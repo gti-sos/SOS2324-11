@@ -1,4 +1,4 @@
-
+//Creación de datos
 
 let datos = [ 
 
@@ -95,26 +95,26 @@ let datos = [
         "eu_payment_rate_on_planned_eu_amount": 50.8721676610121
     },
     {
-        "ms": "FR",
-        "ms_name": "France",
-        "cci": "2014FR05SFOP003",
-        "title": "Guyane - ESF",
-        "fund": "ESF",
-        "category_of_region": "REACT-EU",
-        "year": 2023,
-        "net_planned_eu_amount": 31526760,
-        "cumulative_initial_pre_financing": 3646134.75,
+        "ms": "PT",
+        "ms_name": "Portugal",
+        "cci": "2014PT16M2OP004",
+        "title": "Azores - ERDF/ESF",
+        "fund": "ERDF",
+        "category_of_region": "Outermost or Northern Sparsely Populated",
+        "year": 2022,
+        "net_planned_eu_amount": 57500000,
+        "cumulative_initial_pre_financing": 1891750,
         "cumulative_additional_initial_pre_financing": 0,
         "recovery_of_initial_pre_financing": 0,
-        "cumulative_annual_pre_financing": 1116686.5,
-        "pre_financing_covered_by_expenditure": 0,
-        "recovery_of_annual_pre_financing": 486151.3,
-        "net_pre_financing": 4276669.95,
-        "cumulative_interim_payments": 12552941.82,
-        "recovery_of_expenses": 0,
-        "net_interim_payments": 12552941.82,
-        "total_net_payments": 16829611.77,
-        "eu_payment_rate": 53.3819896811471,
+        "cumulative_annual_pre_financing": 7161625,
+        "pre_financing_covered_by_expenditure": 4932062.5,
+        "recovery_of_annual_pre_financing": 2567375,
+        "net_pre_financing": 1553937.5,
+        "cumulative_interim_payments": 51014000,
+        "recovery_of_expenses": 671081.82,
+        "net_interim_payments": 55274980.68,
+        "total_net_payments": 56828918.18,
+        "eu_payment_rate": 98.8329011826087
     },
     {
         "ms": "DE",
@@ -209,50 +209,48 @@ let datos = [
         "eu_payment_rate_on_planned_eu_amount": 95.3889390735601
     } ,
     {
-        "ms": "BG",
-        "ms_name": "Bulgaria",
-        "cci": "2014BG16M1OP002",
-        "title": "Environment - BG - ERDF/CF",
-        "fund": "CF",
-        "category_of_region": null,
+        "ms": "ES",
+        "ms_name": "Spain",
+        "cci": "2014ES16RFOP018",
+        "title": "Melilla  - ERDF",
+        "fund": "ERDF",
+        "category_of_region": "REACT-EU",
         "year": 2023,
-        "net_planned_eu_amount": 1104246747,
-        "cumulative_initial_pre_financing": 31968080.7,
+        "net_planned_eu_amount": 4071366,
+        "cumulative_initial_pre_financing": 556219.95,
         "cumulative_additional_initial_pre_financing": 0,
         "recovery_of_initial_pre_financing": 0,
-        "cumulative_annual_pre_financing": 208677601.35,
-        "pre_financing_covered_by_expenditure": 44642149.71,
-        "recovery_of_annual_pre_financing": 118530543.7,
-        "net_pre_financing": 77472988.64,
-        "cumulative_interim_payments": 805584833.17,
+        "cumulative_annual_pre_financing": 162854.64,
+        "pre_financing_covered_by_expenditure": 0,
+        "recovery_of_annual_pre_financing": 81427.32,
+        "net_pre_financing": 637647.27,
+        "cumulative_interim_payments": 1549962.02,
         "recovery_of_expenses": 0,
-        "net_interim_payments": 850226982.88,
-        "total_net_payments": 927699971.52,
-        "eu_payment_rate": 84.0120176075103,
-        "eu_payment_rate_on_planned_eu_amount": 82.4802493599663
+        "net_interim_payments": 1549962.02,
+        "total_net_payments": 2187609.29,
+        "eu_payment_rate": 53.7315802607773
     },
     {
-        "ms": "UK",
-        "ms_name": "United Kingdom",
-        "cci": "2014UK05M9OP001",
-        "title": "England - ESF/YEI",
-        "fund": "YEI",
-        "category_of_region": null,
-        "year": 2019,
-        "net_planned_eu_amount": 319576848,
-        "cumulative_initial_pre_financing": 9587305.44,
-        "cumulative_additional_initial_pre_financing": 46338642.96,
-        "recovery_of_initial_pre_financing": 46338642.96,
-        "cumulative_annual_pre_financing": 32756626.92,
-        "pre_financing_covered_by_expenditure": 1590280.42,
-        "recovery_of_annual_pre_financing": 21975095.66,
-        "net_pre_financing": 18778556.28,
-        "cumulative_interim_payments": 112664920.71,
+        "ms": "DE",
+        "ms_name": "Germany",
+        "cci": "2014DE16RFOP015",
+        "title": "Thüringen - ERDF",
+        "fund": "ERDF",
+        "category_of_region": "Transition",
+        "year": 2021,
+        "net_planned_eu_amount": 1165077915,
+        "cumulative_initial_pre_financing": 32855197.2,
+        "cumulative_additional_initial_pre_financing": 0,
+        "recovery_of_initial_pre_financing": 0,
+        "cumulative_annual_pre_financing": 168412012.61,
+        "pre_financing_covered_by_expenditure": 24501676.92,
+        "recovery_of_annual_pre_financing": 89122546.74,
+        "net_pre_financing": 87642986.15,
+        "cumulative_interim_payments": 550193406.66,
         "recovery_of_expenses": 0,
-        "net_interim_payments": 114255201.13,
-        "total_net_payments": 133033757.41,
-        "eu_payment_rate": 41.6280961035075,
-        "eu_payment_rate_on_planned_eu_amount": 41.6280961035075
+        "net_interim_payments": 574695083.58,
+        "total_net_payments": 662338069.73,
+        "eu_payment_rate": 56.8492511275523  
     },
     {
         "ms": "ES",
@@ -301,75 +299,97 @@ let datos = [
         "eu_payment_rate_on_planned_eu_amount": 4.70000008058711
     },
     {
-        "ms": "GR",
-        "ms_name": "Greece",
-        "cci": "2014GR16M3TA001",
-        "title": "Technical assistance - GR - ERDF/ESF/CF",
+        "ms": "PT",
+        "ms_name": "Portugal",
+        "cci": "2014PT16M2OP006",
+        "title": "Madeira - ERDF/ESF",
         "fund": "ERDF",
-        "category_of_region": "Less developed",
+        "category_of_region": "Outermost or Northern Sparsely Populated",
         "year": 2017,
-        "net_planned_eu_amount": 108935710,
-        "cumulative_initial_pre_financing": 4426668.16,
-        "cumulative_additional_initial_pre_financing": 7746669.28,
-        "recovery_of_initial_pre_financing": 0,
-        "cumulative_annual_pre_financing": 4843943.65,
-        "pre_financing_covered_by_expenditure": 1577416.68,
-        "recovery_of_annual_pre_financing": 635917.4,
-        "net_pre_financing": 14803947.01,
-        "cumulative_interim_payments": 30489459.43,
-        "recovery_of_expenses": 0,
-        "net_interim_payments": 32066876.11,
-        "total_net_payments": 46870823.12,
-        "eu_payment_rate": 43.026132679541,
-        "eu_payment_rate_on_planned_eu_amount": 43.026132679541
-    },
-    {
-        "ms": "RO",
-        "ms_name": "Romania",
-        "cci": "2014RO05M9OP001",
-        "title": "Human Capital - RO - ESF/YEI",
-        "fund": "YEI",
-        "category_of_region": null,
-        "year": 2015,
-        "net_planned_eu_amount": 211988630,
-        "cumulative_initial_pre_financing": 6359658.9,
-        "cumulative_additional_initial_pre_financing": 30208379.78,
-        "recovery_of_initial_pre_financing": 0,
-        "cumulative_annual_pre_financing": 0,
-        "pre_financing_covered_by_expenditure": 0,
-        "recovery_of_annual_pre_financing": 0,
-        "net_pre_financing": 36568038.68,
-        "cumulative_interim_payments": 0,
-        "recovery_of_expenses": 0,
-        "net_interim_payments": 0,
-        "total_net_payments": 36568038.68,
-        "eu_payment_rate": 17.2500000023586,
-        "eu_payment_rate_on_planned_eu_amount": 17.2500000023586
-    },
-    {
-        "ms": "AT",
-        "ms_name": "Austria",
-        "cci": "2014AT05SFOP001",
-        "title": "Employment - AT - ESF",
-        "fund": "ESF",
-        "category_of_region": "REACT-EU",
-        "year": 2023,
-        "net_planned_eu_amount": 114174147,
-        "cumulative_initial_pre_financing": 39829538.25,
+        "net_planned_eu_amount": 58181815,
+        "cumulative_initial_pre_financing": 1914181.71,
         "cumulative_additional_initial_pre_financing": 0,
         "recovery_of_initial_pre_financing": 0,
-        "cumulative_annual_pre_financing": 4053684.64,
+        "cumulative_annual_pre_financing": 2529454.4,
         "pre_financing_covered_by_expenditure": 0,
-        "recovery_of_annual_pre_financing": 1770201.7,
-        "net_pre_financing": 42113021.19,
-        "cumulative_interim_payments": 34875038.75,
+        "recovery_of_annual_pre_financing": 1093818.12,
+        "net_pre_financing": 3349817.99,
+        "cumulative_interim_payments": 14579298.68,
         "recovery_of_expenses": 0,
-        "net_interim_payments": 34875038.75,
-        "total_net_payments": 76988059.94,
-        "eu_payment_rate": 67.4303789105602,
-        "eu_payment_rate_on_planned_eu_amount": 67.4303789105602
+        "net_interim_payments": 14579298.68,
+        "total_net_payments": 17929116.67,
+        "eu_payment_rate": 30.8156709617945
+    },
+    {
+        "ms": "IT",
+        "ms_name": "Italy",
+        "cci": "2014IT05SFOP018",
+        "title": "Trento  - ESF",
+        "fund": "ESF",
+        "category_of_region": "More developed",
+        "year": 2022,
+        "net_planned_eu_amount": 63218677,
+        "cumulative_initial_pre_financing": 1550717.76,
+        "cumulative_additional_initial_pre_financing": 0,
+        "recovery_of_initial_pre_financing": 0,
+        "cumulative_annual_pre_financing": 9377750.52,
+        "pre_financing_covered_by_expenditure": 3593861.25,
+        "recovery_of_annual_pre_financing": 4168370.97,
+        "net_pre_financing": 3166236.06,
+        "cumulative_interim_payments": 45147663.23,
+        "recovery_of_expenses": 0,
+        "net_interim_payments": 48741524.48,
+        "total_net_payments": 51907760.54,
+        "eu_payment_rate": 82.1082676880442
+    },
+    {
+        "ms": "ES",
+        "ms_name": "Spain",
+        "cci": "2014ES05SFOP016",
+        "title": "Extremadura - ESF",
+        "fund": "ESF",
+        "category_of_region": "Less developed",
+        "year": 2018,
+        "net_planned_eu_amount": 274376562,
+        "cumulative_initial_pre_financing": 8726407.17,
+        "cumulative_additional_initial_pre_financing": 0,
+        "recovery_of_initial_pre_financing": 0,
+        "cumulative_annual_pre_financing": 18387786.53,
+        "pre_financing_covered_by_expenditure": 0,
+        "recovery_of_annual_pre_financing": 11531323.76,
+        "net_pre_financing": 15582869.94,
+        "cumulative_interim_payments": 67389034.31,
+        "recovery_of_expenses": 0,
+        "net_interim_payments": 67389034.31,
+        "total_net_payments": 82971904.25,
+        "eu_payment_rate": 30.2401574118419
     }
     
 ]
 
-console.log(datos)
+
+//Algoritmo que filtrapor un país y devuelve la media de la prefinanciación anual acumulativa dicho país
+
+function mediaPorPais(entrada, paisBuscado){
+
+    let listaValores = entrada.filter( (datos) => datos.ms_name.match(paisBuscado))
+                            .map( (fila) => fila.cumulative_annual_pre_financing)
+    
+    if (listaValores.length === 0) {
+        console.log('No se han encontrado datos para el país:', paisBuscado);
+        return null;
+    }
+
+    let suma = 0;
+    listaValores.forEach( (valor) => {
+        suma += valor;
+    });
+
+    let media = suma/ listaValores.length
+
+    return media
+
+}
+
+//Llamada a la función
+console.log("La media de prefinanciación anual acumulativa para dicho país es:" , mediaPorPais(datos, "Spain"))
