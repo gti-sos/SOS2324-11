@@ -378,7 +378,7 @@ function mediaGastosRecuperadosPorPais(entradaDatos, pais){
     let lista = entradaDatos.filter((datos) => datos.ms_name.match(pais)).map((fila) => fila.recovery_of_expense)
     
     if (lista.length === 0) {
-        console.log('No existen datos para el país requerido');
+        console.log('No existen datos para el país que ha elegido');
         return null;
     }
 
@@ -394,4 +394,4 @@ function mediaGastosRecuperadosPorPais(entradaDatos, pais){
 }
 
 
-console.log("La media de gastos recuperados para el país elegido es :" , mediaGastosRecuperadosPorPais(datos, "Poland"))
+console.log("La media de gastos recuperados para el país elegido" , mediaGastosRecuperadosPorPais(datos, "Poland"))
