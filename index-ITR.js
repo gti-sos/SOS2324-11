@@ -394,4 +394,4 @@ function mediaGastosRecuperadosPorPais(entradaDatos, pais){
 }
 
 
-console.log("La media de gastos recuperados para el país elegido" , mediaGastosRecuperadosPorPais(datos, "Poland"))
+console.log("La media de gastos recuperados para el país elegido: " , mediaGastosRecuperadosPorPais(datos, "Poland"))
