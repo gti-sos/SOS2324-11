@@ -383,12 +383,8 @@ function mediaGastosRecuperadosPorPais(entradaDatos, pais){
     }
 
     let suma = 0;
-    lista.forEach((valor) => {
-        suma += valor;
-    });
-
+    lista.forEach((valor) => suma += valor);
     let media = suma / lista.length
-
     return media
 
 }
