@@ -277,10 +277,19 @@ let datos = [
 ];
 
 function media_popularity_rate(datos, pais){
-    var suma = datos.filter((n) => n.country == pais).map((n) => n.popularity_rate)
+    var lista = datos.filter((n) => n.country === pais).map((n) => n.popularity_rate);
     
+    // Verificar si la lista está vacía
+    if (lista.length === 0) {
+        return 0; 
+    }
+    
+    var suma = 0;
+    lista.forEach((n) => suma += n);
 
-    return suma;
+    var media = suma / lista.length;
+
+    return media;
 }
 
 
