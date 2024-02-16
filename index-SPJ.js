@@ -1,6 +1,6 @@
-//Creación de datos
+//Data creation
 
-let datos = [ 
+const data = [ 
 
     {
         "ms" : "IT", 
@@ -368,28 +368,29 @@ let datos = [
 ]
 
 
-//Algoritmo que filtrapor un país y devuelve la media de la prefinanciación anual acumulativa dicho país
+//Algorithm that filters by a country and returns the average cumulative annual pre-funding for that country.
 
-function mediaPorPais(entrada, paisBuscado){
+function averageByCountry(entry, countryWanted){
 
-    let listaValores = entrada.filter( (datos) => datos.ms_name.match(paisBuscado))
-                            .map( (fila) => fila.cumulative_annual_pre_financing)
+    let listValues = entry.filter( (data) => data.ms_name.match(countryWanted))
+                            .map( (line) => line.cumulative_annual_pre_financing)
     
-    if (listaValores.length === 0) {
-        console.log('No se han encontrado datos para el país:', paisBuscado);
+    if (listValues.length === 0) {
+        console.log(`No data found for the country: `, countryWanted);
         return null;
     }
 
-    let suma = 0;
-    listaValores.forEach( (valor) => {
-        suma += valor;
+    let sum = 0;
+    listValues.forEach( (value) => {
+        sum += value;
     });
 
-    let media = suma/ listaValores.length
-
-    return media
+    return sum/ listValues.length
 
 }
 
-//Llamada a la función
-console.log("La media de prefinanciación anual acumulativa para dicho país es:" , mediaPorPais(datos, "Spain"))
+  //Display of the result
+
+  console.log(`The average cumulative annual prefinancing for the country is: `, averageByCountry(data, "Spain"))
+
+  console.log(`The average cumulative annual prefinancing for the country is: `, averageByCountry(data, "Netherlands"))
