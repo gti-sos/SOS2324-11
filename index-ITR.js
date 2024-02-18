@@ -1,4 +1,4 @@
-let datos = [
+let data = [
     {
         "ms": "TC",
         "ms_name": "Interreg",
@@ -374,20 +374,19 @@ let datos = [
 
 
 
-function mediaGastosRecuperadosPorPais(entradaDatos, pais){
-    let lista = entradaDatos.filter((datos) => datos.ms_name.match(pais)).map((fila) => fila.recovery_of_expense)
+function averageRecoveredExpensesByCountry(dataEntry, country){
+    let list = dataEntry.filter((data) => data.ms_name.match(country)).map((line) => line.recovery_of_expense)
     
-    if (lista.length === 0) {
-        console.log('No existen datos para el país que ha elegido');
+    if (list.length === 0) {
+        console.log(`There is no data for the country you have chosen`);
         return null;
     }
 
-    let suma = 0;
-    lista.forEach((valor) => suma += valor);
-    let media = suma / lista.length
-    return media
+    let sum = 0;
+    list.forEach((value) => sum += value);
+    return sum / list.length
 
 }
 
 
-console.log("La media de gastos recuperados para el país elegido: " , mediaGastosRecuperadosPorPais(datos, "Poland"))
+console.log(`The average recovered expenses for the chosen country:` , averageRecoveredExpensesByCountry(data, "Poland"))
