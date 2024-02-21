@@ -372,7 +372,7 @@ let data = [
 
 
 
-
+module.exports = data;
 
 function averageRecoveredExpensesByCountry(dataEntry, country){
     let list = dataEntry.filter((data) => data.ms_name.match(country)).map((line) => line.recovery_of_expense)

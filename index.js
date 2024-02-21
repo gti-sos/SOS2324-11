@@ -91,7 +91,7 @@ function averageRecoveredExpensesByCountry(dataEntry, country){
 //Isabel Sample Request
 app.get("/samples/ITR", (req, res) => {
 
-    const result = averageRecoveredExpensesByCountry(isabel_data, "Romania"); 
+    const result = averageRecoveredExpensesByCountry(isabel_data, "Poland"); 
     res.send(`<html> <body> <h1> The average recovered expenses for the chosen country is:  ${result}</h1> </body> </html>`)
     
 });
