@@ -382,6 +382,7 @@ function averageRecoveredExpensesByCountry(dataEntry, country){
         return null;
     }
 
+    
     let sum = 0;
     list.forEach((value) => sum += value);
     return sum / list.length
