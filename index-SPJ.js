@@ -367,6 +367,7 @@ const data = [
     
 ]
 
+module.exports = data;
 
 //Algorithm that filters by a country and returns the average cumulative annual pre-funding for that country.
 
@@ -393,4 +394,3 @@ function averageByCountry(entry, countryWanted){
 
   console.log(`The average cumulative annual prefinancing for the country is: `, averageByCountry(data, "Spain"))
 
-  console.log(`The average cumulative annual prefinancing for the country is: `, averageByCountry(data, "Netherlands"))
