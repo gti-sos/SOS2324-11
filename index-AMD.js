@@ -1,5 +1,5 @@
 
-let datos = [
+const data = [
     {
         "date":2022-9-25,
         "year":2022,
@@ -276,21 +276,23 @@ let datos = [
 
 ];
 
-function media_popularity_rate(datos, pais){
-    var lista = datos.filter((n) => n.country === pais).map((n) => n.popularity_rate);
+module.exports = data;
+
+function popularity_rate_average(data, country){
+    var list = data.filter((n) => n.country === country).map((n) => n.popularity_rate);
     
-    // Verificar si la lista está vacía
-    if (lista.length === 0) {
+    
+    if (list.length === 0) {
         return 0; 
     }
     
-    var suma = 0;
-    lista.forEach((n) => suma += n);
+    var sum = 0;
+    list.forEach((n) => sum += n);
 
-    var media = suma / lista.length;
+    var average = sum / list.length;
 
-    return media;
-}
+    return average;
+} 
 
 
-console.log(media_popularity_rate(datos, "Luxembourg"))
+console.log("Popularity rate in the country is: ", popularity_rate_average(data, "Luxembourg"))
