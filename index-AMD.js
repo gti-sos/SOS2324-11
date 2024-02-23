@@ -276,7 +276,7 @@ const data = [
 
 ];
 
-module.exports = data;
+
 
 function popularity_rate_average(data, country){
     var list = data.filter((n) => n.country === country).map((n) => n.popularity_rate);

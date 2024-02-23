@@ -1,6 +1,7 @@
 let cool = require("cool-ascii-faces");
 let express = require("express");
 const { data, averageByCountry } = require('./samples/SPJ');
+const { amd_data, popularity_rate_average} = require('./samples/AMD');
 
 /*
 const alvaro_data = require('./index-AMD');
@@ -29,33 +30,15 @@ app.get("/samples/SPJ", (req, res) => {
 });
 
 
-/*
-//Alvaro Algorithm
-function popularity_rate_average(data, country){
-    var list = data.filter((n) => n.country === country).map((n) => n.popularity_rate);
-    
-    
-    if (list.length === 0) {
-        return 0; 
-    }
-    
-    var sum = 0;
-    list.forEach((n) => sum += n);
-
-    var average = sum / list.length;
-
-    return average;
-} 
-
-//Alvaro Sample Request
+// .../samples/AMD Request
 app.get("/samples/AMD", (req, res) => {
 
-    const result = popularity_rate_average(alvaro_data, "Luxembourg"); 
+    const result = popularity_rate_average(amd_data, "Luxembourg"); 
     res.send(`<html> <body> <h1> Popularity rate in the country is:  ${result}</h1> </body> </html>`)
     
 });
 
-
+/*
 //Isabel Algorithm
 function averageRecoveredExpensesByCountry(dataEntry, country){
     let list = dataEntry.filter((data) => data.ms_name.match(country)).map((line) => line.recovery_of_expense)
