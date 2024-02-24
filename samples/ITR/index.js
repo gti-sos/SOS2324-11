@@ -1,5 +1,5 @@
 module.exports = {
-     data: [
+     isabel_data: [
         {
             "ms": "TC",
             "ms_name": "Interreg",

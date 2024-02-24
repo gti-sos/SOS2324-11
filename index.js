@@ -2,10 +2,7 @@ let cool = require("cool-ascii-faces");
 let express = require("express");
 const { data, averageByCountry } = require('./samples/SPJ');
 const { amd_data, popularity_rate_average} = require('./samples/AMD');
-
-/*
-const alvaro_data = require('./index-AMD');
-const isabel_data = require('./index-ITR'); */
+const { isabel_data, averageRecoveredExpensesByCountry} = require('./samples/ITR');
 
 let app = express();
 const PORT = (process.env.PORT || 10000); 
