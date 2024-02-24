@@ -2,6 +2,7 @@ let cool = require("cool-ascii-faces");
 let express = require("express");
 const { data, averageByCountry } = require('./samples/SPJ');
 const { amd_data, popularity_rate_average} = require('./samples/AMD');
+const { itr_data, averageRecoveredExpensesByCountry} = require('./samples/ITR');
 
 /*
 const alvaro_data = require('./index-AMD');
@@ -41,7 +42,7 @@ app.get("/samples/AMD", (req, res) => {
 // .../samples/ITR Request
 app.get("/samples/ITR", (req, res) => {
 
-    const result = averageRecoveredExpensesByCountry(isabel_data, "Poland"); 
+    const result = averageRecoveredExpensesByCountry(itr_data, "Poland"); 
     res.send(`<html> <body> <h1> The average recovered expenses for the chosen country is:  ${result}</h1> </body> </html>`)
     
 });
