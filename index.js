@@ -38,28 +38,10 @@ app.get("/samples/AMD", (req, res) => {
     
 });
 
-/*
-//Isabel Algorithm
-function averageRecoveredExpensesByCountry(dataEntry, country){
-    let list = dataEntry.filter((data) => data.ms_name.match(country)).map((line) => line.recovery_of_expense)
-    
-    if (list.length === 0) {
-        console.log(`There is no data for the country you have chosen`);
-        return null;
-    }
-
-    
-    let sum = 0;
-    list.forEach((value) => sum += value);
-    return sum / list.length
-
-}
-
-//Isabel Sample Request
+// .../samples/ITR Request
 app.get("/samples/ITR", (req, res) => {
 
     const result = averageRecoveredExpensesByCountry(isabel_data, "Poland"); 
     res.send(`<html> <body> <h1> The average recovered expenses for the chosen country is:  ${result}</h1> </body> </html>`)
     
 });
-*/
