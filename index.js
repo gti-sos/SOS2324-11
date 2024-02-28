@@ -102,8 +102,9 @@ app.get("/samples/ITR", (req, res) => {
     
 });
 
+
+//Petición GET Isabel
 const API_BASE = "/api/v1";
-app.post(API_BASE +"/structural-payment-data/loadInitialData", (req, res)=>{
-    let dato = req.body;
-    isabel_data.push(dato);
+app.get(API_BASE+"/structural-payment-data/loadInitialData", (req, res)=>{
+    res.send(JSON.stringify(isabel_data));
 });
