@@ -1,12 +1,16 @@
 let cool = require("cool-ascii-faces");
 let express = require("express");
+let bodyParser = require("body-parser");
 const data = require('./index-SPJ'); 
 const alvaro_data = require('./index-AMD');
 const isabel_data = require('./index-ITR');
 
 
 let app = express();
+
 const PORT = (process.env.PORT || 10000); 
+
+app.use(bodyParser.json());
 
 app.listen(PORT, () =>
 {
@@ -96,4 +100,10 @@ app.get("/samples/ITR", (req, res) => {
     const result = averageRecoveredExpensesByCountry(isabel_data, "Romania"); 
     res.send(`<html> <body> <h1> The average recovered expenses for the chosen country is:  ${result}</h1> </body> </html>`)
     
+});
+
+const API_BASE = "/api/v1";
+app.post(API_BASE +"/structural-payment-data/loadInitialData", (req, res)=>{
+    let dato = req.body;
+    isabel_data.push(dato);
 });
