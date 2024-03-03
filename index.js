@@ -2,11 +2,14 @@ let cool = require("cool-ascii-faces");
 let express = require("express");
 let bodyParser = require("body-parser");
 let dataStore = require("nedb"); 
- 
+
 
 let API_SPJ = require("./api-structural-investment-data")
 let dbStructuralInvestment = new dataStore(); 
 let isabel_API = require("./api-structural-payment-data")
+let db_ITR = new dataStore();
+let alvaro_API = require("./api-socioeconomics-tracker-using-unconventional-data");
+let dbAlvaro = new dataStore();
 
 const sharay_data = require('./index-SPJ'); 
 const alvaro_data = require('./index-AMD');
@@ -19,9 +22,10 @@ app.use(bodyParser.json());
 const PORT = (process.env.PORT || 10000); 
 
 //API
-
 API_SPJ(app, dbStructuralInvestment);
-isabel_API(app);
+isabel_API(app, db_ITR);
+alvaro_API(app,dbAlvaro);
+
 
 app.listen(PORT, () =>
 {
