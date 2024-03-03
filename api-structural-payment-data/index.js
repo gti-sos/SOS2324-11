@@ -1,4 +1,3 @@
-
 var datos =[ {
     "ms": "TC",
     "ms_name": "Interreg",
@@ -368,7 +367,6 @@ var datos =[ {
     "eu_payment_rate": 91.2939466989615,
     "eu_payment_rate_on_planned_eu_amount": 91.2939466989615
 }]
-
 
 
 const API_BASE = "/api/v1";

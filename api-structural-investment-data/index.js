@@ -1,7 +1,6 @@
-//Data creation
+const API_BASE = "/api/v1";
 
-const sharay_data = [ 
-
+var initialData =  [
     {
         "ms" : "IT", 
         "ms_name" : "Italy", 
@@ -47,29 +46,6 @@ const sharay_data = [
         "total_net_payments": 256779031,
         "eu_payment_rate": 100,
         "eu_payment_rate_on_planned_eu_amount": 100
-    },
-    {
-        "ms": "PT",
-        "ms_name": "Portugal",
-        "cci": "2014PT16M2OP004",
-        "title": "Azores - ERDF/ESF",
-        "fund": "ESF",
-        "category_of_region": "Less developed",
-        "year": 2023,
-        "net_planned_eu_amount": 343756016,
-        "cumulative_initial_pre_financing": 10354452.85,
-        "cumulative_additional_initial_pre_financing": 0,
-        "recovery_of_initial_pre_financing": 0,
-        "cumulative_annual_pre_financing": 59832136.07,
-        "pre_financing_covered_by_expenditure": 22765761.45,
-        "recovery_of_annual_pre_financing": 25951963.66,
-        "net_pre_financing": 21468863.81,
-        "cumulative_interim_payments": 289402344.33,
-        "recovery_of_expenses": 1644419.15,
-        "net_interim_payments": 310523686.63,
-        "total_net_payments": 331992550.44,
-        "eu_payment_rate": 96.5779608174188,
-        "eu_payment_rate_on_planned_eu_amount": 96.5779608174188
     },
     {
         "ms": "MT",
@@ -347,7 +323,7 @@ const sharay_data = [
         "ms_name": "Spain",
         "cci": "2014ES05SFOP016",
         "title": "Extremadura - ESF",
-        "fund": "ESF",
+        "fund": "ESF", 
         "category_of_region": "Less developed",
         "year": 2018,
         "net_planned_eu_amount": 274376562,
@@ -364,33 +340,178 @@ const sharay_data = [
         "total_net_payments": 82971904.25,
         "eu_payment_rate": 30.2401574118419
     }
+ 
+];
+
+/*
+    MISTAKES
+    400 → Bad Request 
+    404 → Not Found 
+    405 → Method Not Allowed 
+    409 → Conflict 
+*/
+
+module.exports = (app, db) => {
+
+    /*
+    //API REST con fuente de datos
+    app.get(API_BASE + "/structural-investment-data" , (req,res) => {
+        res.send(JSON.stringify(initialData));
+        res.sendStatus(200, "Ok");
+    });
+    */
+
+    //El recurso debe contener una ruta /api/v1/structural-investment-data/loadInitialData que al hacer un GET cree 10 o más datos en el array de NodeJS si está vacío.
+    app.get(API_BASE + "/structural-investment-data/loadInitialData", (req,res) => {
+        db.insert(initialData);
+        res.sendStatus(200, "Ok");
+    });
     
-]
+    app.get(API_BASE + "/structural-investment-data" , (req,res) => {
+        db.find({}, (err, data)=>{
+            if(err){
+                res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
+            }else{
+                res.send(JSON.stringify(data.map((c)=>{ // Te devuelve los datos, quitando el campo que se crea por defecto
+                    delete c._id;
+                    return c;
+                })));
+            }
+        }); 
+    }); 
 
-module.exports = sharay_data;
-
-//Algorithm that filters by a country and returns the average cumulative annual pre-funding for that country.
-
-function averageByCountry(entry, countryWanted){
-
-    let listValues = entry.filter( (data) => data.ms_name.match(countryWanted))
-                            .map( (line) => line.cumulative_annual_pre_financing)
+    //-------------------------------------------------------------------------------------------------------------------------------------------------------
+    //Implementación de todos los métodos de la tabla azul y códigos del cuadro verde 
     
-    if (listValues.length === 0) {
-        console.log(`No data found for the country: `, countryWanted);
-        return null;
-    }
+    //POST --- OK 
+    app.post(API_BASE + "/structural-investment-data", (req, res) => {
 
-    let sum = 0;
-    listValues.forEach( (value) => {
-        sum += value;
+        let dataInitial = req.body;
+    
+        db.find({ ms: dataInitial.ms }, (err, data) => {
+            if (err) {
+                res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
+            }
+    
+            if (data.length > 0) {
+                res.sendStatus(409, "Conflict"); // Conflicto, los datos ya existen
+            } else if (!dataInitial || Object.keys(dataInitial).length === 0) {
+                res.sendStatus(400, "Bad Request"); // Datos inválidos
+            } else {
+                // Insertar datos en la base de datos
+                db.insert(dataInitial, (err, newData) => {
+                    if (err) {
+                        res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
+                    }
+                    res.sendStatus(201, "Created"); // Creado
+                });
+            }
+        });
     });
 
-    return sum/ listValues.length
+    //GET --- OK
+    app.get(API_BASE + "/structural-investment-data", (req, res) => {
+
+        db.find({}, (err, data) => {
+            if (err) {
+                res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
+            }else{
+                res.send(JSON.stringify(data.map((c)=>{
+                    delete c._id;
+                    return c;
+                }))); // Devolver los datos encontrados, quitando el campo que se crea por defecto
+            }
+        });
+    });
+
+
+    //PUT --- NOK
+    app.put(API_BASE + "/structural-investment-data", (req, res) => {
+        res.sendStatus(405, "Method Not Allowed"); // Enviar respuesta con estado 405
+    });
+
+    //DELETE --- OK
+    app.delete(API_BASE + "/structural-investment-data", (req, res) => {
+
+        db.remove({}, { multi: true }, (err, numRemoved) => { // Borrar todo la base de datos
+            if (err) {
+                res.sendStatus(500, "Internal Error"); // Error interno del servidor
+                return;
+            } else {
+                if (numRemoved >= 1) {
+                    res.sendStatus(200, "Ok"); // Todos los datos han sido eliminados correctamente
+                } else {
+                    res.sendStatus(404, "Not found"); // No se encontraron datos para eliminar
+                }
+            }
+        });
+    });
+
+     //-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    // POST --- NOK
+    app.post(API_BASE + "/structural-investment-data/:ms", (req, res) => {
+        res.sendStatus(405, "Method Not Allowed");  // Enviar respuesta con estado 405
+    });
+
+    // GET --- OK
+    app.get(API_BASE + "/structural-investment-data/:ms", (req, res) => {
+
+        const ms = req.params.ms;
+        
+        db.find({ ms: ms }, (err, countryData) => {
+            if (err) {
+                res.sendStatus(500, "Internal Server Error"); // Error interno del servidor
+            }
+
+            if (countryData.length > 0) {
+                res.send(JSON.stringify(countryData.map((c)=>{
+                    delete c._id;
+                    return c;
+                }))); // Devolver los datos encontrados, quitando el campo que se crea por defecto
+            } else {
+                res.sendStatus(404, "Not Found"); //Datos no existentes
+            }
+        });
+    });
+
+    // PUT --- OK
+    app.put(API_BASE + "/structural-investment-data/:ms", (req, res) => {
+
+        const ms = req.params.ms;
+        let data = req.body;
+
+        if (!data || Object.keys(data).length === 0 || data.ms !== ms) {
+            res.sendStatus(400, "Bad Request"); // Datos inválidos
+        } else {
+            db.update({ ms: ms }, data, { }, (err) => {
+                if (err) {
+                    res.sendStatus(500, "Internal Server Error"); // Error interno del servidor
+                }
+                res.sendStatus(200, "Ok"); //Actualizacion correcta
+            });
+        }
+    });
+
+    // DELETE --- OK
+    app.delete(API_BASE + "/structural-investment-data/:ms", (req, res) => {
+        const ms = req.params.ms;
+
+        db.remove({ ms: ms }, {multi: true }, (err, numRemoved) => {
+            if (err) {
+                res.sendStatus(500, "Internal Server Error"); // Error interno del servidor
+                return;
+            }
+
+            if (numRemoved > 0) {
+                res.sendStatus(200, "Ok"); //Borrado correcto
+            } else {
+                res.sendStatus(404, "Not Found"); // Datos no existentes
+            }
+        });
+    });
+
+    
 
 }
-
-  //Display of the result
-
-  console.log(`The average cumulative annual prefinancing for the country is: `, averageByCountry(sharay_data, "Spain"))
 

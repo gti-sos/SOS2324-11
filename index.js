@@ -1,34 +1,29 @@
 let cool = require("cool-ascii-faces");
 let express = require("express");
 let bodyParser = require("body-parser");
+let dataStore = require("nedb"); 
+
+
+let API_SPJ = require("./api-structural-investment-data")
+let dbStructuralInvestment = new dataStore(); 
 let isabel_API = require("./api-structural-payment-data")
-let dataStore = require("nedb");
-
-
-//let isabel_API = require("./api-structural-payment-data");
+let db_ITR = new dataStore();
 let alvaro_API = require("./api-socioeconomics-tracker-using-unconventional-data");
+let dbAlvaro = new dataStore();
 
-
-const data = require('./index-SPJ'); 
+const sharay_data = require('./index-SPJ'); 
 const alvaro_data = require('./index-AMD');
 const isabel_data = require('./index-ITR');
 
 
-let db_ITR = new dataStore();
-
-let dbAlvaro = new dataStore();
-
-
 let app = express();
+app.use(bodyParser.json());
 
 const PORT = (process.env.PORT || 10000); 
 
-app.use(bodyParser.json());
-
-
+//API
+API_SPJ(app, dbStructuralInvestment);
 isabel_API(app, db_ITR);
-
-
 alvaro_API(app,dbAlvaro);
 
 
@@ -66,7 +61,7 @@ function calculateResultSharay(entry, countryWanted) {
 //Sharay Sample Request
 app.get("/samples/SPJ", (req, res) => {
 
-    const result = calculateResultSharay(data, "Spain"); 
+    const result = calculateResultSharay(sharay_data, "Spain"); 
     res.send(` <html> <body> <h1> The average cumulative annual prefinancing for the country is:  ${result}</h1> </body> </html>`);
 });
 
