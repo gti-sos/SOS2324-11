@@ -2,11 +2,12 @@ let cool = require("cool-ascii-faces");
 let express = require("express");
 let bodyParser = require("body-parser");
 let isabel_API = require("./api-structural-payment-data")
-
+let dataStore = require("nedb");
 const data = require('./index-SPJ'); 
 const alvaro_data = require('./index-AMD');
 const isabel_data = require('./index-ITR');
 
+let db_ITR = new dataStore();
 
 let app = express();
 
@@ -14,7 +15,7 @@ const PORT = (process.env.PORT || 10000);
 
 app.use(bodyParser.json());
 
-isabel_API(app);
+isabel_API(app, db_ITR);
 
 app.listen(PORT, () =>
 {
