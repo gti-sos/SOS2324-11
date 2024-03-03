@@ -469,6 +469,22 @@ module.exports = (app,db) => {
         }
     });
 
+    app.delete(API_BASE + "/socioeconomics-traker-using-unconventional-data", (req, res) => {
+
+        db.remove({}, { multi: true }, (err, numRemoved) => { 
+            if (err) {
+                res.sendStatus(500, "Internal Error"); 
+                return;
+            } else {
+                if (numRemoved >= 1) {
+                    res.sendStatus(200, "Ok"); 
+                } else {
+                    res.sendStatus(404, "Not found"); 
+                }
+            }
+        });
+    });
+
     app.delete(API_BASE+'/socioeconomics-traker-using-unconventional-data/:id', (req, res) => {
         let resourceId = req.params.id; 
     
