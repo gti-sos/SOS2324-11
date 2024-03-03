@@ -3,18 +3,16 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let dataStore = require("nedb"); 
 
-
 let API_SPJ = require("./api-structural-investment-data")
-let dbStructuralInvestment = new dataStore(); 
-let isabel_API = require("./api-structural-payment-data")
+let db_SPJ = new dataStore(); 
+let API_ITR = require("./api-structural-payment-data")
 let db_ITR = new dataStore();
-let alvaro_API = require("./api-socioeconomics-tracker-using-unconventional-data");
-let dbAlvaro = new dataStore();
+let API_AMD = require("./api-socioeconomics-tracker-using-unconventional-data");
+let db_AMD = new dataStore();
 
 const sharay_data = require('./index-SPJ'); 
 const alvaro_data = require('./index-AMD');
 const isabel_data = require('./index-ITR');
-
 
 let app = express();
 app.use(bodyParser.json());
@@ -22,9 +20,9 @@ app.use(bodyParser.json());
 const PORT = (process.env.PORT || 10000); 
 
 //API
-API_SPJ(app, dbStructuralInvestment);
-isabel_API(app, db_ITR);
-alvaro_API(app,dbAlvaro);
+API_SPJ(app, db_SPJ);
+API_ITR(app, db_ITR);
+API_AMD(app, db_AMD);
 
 
 app.listen(PORT, () =>
