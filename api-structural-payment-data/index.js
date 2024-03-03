@@ -1,4 +1,4 @@
-const isabel_data = require('/index-ITR');
+//const isabel_data = require('./index-ITR');
 
 const API_BASE = "/api/v1";
 
