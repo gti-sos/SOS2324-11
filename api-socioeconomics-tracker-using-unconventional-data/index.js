@@ -304,11 +304,193 @@ module.exports = (app,db) => {
                 res.sendStatus(500,"Internal Error");
             }else{
                 res.send(JSON.stringify(data.map((c)=>{
-                    delete c._id;
                     return c;
                 })));  
             }
         });
     });
+
+    //Este get nos permite filtrar por pais
+    app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:country', (req, res) => {
+        let country = req.params.country; 
+    
+        
+        db.find({ country: country }, (err, data) => {
+            if (err) {
+                
+                res.sendStatus(500); 
+            } else {
+                if (data.length === 0) {
+                    
+                    res.sendStatus(404); 
+                } else {
+                    
+                    res.send(data); 
+                }
+            }
+        });
+    });
+
+    
+    app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:year', (req, res) => {
+        const year = parseInt(req.params.year);
+        console.log(year);
+    
+        
+        db.find({ year: parseInt(year) }, (err, data) => {
+            if (err) {
+                res.sendStatus(500); 
+            } else {
+                if (data.length === 0) {
+                    res.sendStatus(404);
+                } else {
+                    res.send(data); 
+                }
+            }
+        });
+    });
+    
+
+    app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:country/:year', (req, res) => {
+        const country = req.params.country;
+        const year = parseInt(req.params.year);
+    
+        
+        db.find({ country: country, year: parseInt(year) }, (err, data) => {
+            if (err) {
+                
+                res.status(500).send("Error interno del servidor");
+            } else {
+                if (data.length === 0) {
+                   
+                    res.status(404).send("No se encontraron datos para el país y el año especificados");
+                } else {
+                    
+                    res.send(data);
+                }
+            }
+        });
+    });
+    
+    
+    
+
+    app.post(API_BASE+'/socioeconomics-traker-using-unconventional-data', (req, res) => {
+        let newData = req.body; 
+    
+       
+        const expectedFields = ["date", "year", "month", "day", "tone_doc_count", "popularity_rate", "tone_avg", "tone_w_avg", "tone_cum", "amd1code", "country", "area", "ref_time", "topic"];
+        const newDataFields = Object.keys(newData);
+        const isValidData = expectedFields.every(field => newDataFields.includes(field));
+    
+        if (!isValidData) {
+            
+            res.sendStatus(400); 
+            return;
+        }
+
+        
+        db.findOne({ 
+
+            date: newData.date,
+            year: newData.year,
+            month: newData.month,
+            day: newData.day,
+            tone_doc_count: newData.tone_doc_count,
+            popularity_rate: newData.popularity_rate,
+            tone_avg: newData.tone_avg,
+            tone_w_avg: newData.tone_w_avg,
+            tone_cum: newData.tone_cum,
+            amd1code: newData.amd1code,
+            country: newData.country,
+            area: newData.area,
+            ref_time: newData.ref_time,
+            topic: newData.topic
+
+        }, (err, existingData) => {
+            if (err) {
+               
+                res.sendStatus(500); 
+            } else {
+                if (existingData) {
+                   
+                    res.sendStatus(409); 
+                } else {
+                    
+                    db.insert(newData, (err, insertedData) => {
+                        if (err) {
+                            
+                            res.sendStatus(500); 
+                        } else {
+                          
+                            res.sendStatus(201); 
+                        }
+                    });
+                }
+            }
+        });
+    });
+
+
+    app.put(API_BASE+'/socioeconomics-traker-using-unconventional-data/:id', (req, res) => {
+        let resourceIdFromURL = req.params.id; 
+        let updatedData = req.body; 
+    
+        
+        const expectedFields = ["date", "year", "month", "day", "tone_doc_count", "popularity_rate", "tone_avg", "tone_w_avg", "tone_cum", "amd1code", "country", "area", "ref_time", "topic", "_id"];
+        const updatedDataFields = Object.keys(updatedData);
+        const isValidData = expectedFields.every(field => updatedDataFields.includes(field));
+    
+        if (!isValidData) {
+         
+            res.sendStatus(400); 
+            return;
+        }
+    
+        if (resourceIdFromURL !== updatedData._id) {
+            
+            res.sendStatus(400); 
+        } else {
+           
+            db.update({ _id: resourceIdFromURL }, updatedData, {}, (err, numReplaced) => {
+                if (err) {
+                    
+                    res.sendStatus(500); 
+                } else {
+                    if (numReplaced === 0) {
+                        
+                        res.sendStatus(404); 
+                    } else {
+                        
+                        res.sendStatus(200); 
+                    }
+                }
+            });
+        }
+    });
+
+    app.delete(API_BASE+'/socioeconomics-traker-using-unconventional-data/:id', (req, res) => {
+        let resourceId = req.params.id; 
+    
+       
+        db.remove({ _id: resourceId }, {}, (err, numRemoved) => {
+            if (err) {
+                
+                res.sendStatus(500); 
+            } else {
+                if (numRemoved === 0) {
+                    
+                    res.sendStatus(404); 
+                } else {
+                    
+                    res.sendStatus(200); 
+                }
+            }
+        });
+    });
+
+
+    
+    
 
 }
