@@ -382,27 +382,58 @@ module.exports = (app, db) => {
 
     //POST - VERIFICAR SI LOS DATOS YA EXISTEN EN LA BASE DE DATOS
     app.post(API_BASE + "/structural-payment-data", (req, res) => {
-        let dataInitial = req.body;
+        const newData = req.body;
+        const expectedFields = [
+            "ms",
+            "ms_name",
+            "fund",
+            "year",
+            "planned_eu_amount",
+            "n_3_decommitment_amount",
+            "net_planned_eu_amount",
+            "cumulative_initial_pre_financing",
+            "cumulative_additional_initial_pre_financing",
+            "recovery_of_initial_pre_financing",
+            "net_initial_pre_financing",
+            "cumulative_annual_pre_financing",
+            "annual_pre_financing_covered_by_expenditure",
+            "recovery_of_annual_pre_financing",
+            "net_annual_pre_financing",
+            "cumulative_interim_payment",
+            "recovery_of_expense",
+            "net_interim_payment",
+            "total_net_payment",
+            "eu_payment_rate",
+            "eu_payment_rate_on_planned_eu_amount"
+        ];
+        const receivedFields = Object.keys(newData);
+        const isValidData = expectedFields.every(field => receivedFields.includes(field));
     
-        db.find({ ms_name: dataInitial.ms_name }, (err, data) => {
+        if (!isValidData) {
+            res.sendStatus(400, "Bad Request");
+        } else {
+          // Verificar si ya existe un documento con la misma country en la base de datos
+          db.findOne({ ms_name: newData.ms_name }, (err, existingData) => {
             if (err) {
                 res.sendStatus(500, "Internal Error");
-            }
-    
-            if (data.length > 0) {
-                res.sendStatus(409, "Conflict");
-            } else if (!dataInitial || Object.keys(dataInitial).length === 0) {
-                res.sendStatus(400, "Bad Request");
             } else {
-                db.insert(dataInitial, (err, newData) => {
-                    if (err) {
-                        res.sendStatus(500, "Internal Error");
-                    }
+              if (existingData) {
+                res.sendStatus(409, "Conflict");
+              } else {
+                // Si no existe, insertar el nuevo documento
+                db.insert(newData, (err, insertedData) => {
+                  if (err) {
+                    res.sendStatus(500, "Internal Error");
+                  } else {
                     res.sendStatus(201, "Created");
+                  }
                 });
+              }
             }
-        });
-    });
+          });
+        }
+      });
+      
 
     //GET - LISTA TODOS LOS DATOS
     app.get(API_BASE+"/structural-payment-data", (req, res)=>{
