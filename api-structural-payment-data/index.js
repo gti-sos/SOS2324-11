@@ -412,7 +412,6 @@ module.exports = (app, db) => {
         if (!isValidData) {
             res.sendStatus(400, "Bad Request");
         } else {
-          // Verificar si ya existe un documento con la misma country en la base de datos
           db.findOne({ ms_name: newData.ms_name }, (err, existingData) => {
             if (err) {
                 res.sendStatus(500, "Internal Error");
@@ -420,7 +419,6 @@ module.exports = (app, db) => {
               if (existingData) {
                 res.sendStatus(409, "Conflict");
               } else {
-                // Si no existe, insertar el nuevo documento
                 db.insert(newData, (err, insertedData) => {
                   if (err) {
                     res.sendStatus(500, "Internal Error");
