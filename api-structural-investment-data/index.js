@@ -384,76 +384,27 @@ module.exports = (app, db) => {
     //Implementación de todos los métodos de la tabla azul y códigos del cuadro verde 
     
     //POST --- OK 
-    app.post(API_BASE+'/structural-investment-data', (req, res) => {
-        let newData = req.body; 
+    app.post(API_BASE + "/structural-investment-data", (req, res) => {
+
+        let dataInitial = req.body;
     
-        const expectedFields = [
-            "ms", 
-            "ms_name", 
-            "cci", 
-            "title", 
-            "fund", 
-            "category_of_region", 
-            "year", 
-            "net_planned_eu_amount", 
-            "cumulative_initial_pre_financing", 
-            "cumulative_additional_initial_pre_financing", 
-            "recovery_of_initial_pre_financing", 
-            "cumulative_annual_pre_financing", 
-            "pre_financing_covered_by_expenditure", 
-            "recovery_of_annual_pre_financing", 
-            "net_pre_financing", 
-            "cumulative_interim_payments", 
-            "recovery_of_expenses", 
-            "net_interim_payments", 
-            "total_net_payments", 
-            "eu_payment_rate", 
-            "eu_payment_rate_on_planned_eu_amount"
-        ];
-        const newDataFields = Object.keys(newData);
-        const isValidData = expectedFields.every(field => newDataFields.includes(field));
-    
-        if (!isValidData) {
-            res.sendStatus(400, "Bad Request"); // Datos inválidos
-        }
-    
-        db.findOne({ 
-            ms: newData.ms,
-            ms_name: newData.ms_name,
-            cci: newData.cci,
-            title: newData.title,
-            fund: newData.fund,
-            category_of_region: newData.category_of_region,
-            year: newData.year,
-            net_planned_eu_amount: newData.net_planned_eu_amount,
-            cumulative_initial_pre_financing: newData.cumulative_initial_pre_financing,
-            cumulative_additional_initial_pre_financing: newData.cumulative_additional_initial_pre_financing,
-            recovery_of_initial_pre_financing: newData.recovery_of_initial_pre_financing,
-            cumulative_annual_pre_financing: newData.cumulative_annual_pre_financing,
-            pre_financing_covered_by_expenditure: newData.pre_financing_covered_by_expenditure,
-            recovery_of_annual_pre_financing: newData.recovery_of_annual_pre_financing,
-            net_pre_financing: newData.net_pre_financing,
-            cumulative_interim_payments: newData.cumulative_interim_payments,
-            recovery_of_expenses: newData.recovery_of_expenses,
-            net_interim_payments: newData.net_interim_payments,
-            total_net_payments: newData.total_net_payments,
-            eu_payment_rate: newData.eu_payment_rate,
-            eu_payment_rate_on_planned_eu_amount: newData.eu_payment_rate_on_planned_eu_amount
-        }, (err, existingData) => {
+        db.find({ ms: dataInitial.ms }, (err, data) => {
             if (err) {
-                res.sendStatus(500, "Internal Eroor");   // Error interno del servidor
+                res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
+            }
+    
+            if (data.length > 0) {
+                res.sendStatus(409, "Conflict"); // Conflicto, los datos ya existen
+            } else if (!dataInitial || Object.keys(dataInitial).length === 0) {
+                res.sendStatus(400, "Bad Request"); // Datos inválidos
             } else {
-                if (existingData) {
-                    res.sendStatus(409, "Conflict"); // Conflicto, los datos ya existen
-                } else {
-                    db.insert(newData, (err, insertedData) => {
-                        if (err) {
-                            res.sendStatus(500, "Internal Eroor");  // Error interno del servidor
-                        } else {
-                            res.sendStatus(201,  "Created"); 
-                        }
-                    });
-                }
+                // Insertar datos en la base de datos
+                db.insert(dataInitial, (err, newData) => {
+                    if (err) {
+                        res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
+                    }
+                    res.sendStatus(201, "Created"); // Creado
+                });
             }
         });
     });
