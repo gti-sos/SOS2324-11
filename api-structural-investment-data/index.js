@@ -385,29 +385,58 @@ module.exports = (app, db) => {
     
     //POST --- OK 
     app.post(API_BASE + "/structural-investment-data", (req, res) => {
-
-        let dataInitial = req.body;
+        const newData =  req.body;
     
-        db.find({ ms: dataInitial.ms }, (err, data) => {
-            if (err) {
-                res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
-            }
+        const expectedFields = [
+            "ms",
+            "ms_name",
+            "cci",
+            "title",
+            "fund",
+            "category_of_region",
+            "year",
+            "net_planned_eu_amount",
+            "cumulative_initial_pre_financing",
+            "cumulative_additional_initial_pre_financing",
+            "recovery_of_initial_pre_financing",
+            "cumulative_annual_pre_financing",
+            "pre_financing_covered_by_expenditure",
+            "recovery_of_annual_pre_financing",
+            "net_pre_financing",
+            "cumulative_interim_payments",
+            "recovery_of_expenses",
+            "net_interim_payments",
+            "total_net_payments",
+            "eu_payment_rate"
+        ];
+        const receivedFields = Object.keys(newData);
+        const isValidData = expectedFields.every(field => receivedFields.includes(field));
     
-            if (data.length > 0) {
-                res.sendStatus(409, "Conflict"); // Conflicto, los datos ya existen
-            } else if (!dataInitial || Object.keys(dataInitial).length === 0) {
-                res.sendStatus(400, "Bad Request"); // Datos inválidos
-            } else {
-                // Insertar datos en la base de datos
-                db.insert(dataInitial, (err, newData) => {
-                    if (err) {
-                        res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
+        if (!isValidData) {
+            res.sendStatus(400, "Bad Request"); // Datos inválidos
+        } else {
+            // Verificar si ya existe un documento con el mismo cci en la base de datos
+            db.findOne({ cci: newData.cci }, (err, existingData) => {
+                if (err) {
+                    res.sendStatus(500, "Internal Error"); // Error interno del servidor
+                } else {
+                    if (existingData) {
+                        res.sendStatus(409, "Conflict"); //Datos existentes
+                    } else {
+                        // Si no existe, insertar el nuevo documento
+                        db.insert(newData, (err, insertedData) => {
+                            if (err) {
+                                res.sendStatus(500, "Internal Error"); // Error interno del servidor
+                            } else {
+                                res.sendStatus(201, "Created");
+                            }
+                        });
                     }
-                    res.sendStatus(201, "Created"); // Creado
-                });
-            }
-        });
+                }
+            });
+        }
     });
+    
 
     //GET --- OK
     app.get(API_BASE + "/structural-investment-data", (req, res) => {
