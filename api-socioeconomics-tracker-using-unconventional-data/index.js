@@ -373,7 +373,12 @@ module.exports = (app,db) => {
     });
     
     
-    
+    //POST - NO PERMITIDO
+    app.post(API_BASE + "/socioeconomics-traker-using-unconventional-data/:id", (req, res) => {
+        const id = req.params.id;
+        let data = req.body;
+        res.sendStatus(405, "Method Not Allowed");
+    });
 
     app.post(API_BASE+'/socioeconomics-traker-using-unconventional-data', (req, res) => {
         let newData = req.body; 
@@ -431,6 +436,11 @@ module.exports = (app,db) => {
         });
     });
 
+    //PUT - NO PERMITIDO
+    app.put(API_BASE + "/socioeconomics-traker-using-unconventional-data", (req, res) => {
+        let data = req.body;
+        res.sendStatus(405, "Method not allowed");
+    });
 
     app.put(API_BASE+'/socioeconomics-traker-using-unconventional-data/:id', (req, res) => {
         let resourceIdFromURL = req.params.id; 
