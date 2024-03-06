@@ -343,28 +343,39 @@ var initialData =  [
  
 ];
 
-/*
-    MISTAKES
-    400 → Bad Request 
-    404 → Not Found 
-    405 → Method Not Allowed 
-    409 → Conflict 
-*/
 
 module.exports = (app, db) => {
-
-    /*
-    //API REST con fuente de datos
-    app.get(API_BASE + "/structural-investment-data" , (req,res) => {
-        res.send(JSON.stringify(initialData));
-        res.sendStatus(200, "Ok");
-    });
-    */
 
     //El recurso debe contener una ruta /api/v1/structural-investment-data/loadInitialData que al hacer un GET cree 10 o más datos en el array de NodeJS si está vacío.
     app.get(API_BASE + "/structural-investment-data/loadInitialData", (req,res) => {
         db.insert(initialData);
         res.sendStatus(200, "Ok");
+    });
+
+    app.get(API_BASE + "/structural-investment-data/loadInitialData", (req, res) => {
+        // Verificar si la colección está vacía
+        dbStudents.count({}, (err, count) => {
+            if (err) {
+                console.error("Error al verificar si la base de datos está vacía:", err);
+                res.sendStatus(500); // Error interno del servidor
+            } else {
+                if (count === 0) {
+                    // Insertar datos iniciales solo si la colección está vacía
+                    dbStudents.insert(data_MFC, (err, docs) => {
+                        if (err) {
+                            console.error("Error al insertar datos iniciales:", err);
+                            res.sendStatus(500); // Error interno del servidor
+                        } else {
+                            console.log("Datos iniciales insertados correctamente.");
+                            res.sendStatus(200, "Ok"); // 
+                        }
+                    });
+                } else {
+                    console.log("La base de datos ya contiene datos, no se insertarán datos iniciales.");
+                    res.sendStatus(200, "Ok"); // 
+                }
+            }
+        });
     });
     
     app.get(API_BASE + "/structural-investment-data" , (req,res) => {
@@ -385,29 +396,9 @@ module.exports = (app, db) => {
     
     //POST --- OK 
     app.post(API_BASE + "/structural-investment-data", (req, res) => {
+
         const newData =  req.body;
-    
-        const expectedFields = [
-            "ms",
-            "ms_name",
-            "cci",
-            "title",
-            "fund",
-            "category_of_region",
-            "year",
-            "net_planned_eu_amount",
-            "cumulative_initial_pre_financing",
-            "cumulative_additional_initial_pre_financing",
-            "recovery_of_initial_pre_financing",
-            "cumulative_annual_pre_financing",
-            "pre_financing_covered_by_expenditure",
-            "recovery_of_annual_pre_financing",
-            "net_pre_financing",
-            "cumulative_interim_payments",
-            "recovery_of_expenses",
-            "net_interim_payments",
-            "total_net_payments",
-            "eu_payment_rate"
+        const expectedFields = ["ms","ms_name","cci", "title","fund", "category_of_region", "year","net_planned_eu_amount","cumulative_initial_pre_financing","cumulative_additional_initial_pre_financing", "recovery_of_initial_pre_financing", "cumulative_annual_pre_financing", "pre_financing_covered_by_expenditure", "recovery_of_annual_pre_financing", "net_pre_financing","cumulative_interim_payments", "recovery_of_expenses","net_interim_payments","total_net_payments", "eu_payment_rate"
         ];
         const receivedFields = Object.keys(newData);
         const isValidData = expectedFields.every(field => receivedFields.includes(field));
