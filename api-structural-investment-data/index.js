@@ -1,5 +1,8 @@
 const API_BASE = "/api/v1";
 
+let data_SPJ = require('../index-SPJ');
+
+/*
 var initialData =  [
     {
         "ms" : "IT", 
@@ -342,53 +345,31 @@ var initialData =  [
     }
  
 ];
-
+*/
 
 module.exports = (app, db) => {
 
     //El recurso debe contener una ruta /api/v1/structural-investment-data/loadInitialData que al hacer un GET cree 10 o más datos en el array de NodeJS si está vacío.
-    app.get(API_BASE + "/structural-investment-data/loadInitialData", (req,res) => {
-        db.insert(initialData);
-        res.sendStatus(200, "Ok");
-    });
-
     app.get(API_BASE + "/structural-investment-data/loadInitialData", (req, res) => {
         // Verificar si la colección está vacía
-        dbStudents.count({}, (err, count) => {
+        db.count({}, (err, count) => {
             if (err) {
-                console.error("Error al verificar si la base de datos está vacía:", err);
-                res.sendStatus(500); // Error interno del servidor
+                res.sendStatus(500, "Internal Error"); // Error interno del servidor
             } else {
                 if (count === 0) {
                     // Insertar datos iniciales solo si la colección está vacía
-                    dbStudents.insert(data_MFC, (err, docs) => {
+                    db.insert(data_SPJ, (err, docs) => {
                         if (err) {
-                            console.error("Error al insertar datos iniciales:", err);
-                            res.sendStatus(500); // Error interno del servidor
+                            res.sendStatus(500, "Internal Error"); // Error interno del servidor
                         } else {
-                            console.log("Datos iniciales insertados correctamente.");
-                            res.sendStatus(200, "Ok"); // 
+                            res.sendStatus(200, "Ok"); // Todos los datos han sido eliminados correctamente
                         }
                     });
                 } else {
-                    console.log("La base de datos ya contiene datos, no se insertarán datos iniciales.");
-                    res.sendStatus(200, "Ok"); // 
+                    res.sendStatus(200, "Ok"); // La base de datos ya tiene datos
                 }
             }
         });
-    });
-    
-    app.get(API_BASE + "/structural-investment-data" , (req,res) => {
-        db.find({}, (err, data)=>{
-            if(err){
-                res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
-            }else{
-                res.send(JSON.stringify(data.map((c)=>{ // Te devuelve los datos, quitando el campo que se crea por defecto
-                    delete c._id;
-                    return c;
-                })));
-            }
-        }); 
     }); 
 
     //-------------------------------------------------------------------------------------------------------------------------------------------------------
