@@ -109,7 +109,7 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
         }
       });
       
-
+/*
     //GET - LISTA TODOS LOS DATOS
     app.get(API_BASE+"/structural-payment-data", (req, res)=>{
         db.find({}, (err, data)=>{
@@ -123,13 +123,13 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
             }
         });
     });
-
+/*
     //PUT - NO PERMITIDO
     app.put(API_BASE + "/structural-payment-data", (req, res) => {
         let data = req.body;
         res.sendStatus(405, "Method not allowed");
     });
-
+/*
     //DELETE - BORRA TODOS LOS DATOS
     app.delete(API_BASE + "/structural-payment-data", (req, res) => {
         db.remove({}, {multi:true}, (err, numRemoved)=>{
@@ -144,7 +144,7 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
                 }
             }
         });
-    });
+    });*/
 
     //POST - NO PERMITIDO
     app.post(API_BASE + "/structural-payment-data/:country", (req, res) => {
@@ -189,7 +189,7 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
           }
         });
       });
-
+/*
     //DELETE - BORRA DATOS DE UN PAIS
     app.delete(API_BASE + "/structural-payment-data/:ms_name", (req, res) => {
         let country = req.params.ms_name;
@@ -204,6 +204,52 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
                 }
             }
         });
+    });*/
+    app.delete(API_BASE + '/structural-payment-data', (req, res) => {
+        const queryField = req.query.field; // Campo para buscar
+        let queryValue = req.query.value; // Valor a buscar
+
+        if (!queryField && !queryValue) {
+            // Si no se proporcionan campo y valor, eliminar todos los datos
+            db.remove({}, { multi: true }, (err, numRemoved) => {
+                if (err) {
+                    res.sendStatus(500, "Internal Error");
+                } else {
+                    if (numRemoved >= 1) {
+                        res.sendStatus(200, "Todos los datos fueron eliminados correctamente");
+                    } else {
+                        res.sendStatus(404, "No se encontraron datos para eliminar");
+                    }
+                }
+            });
+        } else {
+            // Si se proporcionan campo y valor, eliminar por ese criterio
+            if (!queryField || !queryValue) {
+                res.status(400).send("Se requieren parámetros de consulta 'field' y 'value'");
+                return;
+            }
+
+            const query = {};
+            // Verificar si el valor es numérico o una cadena
+            if (!isNaN(queryValue)) {
+                // Si es numérico, convertirlo a número
+                queryValue = parseFloat(queryValue);
+            }
+
+            query[queryField] = queryValue;
+
+            db.remove(query, { multi: true }, (err, numRemoved) => {
+                if (err) {
+                    res.sendStatus(500, "Internal Error");
+                } else {
+                    if (numRemoved >= 1) {
+                        res.sendStatus(200, "Datos eliminados correctamente");
+                    } else {
+                        res.sendStatus(404, "No se encontraron datos para eliminar");
+                    }
+                }
+            });
+        }
     });
 
 }
