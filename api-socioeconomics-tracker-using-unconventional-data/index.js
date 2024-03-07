@@ -310,6 +310,36 @@ module.exports = (app,db) => {
         });
     });
 
+    //busqueda de todos los parametros
+    app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data', (req, res) => {
+        const query = req.query;
+        const country = query.country;
+    
+        // Eliminar el campo 'country' de la consulta para que no interfiera
+        delete query.country;
+        
+        // Construir la consulta para buscar solo en el país especificado
+        let dbQuery = {};
+        if (country) {
+            dbQuery = { ...query, country: country };
+        } else {
+            dbQuery = { ...query };
+        }
+    
+        // Ejecutar la consulta en la base de datos
+        db.find(dbQuery, (err, data) => {
+            if (err) {
+                res.sendStatus(500); // Error interno del servidor
+            } else {
+                res.send(data); // Devolver los datos encontrados
+            }
+        });
+    });
+    
+    
+    
+    
+
     //Este get nos permite filtrar por pais
     app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:country', (req, res) => {
         let country = req.params.country; 
@@ -371,6 +401,26 @@ module.exports = (app,db) => {
             }
         });
     });
+
+    //Paginacion 
+    app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data', (req, res) => {
+        const page = parseInt(req.query.page) || 1; // Página solicitada, por defecto 1
+        const size = parseInt(req.query.size) || 10; // Tamaño de la página, por defecto 10
+    
+        const startIndex = (page - 1) * size; // Índice de inicio de la página
+        const endIndex = page * size; // Índice de fin de la página
+    
+        db.find({}, (err, data) => {
+            if (err) {
+                res.sendStatus(500, "Internal Error");
+            } else {
+                const paginatedData = data.slice(startIndex, endIndex); // Obtener solo los datos de la página solicitada
+                res.send(JSON.stringify(paginatedData));
+            }
+        });
+    });
+    
+
     
     
     //POST - NO PERMITIDO
