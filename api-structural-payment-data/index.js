@@ -3,35 +3,28 @@ const API_BASE = "/api/v1";
 
 module.exports = (app, db) => {
 
-        // Búsqueda de datos con parámetros específicos y paginación
 app.get(API_BASE + "/structural-payment-data", (req, res) => {
-    // Obtenemos los parámetros de búsqueda y paginación de la solicitud
     const queryParameters = req.query;
-    const limit = parseInt(queryParameters.limit) || 10; // Tamaño de página predeterminado: 10
-    const offset = parseInt(queryParameters.offset) || 0; // Offset predeterminado: 0
+    const limit = parseInt(queryParameters.limit) || 10; 
+    const offset = parseInt(queryParameters.offset) || 0; 
   
-    // Construimos la consulta de búsqueda basada en los parámetros proporcionados
     let query = {};
   
-    // Iteramos sobre cada parámetro de búsqueda
     Object.keys(queryParameters).forEach(key => {
-      // Si el parámetro no es "limit", "offset" u otros parámetros de paginación, lo consideramos como un atributo de búsqueda
-      if (key !== 'limit' && key !== 'offset') {
-        // Convertimos el valor a minúsculas para una búsqueda insensible a mayúsculas/minúsculas
-        const value = queryParameters[key].toLowerCase();
-        // Creamos una expresión regular para buscar el valor en cualquier parte del atributo
-        const regex = new RegExp(value, 'i');
-        // Agregamos el atributo y su valor a la consulta
-        query[key] = regex;
-      }
+        if (key !== 'limit' && key !== 'offset') {
+            const value = !isNaN(queryParameters[key]) ? parseFloat(queryParameters[key]) : queryParameters[key];
+            if (typeof value === 'string') {
+                query[key] = new RegExp(value, 'i');
+            } else {
+                query[key] = value;
+            }
+        }
     });
   
-    // Ejecutamos la consulta en la base de datos con paginación
     db.find(query).skip(offset).limit(limit).exec((err, data) => {
       if (err) {
         res.sendStatus(500, "Internal Error");
       } else {
-        // Eliminamos el campo _id de los resultados
           const resultsWithoutId = data.map(d => {
           const { _id, ...datWithoutId } = d;
           return datWithoutId;
@@ -44,19 +37,18 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
     app.get(API_BASE + "/structural-payment-data/loadInitialData", (req, res) => {
         db.count({}, (err, count) => {
             if (err) {
-                res.sendStatus(500, "Internal Error"); // Error interno del servidor
+                res.sendStatus(500, "Internal Error");
             } else {
                 if (count === 0) {
-                    // Insertar datos iniciales solo si la colección está vacía
                     db.insert(data, (err, docs) => {
                         if (err) {
-                            res.sendStatus(500, "Internal Error"); // Error interno del servidor
+                            res.sendStatus(500, "Internal Error"); 
                         } else {
-                            res.sendStatus(200, "Ok"); // Datos insertados correctamente
+                            res.sendStatus(200, "Ok"); 
                         }
                     });
                 } else {
-                    res.sendStatus(400, "Bad Request"); // La base de datos ya tiene datos
+                    res.sendStatus(400, "Bad Request"); 
                 }
             }
         });
