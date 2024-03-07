@@ -8,6 +8,7 @@
 - **Repository**: [gti-sos/SOS2324-11](https://github.com/gti-sos/SOS2324-11)
 - **URL**: [sos2324-11.appspot.com](https://sos2324-11.appspot.com)
 - **APIs**:
-  - [https://sos2324-11.appspot.com/api/v1/structural-investment-data/docs (developed by Sharay Portillo Jurado)](https://sos2324-11.appspot.com/api/v1/structural-investment-data/docs)
-  - [https://sos2324-11.appspot.com/api/v1/structural-payment-data/docs (developed by Isabel María Trapero Romero)](https://sos2324-11.appspot.com/api/v1/structural-payment-data/docs)
-  - [https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data/docs (developed by Álvaro Marcos Delgado)](https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data/docs)
+  - [https://sos2324-11.appspot.com/api/v1/structural-investment-data/docs ](https://sos2324-11.appspot.com/api/v1/structural-investment-data/docs)
+  (developed by Sharay Portillo Jurado)
+  - [https://sos2324-11.appspot.com/api/v1/structural-payment-data/docs ](https://sos2324-11.appspot.com/api/v1/structural-payment-data/docs) (developed by Isabel María Trapero Romero)
+  - [https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data/docs ](https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data/docs) (developed by Álvaro Marcos Delgado)
