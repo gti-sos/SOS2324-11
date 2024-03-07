@@ -35,8 +35,7 @@ module.exports = (app, db) => {
     app.post(API_BASE + "/structural-investment-data", (req, res) => {
 
         const newData =  req.body;
-        const expectedFields = ["ms","ms_name","cci", "title","fund", "category_of_region", "year","net_planned_eu_amount","cumulative_initial_pre_financing","cumulative_additional_initial_pre_financing", "recovery_of_initial_pre_financing", "cumulative_annual_pre_financing", "pre_financing_covered_by_expenditure", "recovery_of_annual_pre_financing", "net_pre_financing","cumulative_interim_payments", "recovery_of_expenses","net_interim_payments","total_net_payments", "eu_payment_rate"
-        ];
+        const expectedFields = ["ms","ms_name","cci", "title","fund", "category_of_region", "year","net_planned_eu_amount","cumulative_initial_pre_financing","cumulative_additional_initial_pre_financing", "recovery_of_initial_pre_financing", "cumulative_annual_pre_financing", "pre_financing_covered_by_expenditure", "recovery_of_annual_pre_financing", "net_pre_financing","cumulative_interim_payments", "recovery_of_expenses","net_interim_payments","total_net_payments", "eu_payment_rate"];
         const receivedFields = Object.keys(newData);
         const isValidData = expectedFields.every(field => receivedFields.includes(field));
     
@@ -67,26 +66,53 @@ module.exports = (app, db) => {
     
 
     //GET --- OK
+    // Búsqueda por parámetros específicos y paginación
     app.get(API_BASE + "/structural-investment-data", (req, res) => {
-
-        db.find({}, (err, data) => {
-            if (err) {
-                res.sendStatus(500, "Internal Eroor"); // Error interno del servidor
-            }else{
-                res.send(JSON.stringify(data.map((c)=>{
-                    delete c._id;
-                    return c;
-                }))); // Devolver los datos encontrados, quitando el campo que se crea por defecto
+        // Obtenemos los parámetros de búsqueda y paginación de la solicitud
+        const queryParameters = req.query;
+        const limit = parseInt(queryParameters.limit) || 10; // Tamaño de página predeterminado: 10
+        const offset = parseInt(queryParameters.offset) || 0; // Offset predeterminado: 0
+      
+        // Construimos la consulta de búsqueda basada en los parámetros proporcionados
+        let query = {};
+      
+        // Iteramos sobre cada parámetro de búsqueda
+        Object.keys(queryParameters).forEach(key => {
+            // Si el parámetro no es "limit", "offset" u otros parámetros de paginación, lo consideramos como un atributo de búsqueda
+            if (key !== 'limit' && key !== 'offset') {
+                // Validamos si el valor es numérico
+                const value = !isNaN(queryParameters[key]) ? parseFloat(queryParameters[key]) : queryParameters[key];
+                // Creamos una expresión regular para buscar el valor en cualquier parte del atributo (para strings)
+                if (typeof value === 'string') {
+                    query[key] = new RegExp(value, 'i');
+                } else {
+                    query[key] = value;
+                }
             }
         });
-    });
-
+      
+        // Ejecutamos la consulta en la base de datos con paginación
+        db.find(query).skip(offset).limit(limit).exec((err, data_SPJ) => {
+          if (err) {
+            res.sendStatus(500, "Internal Error");
+          } else {
+            // Eliminamos el campo _id de los resultados
+              const resultsWithoutId = data_SPJ.map(d => {
+              const { _id, ...datWithoutId } = d;
+              return datWithoutId;
+            });
+            res.status(200).json(resultsWithoutId);
+          }
+        });
+      });
+    
 
     //PUT --- NOK
     app.put(API_BASE + "/structural-investment-data", (req, res) => {
         res.sendStatus(405, "Method Not Allowed"); // Enviar respuesta con estado 405
     });
 
+    /*
     //DELETE --- OK
     app.delete(API_BASE + "/structural-investment-data", (req, res) => {
 
@@ -103,14 +129,17 @@ module.exports = (app, db) => {
             }
         });
     });
+    */
 
      //-------------------------------------------------------------------------------------------------------------------------------------------------------
 
+     
     // POST --- NOK
     app.post(API_BASE + "/structural-investment-data/:ms", (req, res) => {
         res.sendStatus(405, "Method Not Allowed");  // Enviar respuesta con estado 405
     });
-
+    
+    /*
     // GET --- OK
     app.get(API_BASE + "/structural-investment-data/:ms", (req, res) => {
 
@@ -131,17 +160,18 @@ module.exports = (app, db) => {
             }
         });
     });
+    */
 
     // PUT --- OK
-    app.put(API_BASE + "/structural-investment-data/:ms", (req, res) => {
+    app.put(API_BASE + "/structural-investment-data/:cci", (req, res) => {
 
-        const ms = req.params.ms;
+        const cci = req.params.cci;
         let data = req.body;
 
-        if (!data || Object.keys(data).length === 0 || data.ms !== ms) {
+        if (!data || Object.keys(data).length === 0 || data.cci !== cci) {
             res.sendStatus(400, "Bad Request"); // Datos inválidos
         } else {
-            db.update({ ms: ms }, data, { }, (err) => {
+            db.update({ cci: cci }, data, { }, (err) => {
                 if (err) {
                     res.sendStatus(500, "Internal Server Error"); // Error interno del servidor
                 }
@@ -150,6 +180,7 @@ module.exports = (app, db) => {
         }
     });
 
+    /*
     // DELETE --- OK
     app.delete(API_BASE + "/structural-investment-data/:ms", (req, res) => {
         const ms = req.params.ms;
@@ -167,8 +198,55 @@ module.exports = (app, db) => {
             }
         });
     });
+    */
 
-    
+    app.delete(API_BASE + '/structural-investment-data', (req, res) => {
+        const queryField = req.query.field; // Campo para buscar
+        let queryValue = req.query.value; // Valor a buscar
+
+        if (!queryField && !queryValue) {
+            // Si no se proporcionan campo y valor, eliminar todos los datos
+            db.remove({}, { multi: true }, (err, numRemoved) => {
+                if (err) {
+                    res.sendStatus(500, "Internal Error");
+                } else {
+                    if (numRemoved >= 1) {
+                        res.sendStatus(200, "Todos los datos fueron eliminados correctamente");
+                    } else {
+                        res.sendStatus(404, "No se encontraron datos para eliminar");
+                    }
+                }
+            });
+        } else {
+            // Si se proporcionan campo y valor, eliminar por ese criterio
+            if (!queryField || !queryValue) {
+                res.status(400).send("Se requieren parámetros de consulta 'field' y 'value'");
+                return;
+            }
+
+            const query = {};
+            // Verificar si el valor es numérico o una cadena
+            if (!isNaN(queryValue)) {
+                // Si es numérico, convertirlo a número
+                queryValue = parseFloat(queryValue);
+            }
+
+            query[queryField] = queryValue;
+
+            db.remove(query, { multi: true }, (err, numRemoved) => {
+                if (err) {
+                    res.sendStatus(500, "Internal Error");
+                } else {
+                    if (numRemoved >= 1) {
+                        res.sendStatus(200, "Datos eliminados correctamente");
+                    } else {
+                        res.sendStatus(404, "No se encontraron datos para eliminar");
+                    }
+                }
+            });
+        }
+    });
+  
 
 }
 
