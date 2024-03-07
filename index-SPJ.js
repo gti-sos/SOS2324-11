@@ -1,6 +1,6 @@
 //Data creation
 
-const sharay_data = [ 
+const data_SPJ = [ 
 
     {
         "ms" : "IT", 
@@ -367,7 +367,7 @@ const sharay_data = [
     
 ]
 
-module.exports = sharay_data;
+module.exports = data_SPJ;
 
 //Algorithm that filters by a country and returns the average cumulative annual pre-funding for that country.
 
@@ -392,5 +392,5 @@ function averageByCountry(entry, countryWanted){
 
   //Display of the result
 
-  console.log(`The average cumulative annual prefinancing for the country is: `, averageByCountry(sharay_data, "Spain"))
+  console.log(`The average cumulative annual prefinancing for the country is: `, averageByCountry(data_SPJ, "Spain"))
 
