@@ -1,4 +1,3 @@
-//let cool = require("cool-ascii-faces");
 let express = require("express");
 let bodyParser = require("body-parser");
 let dataStore = require("nedb"); 
