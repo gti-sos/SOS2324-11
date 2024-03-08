@@ -22,15 +22,19 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
     });
   
     db.find(query).skip(offset).limit(limit).exec((err, data) => {
-      if (err) {
-        res.sendStatus(500, "Internal Error");
-      } else {
-          const resultsWithoutId = data.map(d => {
-          const { _id, ...datWithoutId } = d;
-          return datWithoutId;
-        });
-        res.status(200).json(resultsWithoutId);
-      }
+        if (err) {
+            res.sendStatus(500, "Internal Error");
+          } else {
+              if (data.length === 0) {
+                res.sendStatus(404);
+              } else {
+                const resultsWithoutId = data.map(d => {
+                const { _id, ...datWithoutId } = d;
+                return datWithoutId;
+                });
+                res.status(200).json(resultsWithoutId);
+              }
+          }
     });
   });
 
@@ -123,13 +127,13 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
             }
         });
     });
-/*
+*/
     //PUT - NO PERMITIDO
     app.put(API_BASE + "/structural-payment-data", (req, res) => {
         let data = req.body;
         res.sendStatus(405, "Method not allowed");
     });
-/*
+
     //DELETE - BORRA TODOS LOS DATOS
     app.delete(API_BASE + "/structural-payment-data", (req, res) => {
         db.remove({}, {multi:true}, (err, numRemoved)=>{
@@ -144,7 +148,7 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
                 }
             }
         });
-    });*/
+    });
 
     //POST - NO PERMITIDO
     app.post(API_BASE + "/structural-payment-data/:country", (req, res) => {
@@ -152,7 +156,7 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
         let data = req.body;
         res.sendStatus(405, "Method Not Allowed");
     });
-
+/*
     //GET - DATOS DE UN PAIS
     app.get(API_BASE + "/structural-payment-data/:ms_name", (req, res) => {
         let pais = req.params.ms_name;
@@ -170,30 +174,30 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
                 res.sendStatus(404, "Not Found"); //Datos no existentes
             }
         });
+    });*/
+
+    //PUT - ACTUALIZAR DATO DE UN PAIS
+    app.put(API_BASE+"/structural-payment-data/:ms_name/:fund", (req,res) => {
+        let country = req.params.ms_name;
+        let fund = req.params.fund;
+        let data = req.body;
+        if (!data || Object.keys(data).length === 0 || data.ms_name !== country || data.fund !== fund) {
+            res.sendStatus(400, "Bad request");
+        } else {
+            db.update({ "ms_name": country, "fund": fund }, {data}, (err) => {
+                if (err) {
+                    res.sendStatus(500, "Internal Server Error"); // Error interno del servidor
+                }
+                res.sendStatus(200, "Ok"); //Actualizacion correcta
+            });
+        }
     });
 
-    //PUT - ACTUALIZAR DATOS
-    app.put(API_BASE+"/structural-payment-data/:ms_name", (req,res) => {
-        let countryToUpdate = req.params.ms_name;
-        let newData = req.body;
-
-        db.update({ "ms_name": countryToUpdate }, { $set : newData}, (err,numUpdated) => {
-          if (err) {
-            res.sendStatus(500, "Internal server error");
-        } else {
-            if (numUpdated === 0) {
-                res.sendStatus(400, "Bad request");
-            } else {
-                res.sendStatus(200, "Ok");
-            }
-          }
-        });
-      });
-/*
     //DELETE - BORRA DATOS DE UN PAIS
-    app.delete(API_BASE + "/structural-payment-data/:ms_name", (req, res) => {
+    app.delete(API_BASE + "/structural-payment-data/:ms_name/:fund", (req, res) => {
         let country = req.params.ms_name;
-        db.remove({"ms_name": country}, {}, (err, numRemoved)=>{
+        let fund = req.params.fund;
+        db.remove({"ms_name": country, "fund": fund}, {}, (err, numRemoved)=>{
             if(err){
                 res.sendStatus(500, "Internal Error");
             }else{
@@ -204,52 +208,6 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
                 }
             }
         });
-    });*/
-    app.delete(API_BASE + '/structural-payment-data', (req, res) => {
-        const queryField = req.query.field; // Campo para buscar
-        let queryValue = req.query.value; // Valor a buscar
-
-        if (!queryField && !queryValue) {
-            // Si no se proporcionan campo y valor, eliminar todos los datos
-            db.remove({}, { multi: true }, (err, numRemoved) => {
-                if (err) {
-                    res.sendStatus(500, "Internal Error");
-                } else {
-                    if (numRemoved >= 1) {
-                        res.sendStatus(200, "Todos los datos fueron eliminados correctamente");
-                    } else {
-                        res.sendStatus(404, "No se encontraron datos para eliminar");
-                    }
-                }
-            });
-        } else {
-            // Si se proporcionan campo y valor, eliminar por ese criterio
-            if (!queryField || !queryValue) {
-                res.status(400).send("Se requieren parámetros de consulta 'field' y 'value'");
-                return;
-            }
-
-            const query = {};
-            // Verificar si el valor es numérico o una cadena
-            if (!isNaN(queryValue)) {
-                // Si es numérico, convertirlo a número
-                queryValue = parseFloat(queryValue);
-            }
-
-            query[queryField] = queryValue;
-
-            db.remove(query, { multi: true }, (err, numRemoved) => {
-                if (err) {
-                    res.sendStatus(500, "Internal Error");
-                } else {
-                    if (numRemoved >= 1) {
-                        res.sendStatus(200, "Datos eliminados correctamente");
-                    } else {
-                        res.sendStatus(404, "No se encontraron datos para eliminar");
-                    }
-                }
-            });
-        }
     });
 
 }
