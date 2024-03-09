@@ -3,41 +3,79 @@ const API_BASE = "/api/v1";
 
 module.exports = (app, db) => {
 
-app.get(API_BASE + "/structural-payment-data", (req, res) => {
-    const queryParameters = req.query;
-    const limit = parseInt(queryParameters.limit) || 10; 
-    const offset = parseInt(queryParameters.offset) || 0; 
-  
-    let query = {};
-  
-    Object.keys(queryParameters).forEach(key => {
-        if (key !== 'limit' && key !== 'offset') {
-            const value = !isNaN(queryParameters[key]) ? parseFloat(queryParameters[key]) : queryParameters[key];
-            if (typeof value === 'string') {
-                query[key] = new RegExp(value, 'i');
-            } else {
-                query[key] = value;
-            }
-        }
+    //DOCUMENTACIÓN EN POSTMAN
+    app.get(API_BASE + "/structural-payment-data/docs", (req, res) => {
+        console.log(`REDIRECT TO structural-payment-data/docs`);
+        res.status(301).redirect("https://documenter.getpostman.com/view/32944023/2sA2xh1XiK")
+    
     });
-  
-    db.find(query).skip(offset).limit(limit).exec((err, data) => {
-        if (err) {
-            res.sendStatus(500, "Internal Error");
-          } else {
-              if (data.length === 0) {
-                res.sendStatus(404);
-              } else {
-                const resultsWithoutId = data.map(d => {
-                const { _id, ...datWithoutId } = d;
-                return datWithoutId;
-                });
-                res.status(200).json(resultsWithoutId);
-              }
-          }
-    });
-  });
 
+    //GET - PAGINACIÓN Y BÚSQUEDAD POR CAMPOS
+    app.get(API_BASE + "/structural-payment-data", (req, res) => {
+        const queryParameters = req.query;
+        const limit = parseInt(queryParameters.limit) || 10;
+        const offset = parseInt(queryParameters.offset) || 0;
+        const hasSearchParameters = Object.keys(queryParameters).some(key => key !== 'limit' && key !== 'offset');
+        let query = {};
+    
+        // Si no se proporcionaron parámetros de búsqueda, verificamos si hay datos en la base de datos
+        if (!hasSearchParameters) {
+            db.count({}, (err, count) => {
+                if (err) {
+                    res.sendStatus(500);
+                } else {
+                    if (count === 0) {
+                        // Si no hay datos, devolvemos una lista vacía
+                        res.status(200).json([]);
+                    } else {
+                        // Si hay datos, realizamos la consulta para obtener todos los datos
+                        db.find({}).skip(offset).limit(limit).exec((err, data) => {
+                            if (err) {
+                                res.sendStatus(500, "Internal Error");
+                            } else {
+                                const resultsWithoutId = data.map(d => {
+                                    const { _id, ...datWithoutId } = d;
+                                    return datWithoutId;
+                                });
+                                res.status(200).json(resultsWithoutId);
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            // Construimos la consulta basada en los parámetros proporcionados
+            Object.keys(queryParameters).forEach(key => {
+                if (key !== 'limit' && key !== 'offset') {
+                    const value = !isNaN(queryParameters[key]) ? parseFloat(queryParameters[key]) : queryParameters[key];
+                    if (typeof value === 'string') {
+                        query[key] = new RegExp(value, 'i');
+                    } else {
+                        query[key] = value;
+                    }
+                }
+            });
+    
+            // Ejecutamos la consulta en la base de datos con paginación
+            db.find(query).skip(offset).limit(limit).exec((err, data) => {
+                if (err) {
+                    res.sendStatus(500, "Internal Error");
+                } else {
+                    if (data.length === 0) {
+                        res.status(404).send("Not Found");
+                    } else {
+                        const resultsWithoutId = data.map(d => {
+                            const { _id, ...datWithoutId } = d;
+                            return datWithoutId;
+                        });
+                        res.status(200).json(resultsWithoutId);
+                    }
+                }
+            });
+        }
+    });
+
+    //INTRODUCIR DATOS
     app.get(API_BASE + "/structural-payment-data/loadInitialData", (req, res) => {
         db.count({}, (err, count) => {
             if (err) {
@@ -58,8 +96,6 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
         });
     });
     
-
-//Implementación de los métodos de la tabla azul
 
     //POST - VERIFICAR SI LOS DATOS YA EXISTEN EN LA BASE DE DATOS
     app.post(API_BASE + "/structural-payment-data", (req, res) => {
@@ -113,21 +149,6 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
         }
       });
       
-/*
-    //GET - LISTA TODOS LOS DATOS
-    app.get(API_BASE+"/structural-payment-data", (req, res)=>{
-        db.find({}, (err, data)=>{
-            if(err){
-                res.sendStatus(500, "Internal Error");
-            } else{
-                res.send(JSON.stringify(data.map((c)=>{
-                    delete c._id;
-                    return c;
-                })));
-            }
-        });
-    });
-*/
     //PUT - NO PERMITIDO
     app.put(API_BASE + "/structural-payment-data", (req, res) => {
         let data = req.body;
@@ -156,25 +177,6 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
         let data = req.body;
         res.sendStatus(405, "Method Not Allowed");
     });
-/*
-    //GET - DATOS DE UN PAIS
-    app.get(API_BASE + "/structural-payment-data/:ms_name", (req, res) => {
-        let pais = req.params.ms_name;
-
-        db.find({ ms_name: pais }, (err, countryData) => {
-            if (err) {
-                res.sendStatus(500, "Internal Server Error");
-            }
-            if (countryData.length > 0) {
-                res.send(JSON.stringify(countryData.map((c)=>{
-                    delete c._id;
-                    return c;
-                }))); // Devolver los datos encontrados
-            } else {
-                res.sendStatus(404, "Not Found"); //Datos no existentes
-            }
-        });
-    });*/
 
     //PUT - ACTUALIZAR DATO DE UN PAIS
     app.put(API_BASE+"/structural-payment-data/:ms_name/:fund", (req,res) => {
@@ -209,5 +211,7 @@ app.get(API_BASE + "/structural-payment-data", (req, res) => {
             }
         });
     });
+
+    
 
 }
