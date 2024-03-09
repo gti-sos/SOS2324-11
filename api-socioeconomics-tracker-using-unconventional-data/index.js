@@ -4,6 +4,12 @@ let initialData = require('../index-AMD')
 
 module.exports = (app,db) => {
 
+    app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data/docs", (req, res) => {
+        console.log(`REDIRECT TO structural-payment-data/docs`);
+        res.status(301).redirect("https://documenter.getpostman.com/view/33058352/2sA2xh3CpF")
+    
+    });
+
     app.get(API_BASE+"/socioeconomics-traker-using-unconventional-data/loadInitialData",(req, res) =>{
         db.find({},(err,data) => {
 
@@ -21,69 +27,6 @@ module.exports = (app,db) => {
 
     });
 
-    //Este get nos permite filtrar por pais
-    app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:country', (req, res) => {
-        let country = req.params.country; 
-    
-        
-        db.find({ country: country }, (err, data) => {
-            if (err) {
-                
-                res.sendStatus(500); 
-            } else {
-                if (data.length === 0) {
-                    
-                    res.sendStatus(404); 
-                } else {
-                    
-                    res.send(data); 
-                }
-            }
-        });
-    });
-
-    
-    app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:year', (req, res) => {
-        const year = parseInt(req.params.year);
-        console.log(year);
-    
-        
-        db.find({ year: parseInt(year) }, (err, data) => {
-            if (err) {
-                res.sendStatus(500); 
-            } else {
-                if (data.length === 0) {
-                    res.sendStatus(404);
-                } else {
-                    res.send(data); 
-                }
-            }
-        });
-    });
-    
-
-    app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:country/:year', (req, res) => {
-        const country = req.params.country;
-        const year = parseInt(req.params.year);
-    
-        
-        db.find({ country: country, year: parseInt(year) }, (err, data) => {
-            if (err) {
-                
-                res.status(500).send("Error interno del servidor");
-            } else {
-                if (data.length === 0) {
-                   
-                    res.status(404).send("No se encontraron datos para el país y el año especificados");
-                } else {
-                    
-                    res.send(data);
-                }
-            }
-        });
-    });
-
-
     app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data", (req, res) => {
         // Obtenemos los parámetros de búsqueda y paginación de la solicitud
         const queryParameters = req.query;
@@ -95,8 +38,8 @@ module.exports = (app,db) => {
       
         // Iteramos sobre cada parámetro de búsqueda
         Object.keys(queryParameters).forEach(key => {
-            // Si el parámetro no es "limit", "offset" u otros parámetros de paginación, lo consideramos como un atributo de búsqueda
-            if (key !== 'limit' && key !== 'offset') {
+            // Si el parámetro no es "limit", "offset", "start" ni "end", lo consideramos como un atributo de búsqueda
+            if (key !== 'limit' && key !== 'offset' && key !== 'start' && key !== 'end') {
                 // Validamos si el valor es numérico
                 const value = !isNaN(queryParameters[key]) ? parseFloat(queryParameters[key]) : queryParameters[key];
                 // Creamos una expresión regular para buscar el valor en cualquier parte del atributo (para strings)
@@ -107,20 +50,37 @@ module.exports = (app,db) => {
                 }
             }
         });
+    
+        // Si se proporciona un período de tiempo, agregamos la condición a la consulta
+        if (queryParameters.start && queryParameters.end) {
+            query.date = {
+                $gte: new Date(queryParameters.start),
+                $lte: new Date(queryParameters.end)
+            };
+        }
       
         // Ejecutamos la consulta en la base de datos con paginación
         db.find(query).skip(offset).limit(limit).exec((err, initialData) => {
-            if (err) {
-                res.sendStatus(500, "Internal Error");
+          if (err) {
+            res.sendStatus(500, "Internal Error");
+          } else {
+            if (initialData.length === 0 && Object.keys(queryParameters).length === 0) {
+              // Si no hay datos cargados y no se proporcionan parámetros de búsqueda, devolvemos una lista vacía
+              res.status(200).json([]);
+            } else if (initialData.length === 0) {
+              // Si no hay datos cargados y se proporcionan parámetros de búsqueda, devolvemos un error 404
+              res.sendStatus(404, "No se encontraron datos que coincidan con la búsqueda");
             } else {
-                res.status(200).json(initialData);
+              // Eliminamos el campo _id de los resultados
+              const resultsWithoutId = initialData.map(d => {
+                const { _id, ...datWithoutId } = d;
+                return datWithoutId;
+              });
+              res.status(200).json(resultsWithoutId);
             }
+          }
         });
     });
-    
-    
-
-    
     
     //POST - NO PERMITIDO
     app.post(API_BASE + "/socioeconomics-traker-using-unconventional-data/:id", (req, res) => {
@@ -191,44 +151,44 @@ module.exports = (app,db) => {
         res.sendStatus(405, "Method not allowed");
     });
 
-    app.put(API_BASE+'/socioeconomics-traker-using-unconventional-data/:id', (req, res) => {
-        let resourceIdFromURL = req.params.id; 
+    app.put(API_BASE+'/socioeconomics-traker-using-unconventional-data/:country/:year/:day', (req, res) => {
+        const country = req.params.country;
+        const year = parseInt(req.params.year);
+        const day = parseInt(req.params.day);
         let updatedData = req.body; 
     
-        
-        const expectedFields = ["date", "year", "month", "day", "tone_doc_count", "popularity_rate", "tone_avg", "tone_w_avg", "tone_cum", "amd1code", "country", "area", "ref_time", "topic", "_id"];
+        // Validamos que los campos necesarios estén presentes en los datos actualizados
+        const expectedFields = ["date", "year", "month", "day", "tone_doc_count", "popularity_rate", "tone_avg", "tone_w_avg", "tone_cum", "amd1code", "country", "area", "ref_time", "topic"];
         const updatedDataFields = Object.keys(updatedData);
         const isValidData = expectedFields.every(field => updatedDataFields.includes(field));
     
         if (!isValidData) {
-         
             res.sendStatus(400); 
             return;
         }
     
-        if (resourceIdFromURL !== updatedData._id) {
-            
+        // Verificamos que los datos actualizados coincidan con los parámetros de la URL
+        if (updatedData.country !== country || updatedData.year !== year || updatedData.day !== day) {
             res.sendStatus(400); 
-        } else {
-           
-            db.update({ _id: resourceIdFromURL }, updatedData, {}, (err, numReplaced) => {
-                if (err) {
-                    
-                    res.sendStatus(500); 
-                } else {
-                    if (numReplaced === 0) {
-                        
-                        res.sendStatus(404); 
-                    } else {
-                        
-                        res.sendStatus(200); 
-                    }
-                }
-            });
+            return;
         }
+    
+        // Realizamos la actualización en la base de datos
+        db.update({ country: country, year: year, day: day }, { $set: updatedData }, { multi: true }, (err, numReplaced) => {
+            if (err) {
+                res.sendStatus(500); 
+            } else {
+                if (numReplaced === 0) {
+                    res.sendStatus(404); 
+                } else {
+                    res.sendStatus(200); 
+                }
+            }
+        });
     });
+    
 
-    /*
+    
     app.delete(API_BASE + "/socioeconomics-traker-using-unconventional-data", (req, res) => {
 
         db.remove({}, { multi: true }, (err, numRemoved) => { 
@@ -244,81 +204,24 @@ module.exports = (app,db) => {
             }
         });
     });
-    */
-
-    /*
-    app.delete(API_BASE+'/socioeconomics-traker-using-unconventional-data/:id', (req, res) => {
-        let resourceId = req.params.id; 
     
-       
-        db.remove({ _id: resourceId }, {}, (err, numRemoved) => {
+
+    
+    app.delete(API_BASE+'/socioeconomics-traker-using-unconventional-data/:country/:year/:day', (req, res) => {
+        const { country, year, day } = req.params;
+        
+        db.remove({ country: country, year: parseInt(year), day: parseInt(day) }, { multi: true }, (err, numRemoved) => {
             if (err) {
-                
                 res.sendStatus(500); 
             } else {
                 if (numRemoved === 0) {
-                    
                     res.sendStatus(404); 
                 } else {
-                    
                     res.sendStatus(200); 
                 }
             }
         });
     });
-    */
-    app.delete(API_BASE + '/socioeconomics-traker-using-unconventional-data', (req, res) => {
-        const queryField = req.query.field; // Campo para buscar
-        let queryValue = req.query.value; // Valor a buscar
-    
-        if (!queryField && !queryValue) {
-            // Si no se proporcionan campo y valor, eliminar todos los datos
-            db.remove({}, { multi: true }, (err, numRemoved) => {
-                if (err) {
-                    res.sendStatus(500, "Internal Error");
-                } else {
-                    if (numRemoved >= 1) {
-                        res.sendStatus(200, "Todos los datos fueron eliminados correctamente");
-                    } else {
-                        res.sendStatus(404, "No se encontraron datos para eliminar");
-                    }
-                }
-            });
-        } else {
-            // Si se proporcionan campo y valor, eliminar por ese criterio
-            if (!queryField || !queryValue) {
-                res.status(400).send("Se requieren parámetros de consulta 'field' y 'value'");
-                return;
-            }
-    
-            const query = {};
-            // Verificar si el valor es numérico o una cadena
-            if (!isNaN(queryValue)) {
-                // Si es numérico, convertirlo a número
-                queryValue = parseFloat(queryValue);
-            }
-    
-            query[queryField] = queryValue;
-    
-            db.remove(query, { multi: true }, (err, numRemoved) => {
-                if (err) {
-                    res.sendStatus(500, "Internal Error");
-                } else {
-                    if (numRemoved >= 1) {
-                        res.sendStatus(200, "Datos eliminados correctamente");
-                    } else {
-                        res.sendStatus(404, "No se encontraron datos para eliminar");
-                    }
-                }
-            });
-        }
-    });
     
     
-    
-
-
-    
-    
-
 }
