@@ -30,7 +30,7 @@ module.exports = (app,db) => {
     app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data", (req, res) => {
         // Obtenemos los parámetros de búsqueda y paginación de la solicitud
         const queryParameters = req.query;
-        const limit = parseInt(queryParameters.limit) || 10; // Tamaño de página predeterminado: 10
+        const limit    = parseInt(queryParameters.limit) || 10; // Tamaño de página predeterminado: 10
         const offset = parseInt(queryParameters.offset) || 0; // Offset predeterminado: 0
       
         // Construimos la consulta de búsqueda basada en los parámetros proporcionados
