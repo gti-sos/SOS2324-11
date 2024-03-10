@@ -211,7 +211,7 @@ const data_SPJ = [
     {
         "ms": "ES",
         "ms_name": "Spain",
-        "cci": "2014ES16RFOP018",
+        "cci": "2014ES16RFOP019",
         "title": "Melilla  - ERDF",
         "fund": "ERDF",
         "category_of_region": "REACT-EU",
