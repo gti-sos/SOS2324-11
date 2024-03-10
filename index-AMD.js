@@ -295,4 +295,4 @@ function popularity_rate_average(data, country){
 } 
 
 
-//console.log("Popularity rate in the country is: ", popularity_rate_average(data, "Luxembourg"))
+console.log("Popularity rate in the country is: ", popularity_rate_average(data, "Luxembourg"))
