@@ -455,6 +455,7 @@ module.exports = (app, db) => {
 
 
     //GET --- OK
+    /*
     // Data search by specific parameters or without them and paging and front/to
     app.get(API_BASE + "/structural-investment-data", (req, res) => {
         const queryParameters = req.query;
@@ -535,6 +536,84 @@ module.exports = (app, db) => {
             });
         }
     });
+    */
+    app.get(API_BASE + "/structural-investment-data", (req, res) => {
+        const queryParameters = req.query;
+        const limit = parseInt(queryParameters.limit) || 10;
+        const offset = parseInt(queryParameters.offset) || 0;
+        let from = req.query.from;
+        let to = req.query.to;
+    
+        // Check for 'from' and 'to' parameters
+        if (from !== undefined && to !== undefined) {
+            const fromYear = parseInt(from);
+            const toYear = parseInt(to);
+            console.log(fromYear, toYear);
+            if (isNaN(fromYear) || isNaN(toYear)) {
+                return res.status(400).send("Invalid year format. Please provide valid year values.");
+            }
+            // If the years are valid, build the query to filter by the year range
+            queryParameters.year = { $gte: fromYear, $lte: toYear };
+        }
+    
+        let query = {};
+        // Build the query based on the provided parameters
+        Object.keys(queryParameters).forEach(key => {
+            if (key !== 'limit' && key !== 'offset' && key !== 'from' && key !== 'to') {
+                const value = !isNaN(queryParameters[key]) ? parseFloat(queryParameters[key]) : queryParameters[key];
+                if (typeof value === 'string') {
+                    query[key] = new RegExp(value, 'i');
+                } else {
+                    query[key] = value;
+                }
+            }
+        });
+    
+        // Check if search parameters were provided
+        const hasSearchParameters = Object.keys(queryParameters).some(key => key !== 'limit' && key !== 'offset' && key !== 'from' && key !== 'to');
+    
+        if (!hasSearchParameters) {
+            db.count({}, (err, count) => {
+                if (err) {
+                    res.sendStatus(500);
+                } else {
+                    if (count === 0) {
+                        console.error("If there is no data, we return an empty list.");
+                        res.status(200).json([]);
+                    } else {
+                        db.find({}).skip(offset).limit(limit).exec((err, data) => {
+                            if (err) {
+                                console.error("Error when inserting data:", err);
+                                res.sendStatus(500);
+                            } else {
+                                const resultsWithoutId = data.map(d => {
+                                    const { _id, ...datWithoutId } = d;
+                                    return datWithoutId;
+                                });
+                                console.log("Sending the data");
+                                res.status(200).json(resultsWithoutId);
+                            }
+                        });
+                    }
+                }
+            });
+        } else {
+            db.find(query).skip(offset).limit(limit).exec((err, data) => {
+                if (err) {
+                    console.error("Database error:", err);
+                    res.sendStatus(500);
+                } else {
+                    const formattedData = data.map((d) => {
+                        const { _id, ...formatted } = d;
+                        return formatted;
+                    });
+                    console.log("Sending the data");
+                    res.status(200).json(formattedData);
+                }
+            });
+        }
+    });
+    
     
 
     //GET - OK front and to with country
@@ -568,9 +647,9 @@ module.exports = (app, db) => {
         });
     });
 
-
+    
     // GET --- OK  Specific statistics
-    app.get(API_BASE + "/structural-investment-data/:ms/:year", (req, res) => {
+    app.get(API_BASE + "/structural-investment-data/:ms/:year", (req, res) => { //cci creo un objeto !!!!!!!!!!!!!!!!!!!!!!!!!!!!
         const ms = req.params.ms;
         const year = parseInt(req.params.year); 
     
@@ -591,7 +670,7 @@ module.exports = (app, db) => {
             }
         });
     });
-
+   
 
 
 
@@ -621,7 +700,8 @@ module.exports = (app, db) => {
             });
         }
     });
-
+    
+    /*
     // PUT --- OK statistics
     app.put(API_BASE + "/structural-investment-data/:cci/:ms_name", (req, res) => { 
 
@@ -644,8 +724,7 @@ module.exports = (app, db) => {
             }
         });
     });
-    
-
+    */
     
 
     //DELETE --- OK
