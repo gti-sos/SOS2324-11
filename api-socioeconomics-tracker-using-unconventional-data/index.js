@@ -376,12 +376,12 @@ module.exports = (app,db) => {
                     res.status(200).json(formattedData);
                 } else {
                     console.error("Datos no existentes");
-                    res.status(404).send("Not Found");
+                    res.status(200).json([]);
                 }
             });
-        }
-    });
-
+        }
+    });
+    
     app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:country/:year/:day', (req, res) => {
         const country = req.params.country;
         const year = parseInt(req.params.year);
