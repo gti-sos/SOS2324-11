@@ -402,7 +402,7 @@ module.exports = (app,db) => {
 
     
     //POST - NO PERMITIDO
-    app.post(API_BASE + "/socioeconomics-traker-using-unconventional-data/:id", (req, res) => {
+    app.post(API_BASE + "/socioeconomics-traker-using-unconventional-data/:country/:year/:day", (req, res) => {
         const id = req.params.id;
         let data = req.body;
         res.sendStatus(405, "Method Not Allowed");
