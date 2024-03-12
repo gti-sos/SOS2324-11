@@ -374,7 +374,7 @@ module.exports = (app, db) => {
         if (!hasSearchParameters) {
             db.count({}, (err, count) => {
                 if (err) {
-                    res.sendStatus(500);
+                    res.sendStatus(500, "Internal Error");
                 } else {
                     if (count === 0) {
                         console.error("If there is no data, we return an empty list.");
@@ -444,24 +444,24 @@ module.exports = (app, db) => {
 
    //GET - ACCEDER A UN DATO CONCRETO
    app.get(API_BASE + "/structural-payment-data/:ms_name/:fund", (req, res) => {
-    let pais = req.params.ms_name;
+    let ms_name = req.params.ms_name;
     let fund = req.params.fund;
 
-    db.find({ ms_name: pais, fund:fund }, (err, countryData) => {
+    db.find({ ms_name: ms_name, fund:fund }, (err, data) => {
         if (err) {
             console.error("Database error:", err);
-            res.status(500).send("Internal Server Error");
+            res.sendStatus(500, "Internal Error");
             return;
         }
-        if (countryData.length > 0) {
-            const formattedData = countryData.map((c) => {
+        if (data.length > 0) {
+            const formattedData = data.map((c) => {
                 const { _id, ...formatted } = c;
                 return formatted;
             });
             res.status(200).json(formattedData); // Devolver los datos encontrados
         } else {
             console.error("Datos no existentes");
-            res.status(404).send("Not Found");
+            res.sendStatus(404, "Not found");
         }
     });
 });
@@ -571,31 +571,31 @@ module.exports = (app, db) => {
     });
 
     //POST - NO PERMITIDO
-    app.post(API_BASE + "/structural-payment-data/:country", (req, res) => {
-        const pais = req.params.ms_name;
+    app.post(API_BASE + "/structural-payment-data/:ms_name", (req, res) => {
+        const ms_name = req.params.ms_name;
         let data = req.body;
         res.sendStatus(405, "Method Not Allowed");
     });
 
     //PUT - ACTUALIZAR UN DATO CONCRETO
     app.put(API_BASE + "/structural-payment-data/:ms_name/:fund", (req, res) => { 
-        const fund = req.params.fund; // El atributo cci es un atributo único por dato.
-        const ms_name = req.params.ms_name; // Obtener ms_name de los parámetros de la ruta
+        const fund = req.params.fund;
+        const ms_name = req.params.ms_name;
         let data = req.body;
     
         if (!data || Object.keys(data).length === 0 || data.fund !== fund || data.ms_name !== ms_name) {
             console.error("Invalid data");
-            res.status(400).send("Bad Request"); 
+            res.sendStatus(400, "Bad Request"); 
             return;
         }
     
         db.update({ ms_name: ms_name, fund: fund }, data, {}, (err) => {
             if (err) {
                 console.error("Database error:", err);
-                res.status(500).send("Internal Server Error"); 
+                res.sendStatus(500, "Internal Error"); 
             } else {
                 console.log("Correct update");
-                res.status(200).send("Ok"); 
+                res.sendStatus(200, "Ok"); 
             }
         });
     });
@@ -609,7 +609,7 @@ module.exports = (app, db) => {
                 res.sendStatus(500, "Internal Error");
             }else{
                 if(numRemoved>=1){
-                    res.sendStatus("200", "OK");
+                    res.sendStatus("200", "Ok");
                 }else{
                     res.sendStatus("404", "Not found");
                 }
