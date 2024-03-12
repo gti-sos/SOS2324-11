@@ -534,7 +534,7 @@ module.exports = (app,db) => {
                 res.sendStatus(500); 
             } else {
                 if (numRemoved === 0) {
-                    res.sendStatus(404); 
+                    res.sendStatus(204); 
                 } else {
                     res.sendStatus(200); 
                 }
