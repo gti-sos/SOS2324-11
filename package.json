@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node index",
     "test-structural-investment": "npx newman run ./tests/structural-investment-API.json -e ./tests/environments/local.json",
-    "test-structural-payment-data": "npx newman run ./tests/structural-payment-data.json -e ./tests/environments/local.json"
+    "test-structural-payment-data": "npx newman run ./tests/structural-payment-data.json -e ./tests/environments/local.json",
+    "test-socioeconomics-tracker-using-unconventional-data": "npx newman run ./tests/socioeconomics-tracker-using-unconventional-data-API.json -e ./tests/environments/local.json"
   },
   "author": "sharay",
   "license": "GPL-3.0",
