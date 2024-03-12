@@ -525,12 +525,17 @@ module.exports = (app, db) => {
         }
     });
     
-
-    // GET --- OK  Specific statistics
-    app.get(API_BASE + "/structural-investment-data/:cci", (req, res) => {
-        const cci = req.params.cci;
+    //GET -- OK  Search by single field or by country name with range
+    app.get(API_BASE + "/structural-investment-data/:identifier", (req, res) => {
+        const identifier = req.params.identifier;
+        let fromDate = req.query.from;
+        let toDate = req.query.to;
     
-        db.findOne({ cci: cci }, (err, countryData) => {
+        let query = {};
+    
+        // Intenta buscar por cci primero
+        query.cci = identifier;
+        db.findOne(query, (err, countryData) => {
             if (err) {
                 console.error("Database error:", err);
                 res.status(500).send("Internal Server Error");
@@ -539,11 +544,33 @@ module.exports = (app, db) => {
     
             if (countryData) {
                 const { _id, ...data } = countryData;
-                res.status(200).json(data); 
-            } else {
-                console.error("No data found for cci:", cci);
-                res.sendStatus(404, "Not found");
+                res.status(200).json(data);
+                return;
             }
+    
+            // Si no se encontró por cci, intenta buscar por ms_name
+            query = { ms_name: identifier };
+            if (fromDate && toDate) {
+                query.year = { $gte: parseInt(fromDate), $lte: parseInt(toDate) };
+            }
+    
+            db.find(query, (err, countryData) => {
+                if (err) {
+                    console.error("Database error:", err);
+                    res.sendStatus(500);
+                    return;
+                }
+                if (countryData.length > 0) {
+                    const formattedData = countryData.map((c) => {
+                        const { _id, ...formatted } = c;
+                        return formatted;
+                    });
+                    res.status(200).json(formattedData);
+                } else {
+                    console.error("Non existing data");
+                    res.sendStatus(404, "Not Found");
+                }
+            });
         });
     });
     
