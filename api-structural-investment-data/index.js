@@ -3,27 +3,27 @@ const API_BASE = "/api/v1";
 const data_SPJ = [ 
 
     {
-        "ms" : "IT", 
-        "ms_name" : "Italy", 
-        "cci" : "2014IT16RFOP017", 
-        "title" : "Toscana - ERDF", 
-        "fund" : "ERDF", 
-        "category_of_region" : "More developed", 
-        "year" : 2023, 
-        "net_planned_eu_amount" : 389513945, 
-        "cumulative_initial_pre_financing" : 11173608.57, 
-        "cumulative_additional_initial_pre_financing" : 0, 
-        "recovery_of_initial_pre_financing" : 0, 
-        "cumulative_annual_pre_financing" : 72720941.21, 
-        "pre_financing_covered_by_expenditure" : 26381261.74, 
-        "recovery_of_annual_pre_financing" : 34963288.36, 
+        "ms": "IT",
+        "ms_name": "Italy",
+        "cci": "2014IT16RFOP017",
+        "title": "Toscana - ERDF",
+        "fund": "ERDF",
+        "category_of_region": "More developed",
+        "year": 2023,
+        "net_planned_eu_amount": 389513945,
+        "cumulative_initial_pre_financing": 11173608.57,
+        "cumulative_additional_initial_pre_financing": 0,
+        "recovery_of_initial_pre_financing": 0,
+        "cumulative_annual_pre_financing": 72720941.21,
+        "pre_financing_covered_by_expenditure": 26381261.74,
+        "recovery_of_annual_pre_financing": 34963288.36,
         "net_pre_financing": 22549999.68,
-        "cumulative_interim_payments" : 340582683.58, 
-        "recovery_of_expenses" : 0,
-        "net_interim_payments" : 366963945.32, 
-        "total_net_payments" : 389513945, 
-        "eu_payment_rate" : 100, 
-        "eu_payment_rate_on_planned_eu_amount" : 100
+        "cumulative_interim_payments": 340582683.58,
+        "recovery_of_expenses": 0,
+        "net_interim_payments": 366963945.32,
+        "total_net_payments": 389513945,
+        "eu_payment_rate": 100,
+        "eu_payment_rate_on_planned_eu_amount": 100
     },
     {
         "ms": "ES",
@@ -68,8 +68,8 @@ const data_SPJ = [
         "recovery_of_expenses": 1644419.15,
         "net_interim_payments": 310523686.63,
         "total_net_payments": 331992550.44,
-        "eu_payment_rate": 96.5779608174188,
-        "eu_payment_rate_on_planned_eu_amount": 96.5779608174188
+        "eu_payment_rate": 965779608174188,
+        "eu_payment_rate_on_planned_eu_amount": 965779608174188
     },
     {
         "ms": "MT",
@@ -85,14 +85,14 @@ const data_SPJ = [
         "recovery_of_initial_pre_financing": 0,
         "cumulative_annual_pre_financing": 446491.4,
         "pre_financing_covered_by_expenditure": 0,
-        "recovery_of_annual_pre_financing": 223245.7,
-        "net_pre_financing": 223245.7,
-        "cumulative_interim_payments": 5455250.64,
+        "recovery_of_annual_pre_financing": 433912.6,
+        "net_pre_financing": 433912.6,
+        "cumulative_interim_payments": 3510747.4,
         "recovery_of_expenses": 0,
-        "net_interim_payments": 5455250.64,
+        "net_interim_payments": 3510747.4,
         "total_net_payments": 5678496.34,
-        "eu_payment_rate": 50.8721676610121,
-        "eu_payment_rate_on_planned_eu_amount": 50.8721676610121
+        "eu_payment_rate": 508721676610121,
+        "eu_payment_rate_on_planned_eu_amount": 508721676610121
     },
     {
         "ms": "PT",
@@ -114,7 +114,8 @@ const data_SPJ = [
         "recovery_of_expenses": 671081.82,
         "net_interim_payments": 55274980.68,
         "total_net_payments": 56828918.18,
-        "eu_payment_rate": 98.8329011826087
+        "eu_payment_rate": 988329011826087,
+        "eu_payment_rate_on_planned_eu_amount": 988329011826087
     },
     {
         "ms": "DE",
@@ -182,8 +183,8 @@ const data_SPJ = [
         "recovery_of_expenses": 56329.33,
         "net_interim_payments": 251506375.57,
         "total_net_payments": 267451257.25,
-        "eu_payment_rate": 91.3764580344494,
-        "eu_payment_rate_on_planned_eu_amount": 91.3764580344494
+        "eu_payment_rate": 913764580344494,
+        "eu_payment_rate_on_planned_eu_amount": 913764580344494
     },
     {
         "ms": "ES",
@@ -205,14 +206,14 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 47205908.67,
         "total_net_payments": 50235990.49,
-        "eu_payment_rate": 95.3889390735601,
-        "eu_payment_rate_on_planned_eu_amount": 95.3889390735601
-    } ,
+        "eu_payment_rate": "953.889.390.735.601",
+        "eu_payment_rate_on_planned_eu_amount": "953.889.390.735.601"
+    },
     {
         "ms": "ES",
         "ms_name": "Spain",
         "cci": "2014ES16RFOP019",
-        "title": "Melilla  - ERDF",
+        "title": "Melilla - ERDF",
         "fund": "ERDF",
         "category_of_region": "REACT-EU",
         "year": 2023,
@@ -228,7 +229,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 1549962.02,
         "total_net_payments": 2187609.29,
-        "eu_payment_rate": 53.7315802607773
+        "eu_payment_rate": "537.315.802.607.773",
+        "eu_payment_rate_on_planned_eu_amount": "537.315.802.607.773"
     },
     {
         "ms": "DE",
@@ -250,7 +252,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 574695083.58,
         "total_net_payments": 662338069.73,
-        "eu_payment_rate": 56.8492511275523  
+        "eu_payment_rate": "568.492.511.275.523",
+        "eu_payment_rate_on_planned_eu_amount": "568.492.511.275.523"
     },
     {
         "ms": "ES",
@@ -272,31 +275,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 63042487.49,
         "total_net_payments": 103214770.13,
-        "eu_payment_rate": 8.99256083335672,
-        "eu_payment_rate_on_planned_eu_amount": 8.99256083335672
-    },
-    {
-        "ms": "DE",
-        "ms_name": "Germany",
-        "cci": "2014DE05SFOP007",
-        "title": "Hamburg - ESF",
-        "fund": "ESF",
-        "category_of_region": "More developed",
-        "year": 2016,
-        "net_planned_eu_amount": 78176271,
-        "cumulative_initial_pre_financing": 2204570.88,
-        "cumulative_additional_initial_pre_financing": 0,
-        "recovery_of_initial_pre_financing": 0,
-        "cumulative_annual_pre_financing": 1469713.92,
-        "pre_financing_covered_by_expenditure": 0,
-        "recovery_of_annual_pre_financing": 0,
-        "net_pre_financing": 3674284.8,
-        "cumulative_interim_payments": 0,
-        "recovery_of_expenses": 0,
-        "net_interim_payments": 0,
-        "total_net_payments": 3674284.8,
-        "eu_payment_rate": 4.70000008058711,
-        "eu_payment_rate_on_planned_eu_amount": 4.70000008058711
+        "eu_payment_rate": "899.256.083.335.672",
+        "eu_payment_rate_on_planned_eu_amount": "899.256.083.335.672"
     },
     {
         "ms": "PT",
@@ -318,13 +298,14 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 14579298.68,
         "total_net_payments": 17929116.67,
-        "eu_payment_rate": 30.8156709617945
+        "eu_payment_rate": "308.156.709.617.945",
+        "eu_payment_rate_on_planned_eu_amount": "308.156.709.617.945"
     },
     {
         "ms": "IT",
         "ms_name": "Italy",
         "cci": "2014IT05SFOP018",
-        "title": "Trento  - ESF",
+        "title": "Trento - ESF",
         "fund": "ESF",
         "category_of_region": "More developed",
         "year": 2022,
@@ -340,7 +321,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 48741524.48,
         "total_net_payments": 51907760.54,
-        "eu_payment_rate": 82.1082676880442
+        "eu_payment_rate": "821.082.676.880.442",
+        "eu_payment_rate_on_planned_eu_amount": "821.082.676.880.442"
     },
     {
         "ms": "ES",
@@ -362,10 +344,13 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 67389034.31,
         "total_net_payments": 82971904.25,
-        "eu_payment_rate": 30.2401574118419
+        "eu_payment_rate": "302.401.574.118.419",
+        "eu_payment_rate_on_planned_eu_amount": "302.401.574.118.419"
     }
-    
 ]
+
+
+
 
 module.exports = (app, db) => {
 
@@ -453,9 +438,7 @@ module.exports = (app, db) => {
 
 
 
-
     //GET --- OK
-    /*
     // Data search by specific parameters or without them and paging and front/to
     app.get(API_BASE + "/structural-investment-data", (req, res) => {
         const queryParameters = req.query;
@@ -522,138 +505,32 @@ module.exports = (app, db) => {
                 if (err) {
                     console.error("Database error:", err);
                     res.sendStatus(500);
-                }
-                if (data.length > 0) {
-                    const formattedData = data.map((d) => {
-                        const { _id, ...formatted } = d;
-                        return formatted;
-                    });
-                    res.status(200).json(formattedData);
                 } else {
-                    console.error("Non existing data");
-                    res.sendStatus(404, "Not Found");
-                }
-            });
-        }
-    });
-    */
-    app.get(API_BASE + "/structural-investment-data", (req, res) => {
-        const queryParameters = req.query;
-        const limit = parseInt(queryParameters.limit) || 10;
-        const offset = parseInt(queryParameters.offset) || 0;
-        let from = req.query.from;
-        let to = req.query.to;
-    
-        // Check for 'from' and 'to' parameters
-        if (from !== undefined && to !== undefined) {
-            const fromYear = parseInt(from);
-            const toYear = parseInt(to);
-            console.log(fromYear, toYear);
-            if (isNaN(fromYear) || isNaN(toYear)) {
-                return res.status(400).send("Invalid year format. Please provide valid year values.");
-            }
-            // If the years are valid, build the query to filter by the year range
-            queryParameters.year = { $gte: fromYear, $lte: toYear };
-        }
-    
-        let query = {};
-        // Build the query based on the provided parameters
-        Object.keys(queryParameters).forEach(key => {
-            if (key !== 'limit' && key !== 'offset' && key !== 'from' && key !== 'to') {
-                const value = !isNaN(queryParameters[key]) ? parseFloat(queryParameters[key]) : queryParameters[key];
-                if (typeof value === 'string') {
-                    query[key] = new RegExp(value, 'i');
-                } else {
-                    query[key] = value;
-                }
-            }
-        });
-    
-        // Check if search parameters were provided
-        const hasSearchParameters = Object.keys(queryParameters).some(key => key !== 'limit' && key !== 'offset' && key !== 'from' && key !== 'to');
-    
-        if (!hasSearchParameters) {
-            db.count({}, (err, count) => {
-                if (err) {
-                    res.sendStatus(500);
-                } else {
-                    if (count === 0) {
-                        console.error("If there is no data, we return an empty list.");
-                        res.status(200).json([]);
+                    // Check if only one document was found
+                    if (data.length === 1) {
+                        // If only one document, send it as an object
+                        const { _id, ...formatted } = data[0];
+                        res.status(200).json(formatted);
                     } else {
-                        db.find({}).skip(offset).limit(limit).exec((err, data) => {
-                            if (err) {
-                                console.error("Error when inserting data:", err);
-                                res.sendStatus(500);
-                            } else {
-                                const resultsWithoutId = data.map(d => {
-                                    const { _id, ...datWithoutId } = d;
-                                    return datWithoutId;
-                                });
-                                console.log("Sending the data");
-                                res.status(200).json(resultsWithoutId);
-                            }
+                        // If multiple documents, send them as an array
+                        const formattedData = data.map((d) => {
+                            const { _id, ...formatted } = d;
+                            return formatted;
                         });
+                        console.log("Sending the data");
+                        res.status(200).json(formattedData);
                     }
                 }
             });
-        } else {
-            db.find(query).skip(offset).limit(limit).exec((err, data) => {
-                if (err) {
-                    console.error("Database error:", err);
-                    res.sendStatus(500);
-                } else {
-                    const formattedData = data.map((d) => {
-                        const { _id, ...formatted } = d;
-                        return formatted;
-                    });
-                    console.log("Sending the data");
-                    res.status(200).json(formattedData);
-                }
-            });
         }
     });
     
-    
 
-    //GET - OK front and to with country
-    app.get(API_BASE + "/structural-investment-data/:ms_name", (req, res) => {
-
-        let pais = req.params.ms_name;
-        let fromDate = req.query.from;
-        let toDate = req.query.to;
-
-       // Create a query object to filter by date range if present
-        let query = { ms_name: pais };
-        if (fromDate && toDate) {
-            query.year = { $gte: parseInt(fromDate), $lte: parseInt(toDate) };
-        }
-
-        db.find(query, (err, countryData) => {
-            if (err) {
-                console.error("Database error:", err);
-                res.sendStatus(500);
-            }
-            if (countryData.length > 0) {
-                const formattedData = countryData.map((c) => {
-                    const { _id, ...formatted } = c;
-                    return formatted;
-                });
-                res.status(200).json(formattedData); 
-            } else {
-                console.error("Non existing data");
-                res.sendStatus(404, "Not Found");
-            }
-        });
-    });
-
-    
     // GET --- OK  Specific statistics
-    app.get(API_BASE + "/structural-investment-data/:ms/:year", (req, res) => { //cci creo un objeto !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        const ms = req.params.ms;
-        const year = parseInt(req.params.year); 
+    app.get(API_BASE + "/structural-investment-data/:cci", (req, res) => {
+        const cci = req.params.cci;
     
-        db.findOne({ ms: ms, year: year }, (err, countryData) => {
+        db.findOne({ cci: cci }, (err, countryData) => {
             if (err) {
                 console.error("Database error:", err);
                 res.status(500).send("Internal Server Error");
@@ -661,17 +538,15 @@ module.exports = (app, db) => {
             }
     
             if (countryData) {
-                
                 const { _id, ...data } = countryData;
-                res.status(200).send(data); 
+                res.status(200).json(data); 
             } else {
-                console.error("No data found for ms:", ms, "and year:", year);
+                console.error("No data found for cci:", cci);
                 res.sendStatus(404, "Not found");
             }
         });
     });
-   
-
+    
 
 
     //PUT --- NOK
@@ -701,30 +576,7 @@ module.exports = (app, db) => {
         }
     });
     
-    /*
-    // PUT --- OK statistics
-    app.put(API_BASE + "/structural-investment-data/:cci/:ms_name", (req, res) => { 
-
-        const cci = req.params.cci; 
-        const ms_name = req.params.ms_name; 
-        let data = req.body;
-    
-        if (!data || Object.keys(data).length === 0 || data.cci !== cci || data.ms_name !== ms_name) {
-            console.error("Invalid data");
-            res.status(400).send("Bad Request"); 
-        }
-    
-        db.update({ cci: cci, ms_name: ms_name }, data, {}, (err) => {
-            if (err) {
-                console.error("Database error:", err);
-                res.status(500).send("Internal Server Error"); 
-            } else {
-                console.log("Correct update");
-                res.status(200).send("Ok"); 
-            }
-        });
-    });
-    */
+  
     
 
     //DELETE --- OK
