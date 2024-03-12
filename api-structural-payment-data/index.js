@@ -343,7 +343,7 @@ module.exports = (app, db) => {
         let from = req.query.from;
         let to = req.query.to;
     
-        // Verifica si hay parámetros 'from' y 'to'
+        // Check for 'from' and 'to' parameters
         if (from !== undefined && to !== undefined) {
             const fromYear = parseInt(from);
             const toYear = parseInt(to);
@@ -351,12 +351,12 @@ module.exports = (app, db) => {
             if (isNaN(fromYear) || isNaN(toYear)) {
                 return res.status(400).send("Invalid year format. Please provide valid year values.");
             }
-            // Si los años son válidos, construye la consulta para filtrar por el rango de años
+            // If the years are valid, build the query to filter by the year range
             queryParameters.year = { $gte: fromYear, $lte: toYear };
         }
     
         let query = {};
-        // Construir la consulta basada en los parámetros proporcionados
+        // Build the query based on the provided parameters
         Object.keys(queryParameters).forEach(key => {
             if (key !== 'limit' && key !== 'offset' && key !== 'from' && key !== 'to') {
                 const value = !isNaN(queryParameters[key]) ? parseFloat(queryParameters[key]) : queryParameters[key];
@@ -368,7 +368,7 @@ module.exports = (app, db) => {
             }
         });
     
-        // Verificar si se proporcionaron parámetros de búsqueda
+        // Check if search parameters were provided
         const hasSearchParameters = Object.keys(queryParameters).some(key => key !== 'limit' && key !== 'offset' && key !== 'from' && key !== 'to');
     
         if (!hasSearchParameters) {
@@ -400,22 +400,26 @@ module.exports = (app, db) => {
             db.find(query).skip(offset).limit(limit).exec((err, data) => {
                 if (err) {
                     console.error("Database error:", err);
-                    res.status(500).send("Internal Server Error");
-                    return;
-                }
-                if (data.length > 0) {
-                    const formattedData = data.map((d) => {
-                        const { _id, ...formatted } = d;
-                        return formatted;
-                    });
-                    res.status(200).json(formattedData);
+                    res.sendStatus(500);
                 } else {
-                    console.error("Datos no existentes");
-                    res.status(404).send("Not Found");
+                    // Check if only one document was found
+                    if (data.length === 1) {
+                        // If only one document, send it as an object
+                        const { _id, ...formatted } = data[0];
+                        res.status(200).json(formatted);
+                    } else {
+                        // If multiple documents, send them as an array
+                        const formattedData = data.map((d) => {
+                            const { _id, ...formatted } = d;
+                            return formatted;
+                        });
+                        console.log("Sending the data");
+                        res.status(200).json(formattedData);
+                    }
                 }
             });
-        }
-    });
+        }
+    });
 
     //INTRODUCIR DATOS
     app.get(API_BASE + "/structural-payment-data/loadInitialData", (req, res) => {
@@ -574,7 +578,6 @@ module.exports = (app, db) => {
     });
 
     //PUT - ACTUALIZAR UN DATO CONCRETO
-    // PUT --- OK statistics
     app.put(API_BASE + "/structural-payment-data/:ms_name/:fund", (req, res) => { 
         const fund = req.params.fund; // El atributo cci es un atributo único por dato.
         const ms_name = req.params.ms_name; // Obtener ms_name de los parámetros de la ruta
