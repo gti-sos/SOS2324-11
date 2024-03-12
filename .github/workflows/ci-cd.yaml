@@ -7,7 +7,7 @@ jobs:
       - uses: actions/checkout@v2
       - run : npm install
       - run : npm start &
-      - run : npm tests
+      - run : npm test
 
   deploy:
     needs: [test]   

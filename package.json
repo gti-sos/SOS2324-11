@@ -7,7 +7,8 @@
     "start": "node index",
     "test-structural-investment": "npx newman run ./tests/structural-investment-API.json -e ./tests/environments/local.json",
     "test-structural-payment-data": "npx newman run ./tests/structural-payment-data.json -e ./tests/environments/local.json",
-    "test-socioeconomics-tracker-using-unconventional-data": "npx newman run ./tests/socioeconomics-tracker-using-unconventional-data-API.json -e ./tests/environments/local.json"
+    "test-socioeconomics-tracker-using-unconventional-data": "npx newman run ./tests/socioeconomics-tracker-using-unconventional-data-API.json -e ./tests/environments/local.json",
+    "test": "npm run test-structural-investment && npm run test-structural-payment-data && npm run test-socioeconomics-tracker-using-unconventional-data"
   },
   "author": "sharay",
   "license": "GPL-3.0",
@@ -19,3 +20,7 @@
     "newman": "^6.1.1"
   }
 }
+"test": "(npx newman run ./tests/Football_API.json -e ./tests/environments/gcloud.json) && (npx newman run ./tests/Rugby_API.json -e ./tests/environments/gcloud.json) && (npx newman run ./tests/Volleyball_API.json -e ./tests/environments/gcloud.json)",
+    "test-stats-football": "npx newman run ./tests/Football_API.json -e ./tests/environments/gcloud.json",
+    "test-stats-rugby": "npx newman run ./tests/Rugby_API.json -e ./tests/environments/gcloud.json",
+    "test-stats-volleyball": "npx newman run ./tests/Volleyball_API.json -e ./tests/environments/gcloud.json"
