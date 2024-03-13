@@ -454,11 +454,12 @@ module.exports = (app, db) => {
             return;
         }
         if (data.length > 0) {
-            const formattedData = data.map((c) => {
-                const { _id, ...formatted } = c;
-                return formatted;
-            });
-            res.status(200).json(formattedData); // Devolver los datos encontrados
+            // Tomamos el primer elemento del array de datos
+            const singleData = data[0];
+            // Formateamos el objeto para excluir el _id
+            const { _id, ...formatted } = singleData;
+            // Devolvemos el objeto formateado
+            res.status(200).json(formatted);
         } else {
             console.error("Datos no existentes");
             res.sendStatus(404, "Not found");
