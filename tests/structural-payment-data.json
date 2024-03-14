@@ -49,7 +49,13 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"pm.test(\"Response is an array of size 14\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
+							"    pm.expect(responseBody).to.have.length(14);\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -82,6 +88,11 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array of size 3\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
+							"    pm.expect(responseBody).to.have.length(3);\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -125,6 +136,10 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -168,7 +183,17 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
-							"});"
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
+							"});\r",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -207,6 +232,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -246,6 +280,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -285,6 +328,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -324,6 +376,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -363,6 +424,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -402,6 +472,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -441,6 +520,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -480,6 +568,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -519,6 +616,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -558,6 +664,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -597,6 +712,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -636,6 +760,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -675,6 +808,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -714,6 +856,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -753,6 +904,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -792,6 +952,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -831,6 +1000,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -870,6 +1048,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -909,6 +1096,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -948,6 +1144,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -987,6 +1192,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -1022,6 +1236,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
 							"});"
 						],
 						"type": "text/javascript",
