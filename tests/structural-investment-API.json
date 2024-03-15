@@ -57,9 +57,17 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"",
+							"pm.test(\"Response is an empty array\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    pm.expect(responseBody.length).to.equal(0);",
+							"});",
+							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -90,9 +98,11 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -124,9 +134,25 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"",
+							"pm.test(\"Response is an array of 15 objects with 21 attributes each\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    pm.expect(responseBody.length).to.equal(15);",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -203,7 +229,7 @@
 			"response": []
 		},
 		{
-			"name": "comprobar el post",
+			"name": "filtra por ms",
 			"event": [
 				{
 					"listen": "test",
@@ -211,9 +237,33 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data with 'ms' property containing 'ES'\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('ms');",
+							"        pm.expect(item.ms).to.equal('ES');",
+							"    });",
+							"});",
+							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -233,7 +283,7 @@
 					}
 				},
 				"url": {
-					"raw": "{{SERVER}}/api/v1/structural-investment-data",
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?ms=ES",
 					"host": [
 						"{{SERVER}}"
 					],
@@ -241,6 +291,12 @@
 						"api",
 						"v1",
 						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "ms",
+							"value": "ES"
+						}
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -248,7 +304,7 @@
 			"response": []
 		},
 		{
-			"name": "acceder a dato específico",
+			"name": "filtra por ms_name",
 			"event": [
 				{
 					"listen": "test",
@@ -256,7 +312,107 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data with 'ms_name' property containing 'Italy'\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('ms_name');",
+							"        pm.expect(item.ms_name).to.equal('Italy');",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?ms_name=Italy",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "ms_name",
+							"value": "Italy"
+						}
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "acceder a dato específico ?cci",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data with 'cci' property containing '2014MT16M1OP001'\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('cci');",
+							"        pm.expect(item.cci).to.equal('2014MT16M1OP001');",
+							"    });",
+							"});",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -300,7 +456,7 @@
 			"response": []
 		},
 		{
-			"name": "acceder a dato específico Copy",
+			"name": "filtra por title",
 			"event": [
 				{
 					"listen": "test",
@@ -308,7 +464,583 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data with 'title' property containing 'Melilla - ERDF'\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('title');",
+							"        pm.expect(item.title).to.equal('Melilla - ERDF');",
+							"    });",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?title=Melilla - ERDF",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "title",
+							"value": "Melilla - ERDF"
+						}
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "filtra por fund",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data with 'fund' property containing 'EAFRD'\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('fund');",
+							"        pm.expect(item.fund).to.equal('EAFRD');",
+							"    });",
 							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?fund=EAFRD",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "fund",
+							"value": "EAFRD"
+						}
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "filtra por category_of_region",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"",
+							"pm.test(\"GET operation returns data with 'category_of_region' property containing 'Transition'\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('category_of_region');",
+							"        pm.expect(item.category_of_region).to.equal('Transition');",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?category_of_region=Transition",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "category_of_region",
+							"value": "Transition"
+						}
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "filtra por recovery_of_initial_pre_financing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data with 'recovery_of_initial_pre_financing' property containing '0'\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('recovery_of_initial_pre_financing');",
+							"        pm.expect(item.recovery_of_initial_pre_financing).to.equal(0);",
+							"    });",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?recovery_of_initial_pre_financing=0",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "recovery_of_initial_pre_financing",
+							"value": "0"
+						}
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "filtra por year y ms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data with 'year' and 'ms' properties\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('year');",
+							"        pm.expect(item.year).to.equal(2023);",
+							"        pm.expect(item).to.have.property('ms');",
+							"        pm.expect(item.ms).to.equal('ES');",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?year= 2023&ms=ES",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": " 2023"
+						},
+						{
+							"key": "ms",
+							"value": "ES"
+						}
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "filtra por year y fund",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data with 'year' and 'fund' EAFRD\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('year');",
+							"        pm.expect(item.year).to.equal(2023);",
+							"        pm.expect(item).to.have.property('fund');",
+							"        pm.expect(item.fund).to.equal('EAFRD');",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?year= 2023&fund=EAFRD",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": " 2023"
+						},
+						{
+							"key": "fund",
+							"value": "EAFRD"
+						}
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "filtra por ms, title y  yeu_payment_rate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an array of objects with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.be.an('object');",
+							"        pm.expect(Object.keys(item).length).to.equal(21);",
+							"    });",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data with 'ms', 'title', and 'eu_payment_rate' properties\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('ms');",
+							"        pm.expect(item.ms).to.equal('ES');",
+							"        pm.expect(item).to.have.property('title');",
+							"        pm.expect(item.title).to.equal('Extremadura - ESF');",
+							"        pm.expect(item).to.have.property('eu_payment_rate');",
+							"        pm.expect(item.eu_payment_rate).to.equal(302401574118419);",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?ms=ES&title=Extremadura - ESF&eu_payment_rate=302401574118419",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "ms",
+							"value": "ES"
+						},
+						{
+							"key": "title",
+							"value": "Extremadura - ESF"
+						},
+						{
+							"key": "eu_payment_rate",
+							"value": "302401574118419"
+						}
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "acceder a dato específico /cci",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response is an object with 21 attributes\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    if (!Array.isArray(responseBody) && typeof responseBody === 'object' && Object.keys(responseBody).length === 21) {",
+							"        pm.expect(responseBody).to.be.an('object');",
+							"    } else {",
+							"        pm.expect.fail(\"Response is not an object with 21 attributes\");",
+							"    }",
+							"});",
+							"",
+							"pm.test(\"GET operation returns data for specific structural investment\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"",
+							"    pm.expect(responseBody).to.be.an('object');",
+							"",
+							"    pm.expect(responseBody).to.have.property('cci');",
+							"    pm.expect(responseBody.cci).to.equal('2014DE16RFOP015');",
+							"});",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -355,9 +1087,14 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"",
+							"",
+							"",
+							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -383,51 +1120,6 @@
 						"v1",
 						"structural-investment-data",
 						"2014ES16RFOP005"
-					]
-				},
-				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
-			},
-			"response": []
-		},
-		{
-			"name": "comprobar el put",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{SERVER}}/api/v1/structural-investment-data",
-					"host": [
-						"{{SERVER}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"structural-investment-data"
 					]
 				},
 				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
@@ -487,9 +1179,17 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"GET operation returns expected data\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    pm.expect(responseBody.length).to.equal(5);",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -534,7 +1234,7 @@
 			"response": []
 		},
 		{
-			"name": "Acceder a todas las estadísticas de ES",
+			"name": "búsqueda de estadísticas de España en un periodo",
 			"event": [
 				{
 					"listen": "test",
@@ -542,46 +1242,30 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{SERVER}}/api/v1/structural-investment-data?ms=ES",
-					"host": [
-						"{{SERVER}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"structural-investment-data"
-					],
-					"query": [
-						{
-							"key": "ms",
-							"value": "ES"
-						}
-					]
-				},
-				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
-			},
-			"response": []
-		},
-		{
-			"name": "Búsqueda de estadísticas de España en un periodo",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
+							"});",
+							"",
+							"pm.test(\"GET operation returns expected data for Spain between 2014 and 2020\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"     // Verifica que todos los elementos del array contengan 'Spain' en la propiedad 'ms_name'",
+							"    responseBody.forEach(function(item) {",
+							"        pm.expect(item).to.have.property('ms_name');",
+							"        pm.expect(item.ms_name).to.equal('Spain');",
+							"    });",
+							"",
+							"     // Verifica que todos los elementos del array estén dentro del rango de años especificado",
+							"    responseBody.forEach(function(item) {",
+							"        var year = item.year; // Asume que cada objeto tiene una propiedad 'year'",
+							"        pm.expect(year).to.be.within(2014, 2020);",
+							"    });",
+							"",
+							"});",
+							"",
+							"",
+							"",
+							""
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -618,46 +1302,7 @@
 			"response": []
 		},
 		{
-			"name": "Acceder a todas las estadísticas de un año",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{SERVER}}/api/v1/structural-investment-data?year=2023",
-					"host": [
-						"{{SERVER}}"
-					],
-					"path": [
-						"api",
-						"v1",
-						"structural-investment-data"
-					],
-					"query": [
-						{
-							"key": "year",
-							"value": "2023"
-						}
-					]
-				},
-				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
-			},
-			"response": []
-		},
-		{
-			"name": "Realizar búsqueda de estadísticas de todos los datos en un periodo",
+			"name": "realizar búsqueda de estadísticas de todos los datos en un periodo",
 			"event": [
 				{
 					"listen": "test",
@@ -666,9 +1311,21 @@
 							"pm.test(\"Successful DELETE request\", function () {",
 							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
 							"});",
+							"",
+							"pm.test(\"GET operation returns expected data between 2014 and 2020\", function () {",
+							"",
+							"    var responseBody = pm.response.json();",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"",
+							"    responseBody.forEach(function(item) {",
+							"        var year = item.year; ",
+							"        pm.expect(year).to.be.within(2014, 2020);",
+							"    });",
+							"});",
 							""
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -890,6 +1547,15 @@
 						"exec": [
 							"pm.test(\"Status code is 200\", function () {",
 							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"",
+							"pm.test(\"Response is an empty array\", function () {",
+							"    var responseBody = pm.response.json();",
+							"    ",
+							"    pm.expect(responseBody).to.be.an('array');",
+							"    ",
+							"    pm.expect(responseBody.length).to.equal(0);",
 							"});"
 						],
 						"type": "text/javascript",
@@ -1105,6 +1771,109 @@
 					]
 				},
 				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "periodo error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data?from=2014&to=efe",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2014"
+						},
+						{
+							"key": "to",
+							"value": "efe"
+						}
+					]
+				},
+				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "recurso inexistente ms_name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v1/structural-investment-data/ns_name=sdfgnm",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"structural-investment-data",
+						"ns_name=sdfgnm"
+					]
+				},
+				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
 			},
 			"response": []
 		},

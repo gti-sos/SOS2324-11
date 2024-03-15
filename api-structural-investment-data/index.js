@@ -206,8 +206,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 47205908.67,
         "total_net_payments": 50235990.49,
-        "eu_payment_rate": "953.889.390.735.601",
-        "eu_payment_rate_on_planned_eu_amount": "953.889.390.735.601"
+        "eu_payment_rate": 95388939735601,
+        "eu_payment_rate_on_planned_eu_amount": 953889390735601
     },
     {
         "ms": "ES",
@@ -229,8 +229,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 1549962.02,
         "total_net_payments": 2187609.29,
-        "eu_payment_rate": "537.315.802.607.773",
-        "eu_payment_rate_on_planned_eu_amount": "537.315.802.607.773"
+        "eu_payment_rate": 537315802607773,
+        "eu_payment_rate_on_planned_eu_amount": 537315802607773
     },
     {
         "ms": "DE",
@@ -252,8 +252,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 574695083.58,
         "total_net_payments": 662338069.73,
-        "eu_payment_rate": "568.492.511.275.523",
-        "eu_payment_rate_on_planned_eu_amount": "568.492.511.275.523"
+        "eu_payment_rate": 568492511275523,
+        "eu_payment_rate_on_planned_eu_amount": 568492511275523
     },
     {
         "ms": "ES",
@@ -275,8 +275,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 63042487.49,
         "total_net_payments": 103214770.13,
-        "eu_payment_rate": "899.256.083.335.672",
-        "eu_payment_rate_on_planned_eu_amount": "899.256.083.335.672"
+        "eu_payment_rate": 899256083335672,
+        "eu_payment_rate_on_planned_eu_amount": 899256083335672
     },
     {
         "ms": "PT",
@@ -298,8 +298,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 14579298.68,
         "total_net_payments": 17929116.67,
-        "eu_payment_rate": "308.156.709.617.945",
-        "eu_payment_rate_on_planned_eu_amount": "308.156.709.617.945"
+        "eu_payment_rate": 308156709617945,
+        "eu_payment_rate_on_planned_eu_amount": 308156709617945
     },
     {
         "ms": "IT",
@@ -321,8 +321,8 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 48741524.48,
         "total_net_payments": 51907760.54,
-        "eu_payment_rate": "821.082.676.880.442",
-        "eu_payment_rate_on_planned_eu_amount": "821.082.676.880.442"
+        "eu_payment_rate": 821082676880442,
+        "eu_payment_rate_on_planned_eu_amount": 821082676880442
     },
     {
         "ms": "ES",
@@ -344,11 +344,10 @@ const data_SPJ = [
         "recovery_of_expenses": 0,
         "net_interim_payments": 67389034.31,
         "total_net_payments": 82971904.25,
-        "eu_payment_rate": "302.401.574.118.419",
-        "eu_payment_rate_on_planned_eu_amount": "302.401.574.118.419"
+        "eu_payment_rate": 302401574118419,
+        "eu_payment_rate_on_planned_eu_amount": 302401574118419
     }
 ]
-
 
 
 
@@ -370,20 +369,23 @@ module.exports = (app, db) => {
        
         db.count({}, (err, count) => { // Check if the collection is empty
             if (err) {
+                console.error("Database error:", err);
                 res.sendStatus(500, "Internal Error"); 
+                return; //If there is an internal error for the execution
             } else {
                 if (count === 0) { // Insert initial data only if the collection is empty
                     db.insert(data_SPJ, (err, docs) => {
                         if (err) {
                             console.error("Error when inserting data:", err);
                             res.sendStatus(500, "Internal Error"); 
+                            return;
                         } else {
                             console.log("Data inserted correctly");
                             res.sendStatus(200, "Ok"); 
                         }
                     });
                 } else {
-                    console.log("The database already has data");
+                    console.error("The database already has data");
                     res.sendStatus(400, "Bad Request"); 
                 }
             }
@@ -395,6 +397,7 @@ module.exports = (app, db) => {
     
     //POST --- OK 
     app.post(API_BASE + "/structural-investment-data", (req, res) => {
+        
         const newData = req.body;
         const expectedFields = ["ms", "ms_name", "cci", "title", "fund", "category_of_region", "year", "net_planned_eu_amount", "cumulative_initial_pre_financing", "cumulative_additional_initial_pre_financing", "recovery_of_initial_pre_financing", "cumulative_annual_pre_financing", "pre_financing_covered_by_expenditure", "recovery_of_annual_pre_financing", "net_pre_financing", "cumulative_interim_payments", "recovery_of_expenses", "net_interim_payments", "total_net_payments", "eu_payment_rate"];
         const receivedFields = Object.keys(newData);
@@ -402,25 +405,27 @@ module.exports = (app, db) => {
     
         if (!isValidData) {
             console.error("Invalid data");
-            res.status(400).send("Bad Request");
+            res.sendStatus(400, "Bad Request"); 
         } else {
             // Check if a document with the same cci already exists in the database
             db.findOne({ cci: newData.cci }, (err, existingData) => {
                 if (err) {
-                    res.status(500).send("Internal Error");
+                    console.error("Database error:", err);
+                    res.sendStatus(500, "Internal Error"); 
+                    return;
                 } else {
                     if (existingData) {
                         console.error("Existing data");
-                        res.status(409).send("Conflict");
+                        res.sendStatus(409, "Conflict"); 
                     } else {
-                        // If it does not exist, insert the new document
+                        // If it does not exist, insert the new data
                         db.insert(newData, (err, insertedData) => {
                             if (err) {
                                 console.error("Error when inserting data:", err);
-                                res.status(500).send("Internal Error");
+                                res.sendStatus(500, "Internal Error");
                             } else {
                                 console.log("The new data has been successfully created");
-                                res.status(201).send("Created");
+                                res.sendStatus(201, "Created");
                             }
                         });
                     }
@@ -431,7 +436,8 @@ module.exports = (app, db) => {
 
     // POST --- NOK
     app.post(API_BASE + "/structural-investment-data/:cci", (req, res) => {  //The cci attribute is a single attribute per data.
-        console.error("This method cannot be performed:");
+
+        console.error("This method cannot be performed");
         res.sendStatus(405, "Method Not Allowed"); 
     });
 
@@ -441,8 +447,9 @@ module.exports = (app, db) => {
     //GET --- OK
     // Data search by specific parameters or without them and paging and front/to
     app.get(API_BASE + "/structural-investment-data", (req, res) => {
+
         const queryParameters = req.query;
-        const limit = parseInt(queryParameters.limit) || 10;
+        const limit = parseInt(queryParameters.limit) || 20;
         const offset = parseInt(queryParameters.offset) || 0;
         let from = req.query.from;
         let to = req.query.to;
@@ -451,9 +458,9 @@ module.exports = (app, db) => {
         if (from !== undefined && to !== undefined) {
             const fromYear = parseInt(from);
             const toYear = parseInt(to);
-            console.log(fromYear, toYear);
             if (isNaN(fromYear) || isNaN(toYear)) {
-                return res.status(400).send("Invalid year format. Please provide valid year values.");
+                console.error("Invalid year format. Please provide valid year values.")
+                return  res.sendStatus(400, "Bad Request"); 
             }
             // If the years are valid, build the query to filter by the year range
             queryParameters.year = { $gte: fromYear, $lte: toYear };
@@ -478,7 +485,9 @@ module.exports = (app, db) => {
         if (!hasSearchParameters) {
             db.count({}, (err, count) => {
                 if (err) {
-                    res.sendStatus(500);
+                    console.error("Database error:", err);
+                    res.sendStatus(500, "Internal Error");
+                    return ;
                 } else {
                     if (count === 0) {
                         console.error("If there is no data, we return an empty list.");
@@ -487,9 +496,10 @@ module.exports = (app, db) => {
                         db.find({}).skip(offset).limit(limit).exec((err, data) => {
                             if (err) {
                                 console.error("Error when inserting data:", err);
-                                res.sendStatus(500);
+                                res.sendStatus(500, "Internal Error");
+                                return ;
                             } else {
-                                const resultsWithoutId = data.map(d => {
+                                const resultsWithoutId = data.map(d => { // Delete default generated id
                                     const { _id, ...datWithoutId } = d;
                                     return datWithoutId;
                                 });
@@ -504,22 +514,16 @@ module.exports = (app, db) => {
             db.find(query).skip(offset).limit(limit).exec((err, data) => {
                 if (err) {
                     console.error("Database error:", err);
-                    res.sendStatus(500);
+                    res.sendStatus(500, "Internal Error");
+                    return;
                 } else {
-                    // Check if only one document was found
-                    if (data.length === 1) {
-                        // If only one document, send it as an object
-                        const { _id, ...formatted } = data[0];
-                        res.status(200).json(formatted);
-                    } else {
-                        // If multiple documents, send them as an array
-                        const formattedData = data.map((d) => {
-                            const { _id, ...formatted } = d;
-                            return formatted;
-                        });
-                        console.log("Sending the data");
-                        res.status(200).json(formattedData);
-                    }
+                    // Always return an array, even if there's only one data
+                    const formattedData = data.map((d) => {
+                        const { _id, ...formatted } = d;
+                        return formatted;
+                    });
+                    console.log("Sending the data");
+                    res.status(200).json(formattedData);
                 }
             });
         }
@@ -533,22 +537,22 @@ module.exports = (app, db) => {
     
         let query = {};
     
-        // Intenta buscar por cci primero
+        // Try to search by cci first
         query.cci = identifier;
         db.findOne(query, (err, countryData) => {
             if (err) {
                 console.error("Database error:", err);
-                res.status(500).send("Internal Server Error");
+                res.sendStatus(500, "Internal Error");
                 return;
             }
     
             if (countryData) {
                 const { _id, ...data } = countryData;
                 res.status(200).json(data);
-                return;
+                return; // Detiene la ejecución aquí para evitar más consultas
             }
     
-            // Si no se encontró por cci, intenta buscar por ms_name
+            // If not found by cci, try searching by ms_name
             query = { ms_name: identifier };
             if (fromDate && toDate) {
                 query.year = { $gte: parseInt(fromDate), $lte: parseInt(toDate) };
@@ -557,7 +561,7 @@ module.exports = (app, db) => {
             db.find(query, (err, countryData) => {
                 if (err) {
                     console.error("Database error:", err);
-                    res.sendStatus(500);
+                    res.sendStatus(500, "Internal Error");
                     return;
                 }
                 if (countryData.length > 0) {
@@ -574,10 +578,13 @@ module.exports = (app, db) => {
         });
     });
     
+    
+    
 
 
     //PUT --- NOK
     app.put(API_BASE + "/structural-investment-data", (req, res) => {
+
         console.error("This method cannot be performed:");
         res.sendStatus(405, "Method Not Allowed"); 
     });
@@ -595,7 +602,9 @@ module.exports = (app, db) => {
         } else {
             db.update({ cci: cci }, data, { }, (err) => {
                 if (err) {
+                    console.error("Database error:", err);
                     res.sendStatus(500, "Internal Server Error"); 
+                    return;
                 }
                 console.log("Correct update");
                 res.sendStatus(200, "Ok"); 
@@ -611,7 +620,9 @@ module.exports = (app, db) => {
 
         db.remove({}, { multi: true }, (err, numRemoved) => { 
             if (err) {
+                console.error("Database error:", err);
                 res.sendStatus(500, "Internal Error"); 
+                return;
             } else {
                 if (numRemoved >= 1) {
                     console.log("All data has been successfully deleted");
@@ -627,11 +638,14 @@ module.exports = (app, db) => {
     
     // DELETE --- OK
     app.delete(API_BASE + "/structural-investment-data/:cci", (req, res) => {
+
         const cci = req.params.cci; //The cci attribute is a single attribute per data.
 
         db.remove({ cci: cci }, {multi: true }, (err, numRemoved) => {
             if (err) {
+                console.error("Database error:", err);
                 res.sendStatus(500, "Internal Server Error"); 
+                return;
             }
 
             if (numRemoved > 0) {
