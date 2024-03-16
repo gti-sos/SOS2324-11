@@ -337,8 +337,9 @@ module.exports = (app, db) => {
 
     //GET - PAGINACIÓN, BÚSQUEDAD POR CAMPOS Y PERIODO
     app.get(API_BASE + "/structural-payment-data", (req, res) => {
+
         const queryParameters = req.query;
-        const limit = parseInt(queryParameters.limit) || 14;
+        const limit = parseInt(queryParameters.limit) || 20;
         const offset = parseInt(queryParameters.offset) || 0;
         let from = req.query.from;
         let to = req.query.to;
@@ -347,9 +348,9 @@ module.exports = (app, db) => {
         if (from !== undefined && to !== undefined) {
             const fromYear = parseInt(from);
             const toYear = parseInt(to);
-            console.log(fromYear, toYear);
             if (isNaN(fromYear) || isNaN(toYear)) {
-                return res.status(400).send("Invalid year format. Please provide valid year values.");
+                console.error("Invalid year format. Please provide valid year values.")
+                return  res.sendStatus(400, "Bad Request"); 
             }
             // If the years are valid, build the query to filter by the year range
             queryParameters.year = { $gte: fromYear, $lte: toYear };
@@ -374,7 +375,9 @@ module.exports = (app, db) => {
         if (!hasSearchParameters) {
             db.count({}, (err, count) => {
                 if (err) {
+                    console.error("Database error:", err);
                     res.sendStatus(500, "Internal Error");
+                    return ;
                 } else {
                     if (count === 0) {
                         console.error("If there is no data, we return an empty list.");
@@ -383,9 +386,10 @@ module.exports = (app, db) => {
                         db.find({}).skip(offset).limit(limit).exec((err, data) => {
                             if (err) {
                                 console.error("Error when inserting data:", err);
-                                res.sendStatus(500);
+                                res.sendStatus(500, "Internal Error");
+                                return ;
                             } else {
-                                const resultsWithoutId = data.map(d => {
+                                const resultsWithoutId = data.map(d => { // Delete default generated id
                                     const { _id, ...datWithoutId } = d;
                                     return datWithoutId;
                                 });
@@ -400,22 +404,16 @@ module.exports = (app, db) => {
             db.find(query).skip(offset).limit(limit).exec((err, data) => {
                 if (err) {
                     console.error("Database error:", err);
-                    res.sendStatus(500);
+                    res.sendStatus(500, "Internal Error");
+                    return;
                 } else {
-                    // Check if only one document was found
-                    if (data.length === 1) {
-                        // If only one document, send it as an object
-                        const { _id, ...formatted } = data[0];
-                        res.status(200).json(formatted);
-                    } else {
-                        // If multiple documents, send them as an array
-                        const formattedData = data.map((d) => {
-                            const { _id, ...formatted } = d;
-                            return formatted;
-                        });
-                        console.log("Sending the data");
-                        res.status(200).json(formattedData);
-                    }
+                    // Always return an array, even if there's only one data
+                    const formattedData = data.map((d) => {
+                        const { _id, ...formatted } = d;
+                        return formatted;
+                    });
+                    console.log("Sending the data");
+                    res.status(200).json(formattedData);
                 }
             });
         }
