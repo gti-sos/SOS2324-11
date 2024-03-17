@@ -19,7 +19,7 @@ API_SPJ(app, db_SPJ);
 API_ITR(app, db_ITR);
 API_AMD(app, db_AMD);
 
-
+// Listening on port X
 app.listen(PORT, () =>
 {
     console.log(`Server listening on port PORT ${PORT} `  ); 
