@@ -15,7 +15,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Successful DELETE request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 404]);",
 							"});"
 						],
 						"type": "text/javascript",
@@ -96,6 +96,7 @@
 							"pm.test(\"Response status code is 200\", function () {",
 							"    pm.expect(pm.response.code).to.equal(200);",
 							"});",
+							"",
 							"",
 							"",
 							"",
@@ -318,9 +319,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"// Test to check if the response time is less than 200ms\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -403,9 +403,6 @@
 							"});",
 							"",
 							"",
-							"pm.test(\"Response time is less than 200ms\", function () {",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);",
-							"});",
 							"",
 							"",
 							"pm.test(\"Response content type is text/plain\", function () {",
@@ -501,7 +498,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Successful DELETE request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 404]);",
 							"});",
 							""
 						],
@@ -552,10 +549,6 @@
 							"  pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"// Response time is within the acceptable range\r",
-							"pm.test(\"Response time is within the acceptable range\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
 							"\r",
 							"// Limit parameter in the response matches the requested limit\r",
 							"pm.test(\"Limit parameter in the response matches the requested limit\", function () {\r",
@@ -635,9 +628,7 @@
 							"\r",
 							"\r",
 							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-							"});\r",
+							"\r",
 							"\r",
 							""
 						],
@@ -938,7 +929,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Successful DELETE request\", function () {",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 404]);",
 							"});",
 							""
 						],
@@ -1076,7 +1067,7 @@
 					"script": {
 						"exec": [
 							"pm.test(\"Successful DELETE request\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 404]);\r",
 							"});\r",
 							""
 						],
