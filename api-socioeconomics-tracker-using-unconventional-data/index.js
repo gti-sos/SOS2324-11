@@ -518,7 +518,7 @@ module.exports = (app,db) => {
                 if (numRemoved >= 1) {
                     res.sendStatus(200, "Ok"); 
                 } else {
-                    res.sendStatus(204, "No content"); 
+                    res.sendStatus(404, "Not found"); 
                 }
             }
         });
@@ -534,7 +534,7 @@ module.exports = (app,db) => {
                 res.sendStatus(500); 
             } else {
                 if (numRemoved === 0) {
-                    res.sendStatus(204); 
+                    res.sendStatus(404); 
                 } else {
                     res.sendStatus(200); 
                 }
