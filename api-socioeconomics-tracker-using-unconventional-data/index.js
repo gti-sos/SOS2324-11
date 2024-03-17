@@ -512,7 +512,7 @@ module.exports = (app,db) => {
 
         db.remove({}, { multi: true }, (err, numRemoved) => { 
             if (err) {
-                res.sendStatus(500, "Internal Error"); 
+                res.sendStatus(500, "Internal Error "); 
                 return;
             } else {
                 if (numRemoved >= 1) {
