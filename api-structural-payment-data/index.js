@@ -324,18 +324,19 @@ const data = [
     }
 ]
 
+
 const API_BASE = "/api/v1";
 
 module.exports = (app, db) => {
 
-    //DOCUMENTACIÓN EN POSTMAN
+    //DOCUMENTATION IN POSTMAN
     app.get(API_BASE + "/structural-payment-data/docs", (req, res) => {
         console.log(`REDIRECT TO structural-payment-data/docs`);
         res.status(301).redirect("https://documenter.getpostman.com/view/32944023/2sA2xh1XiK")
     
     });
 
-    //GET - PAGINACIÓN, BÚSQUEDAD POR CAMPOS Y PERIODO
+    //GET - PAGINATION, SEARCH BY FIELDS AND PERIOD
     app.get(API_BASE + "/structural-payment-data", (req, res) => {
 
         const queryParameters = req.query;
@@ -419,7 +420,7 @@ module.exports = (app, db) => {
         }
     });
 
-    //INTRODUCIR DATOS
+    //INTRODUCE DATA
     app.get(API_BASE + "/structural-payment-data/loadInitialData", (req, res) => {
         db.count({}, (err, count) => {
             if (err) {
@@ -440,7 +441,7 @@ module.exports = (app, db) => {
         });
     });
 
-   //GET - ACCEDER A UN DATO CONCRETO
+   //GET - ACCESS SPECIFIC DATA
    app.get(API_BASE + "/structural-payment-data/:ms_name/:fund", (req, res) => {
     let ms_name = req.params.ms_name;
     let fund = req.params.fund;
@@ -452,11 +453,8 @@ module.exports = (app, db) => {
             return;
         }
         if (data.length > 0) {
-            // Tomamos el primer elemento del array de datos
             const singleData = data[0];
-            // Formateamos el objeto para excluir el _id
             const { _id, ...formatted } = singleData;
-            // Devolvemos el objeto formateado
             res.status(200).json(formatted);
         } else {
             console.error("Datos no existentes");
@@ -465,7 +463,7 @@ module.exports = (app, db) => {
     });
 });
 
-    //GET - DATOS DE UN PAIS EN UN PERIODO DE TIEMPO
+    //GET - DATA OF A COUNTRY IN A PERIOD OF TIME
     app.get(API_BASE + "/structural-payment-data/:ms_name", (req, res) => {
 
         let pais = req.params.ms_name;
@@ -495,7 +493,7 @@ module.exports = (app, db) => {
     });
 
 
-    //POST - VERIFICAR SI LOS DATOS YA EXISTEN EN LA BASE DE DATOS
+    //POST - CHECK IF THE DATA ALREADY EXISTS IN THE DATABASE
     app.post(API_BASE + "/structural-payment-data", (req, res) => {
         const newData = req.body;
         const expectedFields = [
@@ -547,13 +545,13 @@ module.exports = (app, db) => {
         }
       });
       
-    //PUT - NO PERMITIDO
+    //PUT - NOT ALLOWED
     app.put(API_BASE + "/structural-payment-data", (req, res) => {
         let data = req.body;
         res.sendStatus(405, "Method not allowed");
     });
 
-    //DELETE - BORRA TODOS LOS DATOS
+    //DELETE - DELETE ALL DATA
     app.delete(API_BASE + "/structural-payment-data", (req, res) => {
         db.remove({}, {multi:true}, (err, numRemoved)=>{
             if(err){
@@ -569,14 +567,14 @@ module.exports = (app, db) => {
         });
     });
 
-    //POST - NO PERMITIDO
+    //POST - NOT ALLOWED
     app.post(API_BASE + "/structural-payment-data/:ms_name", (req, res) => {
         const ms_name = req.params.ms_name;
         let data = req.body;
         res.sendStatus(405, "Method Not Allowed");
     });
 
-    //PUT - ACTUALIZAR UN DATO CONCRETO
+    //PUT - UPDATE SPECIFIC DATA
     app.put(API_BASE + "/structural-payment-data/:ms_name/:fund", (req, res) => { 
         const fund = req.params.fund;
         const ms_name = req.params.ms_name;
@@ -599,7 +597,7 @@ module.exports = (app, db) => {
         });
     });
 
-    //DELETE - ELIMINAR UN DATO CONCRETO
+    //DELETE - DELETE SPECIFIC DATA
     app.delete(API_BASE + "/structural-payment-data/:ms_name/:fund", (req, res) => {
         let country = req.params.ms_name;
         let fund = req.params.fund;
