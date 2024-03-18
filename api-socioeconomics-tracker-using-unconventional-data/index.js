@@ -82,22 +82,6 @@ const data_AMD = [
         "topic":"unemployment",
     },
     {
-        "date":2022-9-29,
-        "year":2022,
-        "month":9,
-        "day":29,
-        "tone_doc_count":7.0,
-        "popularity_rate":0.21875,
-        "tone_avg":0.7663061405820866,
-        "tone_w_avg":0.5453324583233635,
-        "tone_cum":0.9806448635392798,
-        "amd1code":"EN",
-        "country":"Estonia",
-        "area":"EE",
-        "ref_time":"day",
-        "topic":"unemployment",
-    },
-    {
         "date":2022-9-30,
         "year":2022,
         "month":9,
@@ -382,6 +366,7 @@ module.exports = (app,db) => {
         }
     });
     
+    /*
     app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:country/:year/:day', (req, res) => {
         const country = req.params.country;
         const year = parseInt(req.params.year);
@@ -399,6 +384,31 @@ module.exports = (app,db) => {
             }
         });
     });
+    */
+
+    //GET - ACCESS SPECIFIC DATA
+   app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data/:country/:year/:day", (req, res) => {
+    const country = req.params.country;
+    const year = parseInt(req.params.year);
+    const day = parseInt(req.params.day);
+
+    db.find({ country: country, year: year, day: day }, (err, data) => {
+        if (err) {
+            console.error("Database error:", err);
+            res.sendStatus(500, "Internal Error");
+            return;
+        }
+        if (data.length > 0) {
+            const singleData = data[0];
+            const { _id, ...formatted } = singleData;
+            res.status(200).json(formatted);
+        } else {
+            console.error("Datos no existentes");
+            res.sendStatus(404, "Not found");
+        }
+    });
+});
+
 
     
     //POST - NO PERMITIDO
