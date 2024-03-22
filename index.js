@@ -2,11 +2,11 @@ let express = require("express");
 let bodyParser = require("body-parser");
 let dataStore = require("nedb"); 
 
-let API_SPJ = require("./api-structural-investment-data")
+let API_SPJ = require("./backend/v1/api-structural-investment-data")
 let db_SPJ = new dataStore(); 
-let API_ITR = require("./api-structural-payment-data")
+let API_ITR = require("./backend/v1/api-structural-payment-data")
 let db_ITR = new dataStore();
-let API_AMD = require("./api-socioeconomics-tracker-using-unconventional-data");
+let API_AMD = require("./backend/v1/api-socioeconomics-tracker-using-unconventional-data");
 let db_AMD = new dataStore();
 
 let app = express();
