@@ -353,7 +353,6 @@ const data_SPJ = [
 
 module.exports = (app, db) => {
 
-
     //Redirect to the documentation portal generated in POSTMAN
     app.get(API_BASE + "/structural-investment-data/docs", (req, res) => {
         console.log(`REDIRECT TO structural-investment-data/docs`);
