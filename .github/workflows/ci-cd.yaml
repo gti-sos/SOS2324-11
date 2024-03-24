@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run : cd frontend; npm install; cd ..
-      - run : cd fronted; npm run build; cd ..
+      - run : cd frontend; npm run build; cd ..
       - run : npm install
       - run : npm start &
       - run : npm test
