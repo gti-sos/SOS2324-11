@@ -357,8 +357,7 @@ function loadBackend_sharay (app, db) {
     //Redirect to the documentation portal generated in POSTMAN
     app.get(API_BASE + "/structural-investment-data/docs", (req, res) => {
         console.log(`REDIRECT TO structural-investment-data/docs`);
-        res.status(301).redirect("https://documenter.getpostman.com/view/33019318/2sA2xh3svw")
-    
+        res.status(301).redirect("https://documenter.getpostman.com/view/33019318/2sA35BbjNU")
     });
 
 

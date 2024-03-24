@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test-structural-investment": "npx newman run ./tests/structural-investment-API.json -e ./tests/environments/gcloud.json",
+    "test-structural-investment": "npx newman run ./tests/structural-investment-API-v2.json -e ./tests/environments/gcloud.json",
     "test-structural-payment-data": "npx newman run ./tests/structural-payment-data.json -e ./tests/environments/gcloud.json",
     "test-socioeconomics-tracker-using-unconventional-data": "npx newman run ./tests/socioeconomics-tracker-using-unconventional-data-API.json -e ./tests/environments/gcloud.json",
     "test": "npm run test-structural-investment && npm run test-structural-payment-data && npm run test-socioeconomics-tracker-using-unconventional-data"
