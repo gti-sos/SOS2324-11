@@ -1,4 +1,4 @@
-const API_BASE = "/api/v1";
+const API_BASE = "/api/v2";
 
 const data_SPJ = [ 
 
@@ -351,7 +351,7 @@ const data_SPJ = [
 
 
 
-module.exports = (app, db) => {
+function loadBackend_sharay (app, db) {
 
 
     //Redirect to the documentation portal generated in POSTMAN
@@ -660,4 +660,6 @@ module.exports = (app, db) => {
 
 
 }
+
+export { loadBackend_sharay }
 

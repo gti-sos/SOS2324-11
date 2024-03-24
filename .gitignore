@@ -130,3 +130,5 @@ dist
 .pnp.*
 
 gc-sa-key.json
+
+frontend/node_modules

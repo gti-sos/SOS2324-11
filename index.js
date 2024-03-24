@@ -1,23 +1,26 @@
-let express = require("express");
-let bodyParser = require("body-parser");
-let dataStore = require("nedb"); 
+import express from "express";
+import bodyParser from "body-parser";
+import dataStore from "nedb"; 
+import { handler } from "./frontend/build/handler.js";
 
-let API_SPJ = require("./backend/v1/api-structural-investment-data")
+import { loadBackend_sharay } from "./backend/v2/api-structural-investment-data/index.js";
 let db_SPJ = new dataStore(); 
-let API_ITR = require("./backend/v1/api-structural-payment-data")
-let db_ITR = new dataStore();
-let API_AMD = require("./backend/v1/api-socioeconomics-tracker-using-unconventional-data");
-let db_AMD = new dataStore();
+//import { loadBackend_isabel } from "./backend/v2/api-structural-payment-data/index.js";
+//let db_ITR = new dataStore();
+//import { loadBackend_álvaro } from"./backend/v2/api-socioeconomics-tracker-using-unconventional-data/index.js";
+//let db_AMD = new dataStore();
 
 let app = express();
 app.use(bodyParser.json());
 
-const PORT = (process.env.PORT || 10000); 
-
 //API
-API_SPJ(app, db_SPJ);
-API_ITR(app, db_ITR);
-API_AMD(app, db_AMD);
+loadBackend_sharay(app, db_SPJ);
+//loadBackend_isabel(app, db_ITR);
+//loadBackend_álvaro(app, db_AMD);
+
+app.use(handler);
+
+const PORT = (process.env.PORT || 10000); 
 
 // Listening on port X
 app.listen(PORT, () =>
@@ -25,8 +28,7 @@ app.listen(PORT, () =>
     console.log(`Server listening on port PORT ${PORT} `  ); 
 });
 
-//Shows information from index.js
-app.use("/", express.static("./public"));
+
 
 
 
