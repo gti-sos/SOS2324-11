@@ -1,0 +1,1715 @@
+{
+	"info": {
+		"_postman_id": "18fcc479-978f-43a9-8446-6c9d615b306e",
+		"name": "Peticiones v2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32944023"
+	},
+	"item": [
+		{
+			"name": "Introduce datos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data/loadInitialData",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data",
+						"loadInitialData"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar datos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array of size 14\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
+							"    pm.expect(responseBody).to.have.length(14);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Paginación",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array of size 3\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
+							"    pm.expect(responseBody).to.have.length(3);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?limit=3&offset=0",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "3"
+						},
+						{
+							"key": "offset",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Datos en un periodo de tiempo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    pm.expect(responseBody).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"The value of the year field is between the year 2023 and 2025\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        var year = parseInt(item.year);\r",
+							"        pm.expect(year).to.be.within(2023, 2025);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?from=2023&to=2025",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2023"
+						},
+						{
+							"key": "to",
+							"value": "2025"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo ms",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"ms field is equal to LV\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.ms).to.eql('LV');\r",
+							"    });\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?ms=LV",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "ms",
+							"value": "LV"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo ms_name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"ms_name field is equal to Latvia\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.ms_name).to.eql('Latvia');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?ms_name=Latvia",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "ms_name",
+							"value": "Latvia"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo fund",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"fund field is equal to TOTAL\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.fund).to.eql('TOTAL');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?fund=TOTAL",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "fund",
+							"value": "TOTAL"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo year",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"year field is equal to 2021\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.year).to.eql(2021);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?year=2021",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "year",
+							"value": "2021"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo planned_eu_amount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"planned_eu_amount field is equal to 9410256783\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.planned_eu_amount).to.eql(9410256783);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?planned_eu_amount=9410256783",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "planned_eu_amount",
+							"value": "9410256783"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo n_3_decommitment_amount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"n_3_decommitment_amount field is equal to -1306860\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.n_3_decommitment_amount).to.eql(-1306860);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?n_3_decommitment_amount=-1306860",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "n_3_decommitment_amount",
+							"value": "-1306860"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo net_planned_eu_amount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"net_planned_eu_amount field is equal to 1246634592\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.net_planned_eu_amount).to.eql(1246634592);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?net_planned_eu_amount=1246634592\n",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "net_planned_eu_amount",
+							"value": "1246634592\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo cumulative_initial_pre_financing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"cumulative_initial_pre_financing field is equal to 38053494.39\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.cumulative_initial_pre_financing).to.eql(38053494.39);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?cumulative_initial_pre_financing=38053494.39\n",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "cumulative_initial_pre_financing",
+							"value": "38053494.39\n"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo cumulative_additional_initial_pre_financing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"cumulative_additional_initial_pre_financing field is equal to 0\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.cumulative_additional_initial_pre_financing).to.eql(0);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?cumulative_additional_initial_pre_financing=0",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "cumulative_additional_initial_pre_financing",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo recovery_of_initial_pre_financing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"recovery_of_initial_pre_financing is equal to 0\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.recovery_of_initial_pre_financing).to.eql(0);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?recovery_of_initial_pre_financing=0",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "recovery_of_initial_pre_financing",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo net_initial_pre_financing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"net_initial_pre_financing is equal to 36354536.76\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.net_initial_pre_financing).to.eql(36354536.76);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?net_initial_pre_financing=36354536.76",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "net_initial_pre_financing",
+							"value": "36354536.76"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo cumulative_annual_pre_financing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object or array\", function () {\r",
+							"    var responseBody = pm.response.json();\r",
+							"    if (!Array.isArray(responseBody) && Object.keys(responseBody).length === 21) {\r",
+							"        pm.expect(responseBody).to.be.an('object');\r",
+							"    }\r",
+							"    else {\r",
+							"        pm.expect(responseBody).to.be.an('array');\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?cumulative_annual_pre_financing=145781633.4",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "cumulative_annual_pre_financing",
+							"value": "145781633.4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo annual_pre_financing_covered_by_expenditure",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"annual_pre_financing_covered_by_expenditure is equal to 29936191.64\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.annual_pre_financing_covered_by_expenditure).to.eql(29936191.64);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?annual_pre_financing_covered_by_expenditure=29936191.64",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "annual_pre_financing_covered_by_expenditure",
+							"value": "29936191.64"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo recovery_of_annual_pre_financing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"recovery_of_annual_pre_financing is equal to 793378204.08\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.recovery_of_annual_pre_financing).to.eql(793378204.08);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?recovery_of_annual_pre_financing=793378204.08",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "recovery_of_annual_pre_financing",
+							"value": "793378204.08"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo cumulative_interim_payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"cumulative_interim_payment is equal to 492457164.67\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.cumulative_interim_payment).to.eql(492457164.67);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?cumulative_interim_payment=492457164.67",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "cumulative_interim_payment",
+							"value": "492457164.67"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo net_annual_pre_financing",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"net_annual_pre_financing is equal to 635535916.809999\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.net_annual_pre_financing).to.eql(635535916.809999);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?net_annual_pre_financing= 635535916.809999",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "net_annual_pre_financing",
+							"value": " 635535916.809999"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo recovery_of_expense",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"recovery_of_expense is equal to 0\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.recovery_of_expense).to.eql(0);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?recovery_of_expense= 0",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "recovery_of_expense",
+							"value": " 0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo net_interim_payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"net_interim_payment is equal to 15919634342.04\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.net_interim_payment).to.eql(15919634342.04);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?net_interim_payment=15919634342.04",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "net_interim_payment",
+							"value": "15919634342.04"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo total_net_payment",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"total_net_payment is equal to 17822580368.85\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.total_net_payment).to.eql(17822580368.85);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?total_net_payment=17822580368.85",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "total_net_payment",
+							"value": "17822580368.85"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo eu_payment_rate",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"eu_payment_rate is equal to 94.2438436793373\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.eu_payment_rate).to.eql(94.2438436793373);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?eu_payment_rate=94.2438436793373",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "eu_payment_rate",
+							"value": "94.2438436793373"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Filtra por campo eu_payment_rate_on_planned_eu_amount",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"eu_payment_rate_on_planned_eu_amount is equal to 94.2438436793373\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        pm.expect(item.eu_payment_rate_on_planned_eu_amount).to.eql(94.2438436793373);\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data?eu_payment_rate_on_planned_eu_amount=94.2438436793373",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					],
+					"query": [
+						{
+							"key": "eu_payment_rate_on_planned_eu_amount",
+							"value": "94.2438436793373"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener un dato concreto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an object\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('object');\r",
+							"});\r",
+							"pm.test(\"ms_name field is equal to Spain and fund field is equal to TOTAL\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ms_name).to.eql('Spain');\r",
+							"    pm.expect(jsonData.fund).to.eql('TOTAL');\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data/Spain/TOTAL",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data",
+						"Spain",
+						"TOTAL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener datos de un país en un periodo de tiempo",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response is an array\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.be.an('array');\r",
+							"});\r",
+							"pm.test(\"The value of the year field is between the year 2022 and 2025 and ms_name value is equal to Spain\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    jsonData.forEach(function (item) {\r",
+							"        var year = parseInt(item.year);\r",
+							"        pm.expect(year).to.be.within(2022, 2025);\r",
+							"        pm.expect(item.ms_name).to.eql('Spain');\r",
+							"    });\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data/Spain?from=2022&to=2025",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data",
+						"Spain"
+					],
+					"query": [
+						{
+							"key": "from",
+							"value": "2022"
+						},
+						{
+							"key": "to",
+							"value": "2025"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Actualizar un país",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"ms\": \"LAT\",\r\n        \"ms_name\": \"Latvia\",\r\n        \"fund\": \"CF\",\r\n        \"year\": 2023,\r\n        \"planned_eu_amount\": 1246634592,\r\n        \"n_3_decommitment_amount\": 0,\r\n        \"net_planned_eu_amount\": 1246634592,\r\n        \"cumulative_initial_pre_financing\": 38053494.39,\r\n        \"cumulative_additional_initial_pre_financing\": 0,\r\n        \"recovery_of_initial_pre_financing\": 0,\r\n        \"net_initial_pre_financing\": 38053494.39,\r\n        \"cumulative_annual_pre_financing\": 242867675.75,\r\n        \"annual_pre_financing_covered_by_expenditure\": 26728833.24,\r\n        \"recovery_of_annual_pre_financing\": 157051202.55,\r\n        \"net_annual_pre_financing\": 97141134.35,\r\n        \"cumulative_interim_payment\": 932556402.72,\r\n        \"recovery_of_expense\": 1582884.99,\r\n        \"net_interim_payment\": 957702350.97,\r\n        \"total_net_payment\": 1054843485.32,\r\n        \"eu_payment_rate\": 84.6152908068831,\r\n        \"eu_payment_rate_on_planned_eu_amount\": 84.6152908068831\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data/Latvia/CF",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data",
+						"Latvia",
+						"CF"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Nuevo dato",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ms\": \"IT\",\r\n    \"ms_name\": \"Italy\",\r\n    \"fund\": \"ERDF\",\r\n    \"year\": 2023,\r\n    \"planned_eu_amount\": 89189782,\r\n    \"n_3_decommitment_amount\": 0,\r\n    \"net_planned_eu_amount\": 89189782,\r\n    \"cumulative_initial_pre_financing\": 11003074.62,\r\n    \"cumulative_additional_initial_pre_financing\": 0,\r\n    \"recovery_of_initial_pre_financing\": 0,\r\n    \"net_initial_pre_financing\": 11003074.62,\r\n    \"cumulative_annual_pre_financing\": 6386663.66,\r\n    \"annual_pre_financing_covered_by_expenditure\": 2902451.64,\r\n    \"recovery_of_annual_pre_financing\": 1505632.02,\r\n    \"net_annual_pre_financing\": 12981654.62,\r\n    \"cumulative_interim_payment\": 66370779.13,\r\n    \"recovery_of_expense\": 830013.35,\r\n    \"net_interim_payment\": 68443217.42,\r\n    \"total_net_payment\": 81424872.04,\r\n    \"eu_payment_rate\": 91.2939466989615,\r\n    \"eu_payment_rate_on_planned_eu_amount\": 91.2939466989615\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Devuelve 405 Prohibido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ms\": \"IT\",\r\n    \"ms_name\": \"Italy\",\r\n    \"fund\": \"ERDF\",\r\n    \"year\": \"2023\",\r\n    \"planned_eu_amount\": 12376137876,\r\n    \"n_3_decommitment_amount\": 0,\r\n    \"net_planned_eu_amount\": 12376137876,\r\n    \"cumulative_initial_pre_financing\": 868546842.66,\r\n    \"cumulative_additional_initial_pre_financing\": 0,\r\n    \"recovery_of_initial_pre_financing\": 0,\r\n    \"net_initial_pre_financing\": 868546842.66,\r\n    \"cumulative_annual_pre_financing\": 2048832083.97,\r\n    \"annual_pre_financing_covered_by_expenditure\": 502203928.85,\r\n    \"recovery_of_annual_pre_financing\": 1077148628.61,\r\n    \"net_annual_pre_financing\": 1338026369.17,\r\n    \"cumulative_interim_payment\": 9459260360.08,\r\n    \"recovery_of_expense\": 11907266.25,\r\n    \"net_interim_payment\": 9949557022.68,\r\n    \"total_net_payment\": 11287583391.85,\r\n    \"eu_payment_rate\": 91.2044088789529,\r\n    \"eu_payment_rate_on_planned_eu_amount\": 91.2044088789529\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data/Romania",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data",
+						"Romania"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Devuelve 405 Prohibido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 405\", function () {\r",
+							"    pm.response.to.have.status(405);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ms\": \"RO\",\r\n    \"ms_name\": \"Romania\",\r\n    \"fund\": \"ERDF\",\r\n    \"year\": \"2023\",\r\n    \"planned_eu_amount\": 12376137876,\r\n    \"n_3_decommitment_amount\": 0,\r\n    \"net_planned_eu_amount\": 12376137876,\r\n    \"cumulative_initial_pre_financing\": 868546842.66,\r\n    \"cumulative_additional_initial_pre_financing\": 0,\r\n    \"recovery_of_initial_pre_financing\": 0,\r\n    \"net_initial_pre_financing\": 868546842.66,\r\n    \"cumulative_annual_pre_financing\": 2048832083.97,\r\n    \"annual_pre_financing_covered_by_expenditure\": 502203928.85,\r\n    \"recovery_of_annual_pre_financing\": 1077148628.61,\r\n    \"net_annual_pre_financing\": 1338026369.17,\r\n    \"cumulative_interim_payment\": 9459260360.08,\r\n    \"recovery_of_expense\": 11907266.25,\r\n    \"net_interim_payment\": 9949557022.68,\r\n    \"total_net_payment\": 11287583391.85,\r\n    \"eu_payment_rate\": 91.2044088789529,\r\n    \"eu_payment_rate_on_planned_eu_amount\": 91.2044088789529\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Devuelve 404 cuando se intenta acceder a un recurso inexistente",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data/France",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data",
+						"France"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Devuelve 400 cuando un dato pasado con un PUT no tiene el mismo id del recurso al que se especifica en la URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ms\": \"RO\",\r\n    \"ms_name\": \"Romania\",\r\n    \"fund\": \"TOTAL\",\r\n    \"year\": \"2024\",\r\n    \"planned_eu_amount\": 12376137876,\r\n    \"n_3_decommitment_amount\": 0,\r\n    \"net_planned_eu_amount\": 12376137876,\r\n    \"cumulative_initial_pre_financing\": 868546842.66,\r\n    \"cumulative_additional_initial_pre_financing\": 0,\r\n    \"recovery_of_initial_pre_financing\": 0,\r\n    \"net_initial_pre_financing\": 868546842.66,\r\n    \"cumulative_annual_pre_financing\": 2048832083.97,\r\n    \"annual_pre_financing_covered_by_expenditure\": 502203928.85,\r\n    \"recovery_of_annual_pre_financing\": 1077148628.61,\r\n    \"net_annual_pre_financing\": 1338026369.17,\r\n    \"cumulative_interim_payment\": 9459260360.08,\r\n    \"recovery_of_expense\": 11907266.25,\r\n    \"net_interim_payment\": 9949557022.68,\r\n    \"total_net_payment\": 11287583391.85,\r\n    \"eu_payment_rate\": 91.2044088789529,\r\n    \"eu_payment_rate_on_planned_eu_amount\": 91.2044088789529\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data/Spain/TOTAL",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data",
+						"Spain",
+						"TOTAL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Devuelve 409, no se puede hacer un POST con un recurso que ya existe",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {\r",
+							"    pm.response.to.have.status(409);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ms\": \"LU\",\r\n    \"ms_name\": \"Luxembourg\",\r\n    \"fund\": \"ERDF\",\r\n    \"year\": 2023,\r\n    \"planned_eu_amount\": 89189782,\r\n    \"n_3_decommitment_amount\": 0,\r\n    \"net_planned_eu_amount\": 89189782,\r\n    \"cumulative_initial_pre_financing\": 11003074.62,\r\n    \"cumulative_additional_initial_pre_financing\": 0,\r\n    \"recovery_of_initial_pre_financing\": 0,\r\n    \"net_initial_pre_financing\": 11003074.62,\r\n    \"cumulative_annual_pre_financing\": 6386663.66,\r\n    \"annual_pre_financing_covered_by_expenditure\": 2902451.64,\r\n    \"recovery_of_annual_pre_financing\": 1505632.02,\r\n    \"net_annual_pre_financing\": 12981654.62,\r\n    \"cumulative_interim_payment\": 66370779.13,\r\n    \"recovery_of_expense\": 830013.35,\r\n    \"net_interim_payment\": 68443217.42,\r\n    \"total_net_payment\": 81424872.04,\r\n    \"eu_payment_rate\": 91.2939466989615,\r\n    \"eu_payment_rate_on_planned_eu_amount\": 91.2939466989615\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Devuelve 400 si se recibe un dato (JSON) que no tiene los campos esperados",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ms\": \"LU\",\r\n    \"ms_name\": \"Luxembourg\",\r\n    \"fund\": \"ERDF\",\r\n    \"year\": 2023,\r\n    \"planned_eu_amount\": 89189782,\r\n    \"n_3_decommitment_amount\": 0,\r\n    \"cumulative_initial_pre_financing\": 11003074.62,\r\n    \"cumulative_additional_initial_pre_financing\": 0,\r\n    \"recovery_of_initial_pre_financing\": 0,\r\n    \"net_initial_pre_financing\": 11003074.62,\r\n    \"cumulative_annual_pre_financing\": 6386663.66,\r\n    \"annual_pre_financing_covered_by_expenditure\": 2902451.64,\r\n    \"recovery_of_annual_pre_financing\": 1505632.02,\r\n    \"net_annual_pre_financing\": 12981654.62,\r\n    \"cumulative_interim_payment\": 66370779.13,\r\n    \"recovery_of_expense\": 830013.35,\r\n    \"net_interim_payment\": 68443217.42,\r\n    \"total_net_payment\": 81424872.04,\r\n    \"eu_payment_rate\": 91.2939466989615,\r\n    \"eu_payment_rate_on_planned_eu_amount\": 91.2939466989615\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar un dato",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data/Interreg/TOTAL",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data",
+						"Interreg",
+						"TOTAL"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Eliminar datos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
