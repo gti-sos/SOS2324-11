@@ -332,7 +332,7 @@ function loadBackend_isabel (app, db) {
     //DOCUMENTATION IN POSTMAN
     app.get(API_BASE + "/structural-payment-data/docs", (req, res) => {
         console.log(`REDIRECT TO structural-payment-data/docs`);
-        res.status(301).redirect("https://documenter.getpostman.com/view/32944023/2sA2xh1XiK")
+        res.status(301).redirect("https://documenter.getpostman.com/view/32944023/2sA35G21ac")
     
     });
 
