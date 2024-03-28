@@ -366,26 +366,7 @@ function loadBackend_álvaro (app, db) {
         }
     });
     
-    /*
-    app.get(API_BASE + '/socioeconomics-traker-using-unconventional-data/:country/:year/:day', (req, res) => {
-        const country = req.params.country;
-        const year = parseInt(req.params.year);
-        const day = parseInt(req.params.day);
-
-        db.find({ country: country, year: year, day: day }, (err, data) => {
-            if (err) {
-                res.sendStatus(500, "Error interno del servidor");
-            } else {
-                if (data.length === 0) {
-                    res.sendStatus(404, "No se encontraron datos para el país, año y día especificados");
-                } else {
-                    res.status(200).json(data);
-                }
-            }
-        });
-    });
-    */
-
+    
     //GET - ACCESS SPECIFIC DATA
    app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data/:country/:year/:day", (req, res) => {
     const country = req.params.country;
