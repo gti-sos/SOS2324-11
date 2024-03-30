@@ -354,7 +354,7 @@ function loadBackend_isabel (app, db) {
                 console.error("Invalid year format. Please provide valid year values.")
                 return  res.sendStatus(400, "Bad Request"); 
             }
-            // If the years are valid, build the query to filter by the year range
+            //If the years are valid, build the query to filter by the year range
             queryParameters.year = { $gte: fromYear, $lte: toYear };
         }
     
