@@ -325,6 +325,7 @@ const data = [
 ]
 
 
+
 const API_BASE = "/api/v2";
 
 function loadBackend_isabel (app, db) {
@@ -370,7 +371,7 @@ function loadBackend_isabel (app, db) {
             }
         });
     
-        // Check if search parameters were provided
+        //Check if search parameters were provided
         const hasSearchParameters = Object.keys(queryParameters).some(key => key !== 'limit' && key !== 'offset' && key !== 'from' && key !== 'to');
     
         if (!hasSearchParameters) {
