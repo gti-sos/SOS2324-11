@@ -359,7 +359,7 @@ function loadBackend_isabel (app, db) {
         }
     
         let query = {};
-        // Build the query based on the provided parameters
+        //Build the query based on the provided parameters
         Object.keys(queryParameters).forEach(key => {
             if (key !== 'limit' && key !== 'offset' && key !== 'from' && key !== 'to') {
                 const value = !isNaN(queryParameters[key]) ? parseFloat(queryParameters[key]) : queryParameters[key];
