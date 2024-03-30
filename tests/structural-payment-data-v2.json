@@ -7,40 +7,6 @@
 	},
 	"item": [
 		{
-			"name": "Introduce datos",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});"
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{SERVER}}/api/v2/structural-payment-data/loadInitialData",
-					"host": [
-						"{{SERVER}}"
-					],
-					"path": [
-						"api",
-						"v2",
-						"structural-payment-data",
-						"loadInitialData"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Listar datos",
 			"event": [
 				{
@@ -1706,6 +1672,40 @@
 						"api",
 						"v2",
 						"structural-payment-data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Introduce datos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{SERVER}}/api/v2/structural-payment-data/loadInitialData",
+					"host": [
+						"{{SERVER}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"structural-payment-data",
+						"loadInitialData"
 					]
 				}
 			},

@@ -330,6 +330,8 @@ const API_BASE = "/api/v2";
 
 function loadBackend_isabel (app, db) {
 
+    db.insert(data);
+
     //DOCUMENTATION IN POSTMAN
     app.get(API_BASE + "/structural-payment-data/docs", (req, res) => {
         console.log(`REDIRECT TO structural-payment-data/docs`);

@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import dataStore from "nedb"; 
 import { handler } from "./frontend/build/handler.js";
+import cors from "cors";
 
 import { loadBackend_sharay_v1 } from "./backend/v1/api-structural-investment-data/index.js";
 import { loadBackend_sharay } from "./backend/v2/api-structural-investment-data/index.js";
@@ -14,6 +15,9 @@ import { loadBackend_álvaro } from"./backend/v2/api-socioeconomics-tracker-usin
 let db_AMD = new dataStore();
 
 let app = express();
+
+app.use(cors());
+
 app.use(bodyParser.json());
 
 
