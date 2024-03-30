@@ -337,7 +337,7 @@ function loadBackend_isabel (app, db) {
     
     });
 
-    //GET - PAGINATION, SEARCH BY FIELDS AND PERIOD
+    //GET - PAGINATION,SEARCH BY FIELDS AND PERIOD
     app.get(API_BASE + "/structural-payment-data", (req, res) => {
 
         const queryParameters = req.query;
