@@ -14,13 +14,6 @@
             padding: 0;
         }
 
-        h1 {
-            background-color: #007BFF;
-            color: white;
-            padding: 20px;
-            margin: 0;
-        }
-
         .card {
             background-color: white;
             border: 1px solid #ddd;
@@ -66,7 +59,6 @@
 </head>
 
 <body>
-    <h1>SOS2324-11</h1>
     <div class="card">
         <h2>Team</h2>
         <p>
