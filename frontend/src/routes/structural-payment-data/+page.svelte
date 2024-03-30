@@ -195,7 +195,7 @@
 <ul>
     
     {#each data as d}
-        <li>{d.ms_name}-{d.fund}<button on:click="{deleteData}">Delete</button>
+        <li>{d.ms_name}-{d.fund}<button on:click="{deleteData(d.ms_name, d.fund)}">Delete</button>
         </li>
     {/each}
 </ul>
