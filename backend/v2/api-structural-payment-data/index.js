@@ -346,7 +346,7 @@ function loadBackend_isabel (app, db) {
         let from = req.query.from;
         let to = req.query.to;
     
-        // Check for 'from' and 'to' parameters
+        //Check for 'from' and 'to' parameters
         if (from !== undefined && to !== undefined) {
             const fromYear = parseInt(from);
             const toYear = parseInt(to);

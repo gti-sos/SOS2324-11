@@ -351,7 +351,7 @@ const data_SPJ = [
 
 
 
-module.exports = (app, db) => {
+function loadBackend_sharay_v1(app, db) {
 
     //Redirect to the documentation portal generated in POSTMAN
     app.get(API_BASE + "/structural-investment-data/docs", (req, res) => {
@@ -660,3 +660,4 @@ module.exports = (app, db) => {
 
 }
 
+export{ loadBackend_sharay_v1 }

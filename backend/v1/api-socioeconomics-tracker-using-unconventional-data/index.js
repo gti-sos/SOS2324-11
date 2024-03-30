@@ -260,7 +260,7 @@ const data_AMD = [
 ]
 
 
-module.exports = (app,db) => {
+function loadBackend_álvaro_v1(app,db) {
 
     app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data/docs", (req, res) => {
         console.log(`REDIRECT TO structural-payment-data/docs`);
@@ -554,3 +554,5 @@ module.exports = (app,db) => {
     
     
 }
+
+export { loadBackend_álvaro_v1 }

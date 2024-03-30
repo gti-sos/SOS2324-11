@@ -327,7 +327,7 @@ const data = [
 
 const API_BASE = "/api/v1";
 
-module.exports = (app, db) => {
+function loadBackend_isabel_v1 (app, db) {
 
     //DOCUMENTATION IN POSTMAN
     app.get(API_BASE + "/structural-payment-data/docs", (req, res) => {
@@ -617,3 +617,5 @@ module.exports = (app, db) => {
     
 
 }
+
+export { loadBackend_isabel_v1 }
