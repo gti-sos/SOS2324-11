@@ -1,7 +1,12 @@
 <script>
     import {onMount} from "svelte";
+    import {dev} from "$app/environment";
 
-    let API = "http://localhost:10000/api/v1/structural-payment-data"
+    let API = "/api/v2/structural-payment-data";
+    if(dev)
+        API = "http://localhost:10000"+API;
+
+
     let data = [];
     let newData = {
         "ms": "Código",
@@ -195,7 +200,7 @@
 <ul>
     
     {#each data as d}
-        <li>{d.ms_name}-{d.fund}<button on:click="{deleteData(d.ms_name, d.fund)}">Delete</button>
+        <li><a href="/structural-payment-data/{d.ms_name}/{d.fund}">{d.ms_name}-{d.fund}</a><button on:click="{deleteData(d.ms_name, d.fund)}">Delete</button>
         </li>
     {/each}
 </ul>
