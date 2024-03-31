@@ -24,33 +24,27 @@
 
     async function getData() {
         resultStatus = result = "";
-        const res = await fetch(API + "/" + ms_name + "/" + fund, {
+        const res = await fetch(API+"/"+country+"/"+parseInt(year)+"/"+parseInt(day), {
             method: "GET",
         });
         try {
             const data = await res.json();
             result = JSON.stringify(data, null, 2);
             dato = data;
-            updatedMs = dato.ms;
-            updatedMs_name = dato.ms_name;
-            updatedFund = dato.fund;
+            updatedDate = dato.date;
             updatedYear = dato.year;
-            updatedPlanned_eu_amount = dato.planned_eu_amount;
-            updatedN_3_decommitment_amount = dato.n_3_decommitment_amount;
-            updatedNet_planned_eu_amount = dato.net_planned_eu_amount;
-            updatedCumulative_initial_pre_financing = dato.cumulative_initial_pre_financing;
-            updatedCumulative_additional_initial_pre_financing = dato.cumulative_additional_initial_pre_financing;
-            updatedRecovery_of_initial_pre_financing = dato.recovery_of_initial_pre_financing;
-            updatedNet_initial_pre_financing = dato.net_initial_pre_financing;
-            updatedCumulative_annual_pre_financing = dato.cumulative_annual_pre_financing;
-            updatedAnnual_pre_financing_covered_by_expenditure = dato.annual_pre_financing_covered_by_expenditure;
-            updatedRecovery_of_annual_pre_financing = dato.recovery_of_annual_pre_financing;
-            updatedNet_annual_pre_financing = dato.net_annual_pre_financing;
-            updatedCumulative_interim_payment = dato.cumulative_interim_payment;
-            updatedRecovery_of_expense = dato.recovery_of_expense;
-            updatedNet_interim_payment = dato.net_interim_payment;
-            updatedTotal_net_payment = dato.total_net_payment;
-            updatedEu_payment_rate = dato.eu_payment_rate;
+            updatedMonth = dato.month;
+            updatedDay = dato.day;
+            updatedTone_doc_count = dato.tone_doc_count;
+            updatedPopularity_rate = dato.popularity_rate;
+            updatedTone_avg = dato.tone_avg;
+            updatedTone_w_avg = dato.tone_w_avg;
+            updatedTone_cum = dato.tone_cum;
+            updatedAmd1code = dato.amd1code;
+            updatedCountry = dato.country;
+            updatedArea = dato.area;
+            updatedRef_time = dato.ref_time;
+            updatedTopic = dato.topic;
             
         } catch (error) {
             console.log(`Error parsing result: ${error}`);
@@ -58,9 +52,62 @@
         const status = await res.status;
         resultStatus = status;
         if (status == 404) {
-            message = `El elemento: ${ms_name} ${fund}; No encontrado`;
+            message = `El elemento: ${country} ${year} ${day}; No encontrado`;
         }
         if (status == 500) {
+            message = "Error interno";
+        }
+    }
+
+    let updatedDate = "";
+    let updatedYear = year;
+    let updatedMonth = "";
+    let updatedDay = day;
+    let updatedTone_doc_count = "";
+    let updatedPopularity_rate = "";
+    let updatedTone_avg = "";
+    let updatedTone_w_avg = "";
+    let updatedTone_cum = "";
+    let updatedAmd1code = "";
+    let updatedCountry = country;
+    let updatedArea = "";
+    let updatedRef_time = "";
+    let updatedTopic = "";
+
+    async function updateData() {
+        resultStatus = result = "";
+        const res = await fetch(API+"/"+country+"/"+parseInt(year)+"/"+parseInt(day), {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                date: updatedDate,
+                year: updatedYear,
+                month: updatedMonth,
+                day: updatedDay,
+                tone_doc_count: updatedTone_doc_count,
+                popularity_rate: updatedPopularity_rate,
+                tone_avg: updatedTone_avg,
+                tone_w_avg: updatedTone_w_avg,
+                tone_cum: updatedTone_cum,
+                amd1code: updatedAmd1code,
+                country: updatedCountry,
+                area: updatedArea,
+                ref_time: updatedRef_time,
+                topic: updatedTopic,
+                
+            }),
+        });
+        const status = await res.status;
+        resultStatus = status;
+
+        if (status == 200) {
+            message = "El dato se ha actualizado";
+            getData();
+        } else if (status == 400) {
+            message = "Rellena todos los campos";
+        } else if (status == 500) {
             message = "Error interno";
         }
     }
@@ -68,4 +115,126 @@
 
 </script>
 
-Details of {country} {year} {day}
+
+<br>
+<br>
+<br>
+<table>
+    <thead>
+        <th>Fecha</th>
+        <th>Año</th>
+        <th>Mes</th>
+        <th> Dia</th>
+        <th>Recuento de cantidad de documentos </th>
+        <th>Tasa de popularidad</th>
+        <th>Cantidad media</th>
+        <th>Cantidad con peso media</th>
+        <th>tone_cum</th>
+        <th>Codigo amd1</th>
+        <th>Pais</th>
+        <th>Area</th>
+        <th>Referencia de tiempo</th>
+        <th>Tema</th>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                <input bind:value={updatedDate}>
+            </td>
+            <td>
+                {updatedYear} 
+            </td>
+            <td>
+                <input bind:value={updatedMonth}> 
+            </td>
+            <td>
+                {updatedDay}
+            </td>
+            <td>
+                <input bind:value={updatedTone_doc_count}> 
+            </td>
+            <td>
+                <input bind:value={updatedPopularity_rate}> 
+            </td>
+            <td>
+                <input bind:value={updatedTone_avg}> 
+            </td>
+            <td>
+                <input bind:value={updatedTone_w_avg}> 
+            </td>
+            <td>
+                <input bind:value={updatedTone_cum}> 
+            </td>
+            <td>
+                <input bind:value={updatedAmd1code}> 
+            </td>
+            <td>
+                {updatedCountry}
+            </td>
+            <td>
+                <input bind:value={updatedArea}> 
+            </td>
+            <td>
+                <input bind:value={updatedRef_time}> 
+            </td>
+            <td>
+                <input bind:value={updatedTopic}> 
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                {updatedDate}
+            </td>
+            <td>
+                {updatedYear} 
+            </td>
+            <td>
+                {updatedMonth}
+            </td>
+            <td>
+                {updatedDay}
+            </td>
+            <td>
+                {updatedTone_doc_count}
+            </td>
+            <td>
+                {updatedPopularity_rate}
+            </td>
+            <td>
+                {updatedTone_avg}
+            </td>
+            <td>
+                {updatedTone_w_avg} 
+            </td>
+            <td>
+                {updatedTone_cum}
+            </td>
+            <td>
+                {updatedAmd1code}
+            </td>
+            <td>
+                {updatedCountry}
+            </td>
+            <td>
+                {updatedArea}
+            </td>
+            <td>
+                {updatedRef_time}
+            </td>
+            <td>
+                {updatedTopic}
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+<button on:click="{updateData}">Actualizar dato</button>
+
+{#if message != ""}
+{message}
+{/if}
+
+

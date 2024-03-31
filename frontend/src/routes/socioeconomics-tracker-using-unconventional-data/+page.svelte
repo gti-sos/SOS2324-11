@@ -123,6 +123,9 @@
 
 </script>
 
+<br>
+<br>
+<br>
 <table>
     <thead>
         <th>Fecha</th>
