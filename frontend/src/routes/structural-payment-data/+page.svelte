@@ -1,7 +1,6 @@
 <script>
     import {onMount} from "svelte";
     import {dev} from "$app/environment";
-	import { response } from "express";
 
     let API = "/api/v2/structural-payment-data";
     if(dev)
@@ -74,7 +73,7 @@
             } else if (response.status == 500) {
                 errorMsg = "Error interno";
             }else{
-                errorMsg = "Code: " + response.status;
+                errorMsg = "Error, código: " + response.status;
             }
         
         }catch(e){
@@ -116,7 +115,7 @@
             } else if (response.status == 500) {
                 errorMsg = "Error interno";
             }else{
-                errorMsg = "Code: " + response.status;
+                errorMsg = "Error, código: " + response.status;
             }
         
         }catch(e){
@@ -149,6 +148,7 @@
         <th>Tasa de pago de la UE</th>
         <th>Tasa de pago de la UE sobre la cantidad planificada de la UE </th>
     </thead>
+    
     <tbody>
         <tr>
             <td><input bind:value={newData.ms}></td>
