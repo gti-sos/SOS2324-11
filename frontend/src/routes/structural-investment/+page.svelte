@@ -70,13 +70,10 @@
             if( status === 201) {
                 getData();
                 document.getElementById('message-container').textContent = "Creación exitosa.";
-                Msg = "El dato se ha creado correctamente";
             } else if(status === 400) {
                 document.getElementById('message-container').textContent = "El dato no tiene los campos esperados.";
-                Msg = "El dato ya existe";
             } else if(status === 409){
                 document.getElementById('message-container').textContent = "No se puede crear el dato indicado porque ya existe en la base de datos.";
-                Msg = "No se puede crear el dato indicado porque ya existe en la base de datos.";
             } else {
                 document.getElementById('message-container').textContent = + response.status;
             }
@@ -212,9 +209,8 @@
 <button class="button" on:click="{createData}">Crear nuevo dato</button>
 <button class="button"  on:click="{deleteAllData}">Eliminar todos los datos</button>
 
-{#if Msg != ""}
-{Msg}
-{/if}
+
+
 </body>
 
 
