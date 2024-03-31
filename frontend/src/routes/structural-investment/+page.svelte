@@ -65,14 +65,14 @@
                 body:JSON.stringify(newData,null,2)
             });
 
-            let status = await response.status;
+            let status = response.status;
             console.log(`Creación, ´respuesta de estado ${status}`);
-            if(responde == 201) {
+            if(status == 201) {
                 getData();
                 document.getElementById('message-container').textContent = "Creación exitosa.";
-            } else if(responde == 409) {
+            } else if(status == 409) {
                 document.getElementById('message-container').textContent = "El dato no tiene los campos esperados.";
-            } else if(responde == 400){
+            } else if(status == 400){
                 document.getElementById('message-container').textContent = "No se puede crear el dato indicado porque ya existe en la base de datos.";
             } else {
                 document.getElementById('message-container').textContent = + response.status;
@@ -80,7 +80,7 @@
 
         } catch(e) {
             Msg = e;
-            document.getElementById('message-container').textContent = "Error interno del servidor.";
+           
         }
     }
 
