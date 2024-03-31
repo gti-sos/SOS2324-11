@@ -1,40 +1,51 @@
-
-<main>
-<nav>
-    <div class="container"> 
-        <a href="/">Home</a>
-        <a href="/about">About</a>
-        <a href="/structural-investment-data">Structural Investment Data</a>
-        <a href="/structural-payment-data">Structural Payment Data</a>
-        <a href="/socioeconomics-tracker-using-unconventional-data">Socioeconomics tracker using unconventional data</a>
-</div>
-</nav>
-</main>
-
+<header> 
+    <nav>
+        <div class="container"> 
+            <span class="sos-code">SOS2324-11</span>
+            <a href="/">Inicio</a>
+            <a href="/about">Estado</a>
+            <a href="/structural-investment">Inversión estructural</a>
+            <a href="/structural-payment-data">Pagos estructurales</a>
+            <a href="/socioeconomics-tracker-using-unconventional-data">Rastreador de socioeconomía utilizando </a>
+        </div>
+    </nav>
+</header>
 
 <style> 
+    header {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #ADD8E6; 
+        z-index: 1000; 
+    }
+
+    .sos-code {
+        color: #076c8e; 
+        font-size: 35px; 
+        font-weight: bold; 
+        margin-left: 10px;
+        margin-right: 20px;
+        margin-top: 28px;
+    }
+
     a {
-        color : rgb(16, 16, 17);
+        color : rgb(0, 0, 0);
+        font-weight: bold; 
         text-decoration: none;
         font-size: 21px;
         padding-top: 20px;
         margin-left: 10px;
         text-align: center; 
-             
     }
-    main{
-        margin-top: 20px;
-        position: relative;
-        height: 200px;
 
-    }
     .container {
         width: 1200px;
         height: 120px;
         display: grid;
         grid-template-rows: 50% 50%;
-        grid-template-columns: 20% 20% 20% 20% 20%;
-        border-style: solid;
-        border-width: 3px;
+        grid-template-columns: 20% 20% 20% 20% 20% 20%;
+       
     }
 </style>
+

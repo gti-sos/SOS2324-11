@@ -1,6 +1,11 @@
-<h4>by SOS2324-11</h4>
-
+<p>by SOS2324-11</p>
 
 <style>
-    h4{padding: 20px;}
+    p {
+        padding: 20px;
+        border-top: 2px solid #0e0e0e;
+        background-color: #e0e0e0;
+    }
 </style>
+
+

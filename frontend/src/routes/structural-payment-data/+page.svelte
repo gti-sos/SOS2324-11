@@ -105,6 +105,8 @@
     }
 </script>
 
+<br>
+<br>
 <table>
     <thead>
         <th>Código</th>
