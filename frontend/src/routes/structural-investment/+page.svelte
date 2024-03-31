@@ -2,7 +2,6 @@
 
     import {onMount} from "svelte";
     import {dev} from "$app/environment";
-    import { responde } from "express";
 
     let API = "/api/v2/structural-investment-data";
     if(dev)
