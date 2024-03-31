@@ -50,7 +50,7 @@
             console.log(data);
         }catch(e){
             Msg = e;
-            document.getElementById('message-container').textContent = "Error interno del servidor.";
+            document.getElementById('message-container').textContent = "Error al procesar la solicitud.";
         }
     }
     
@@ -65,22 +65,25 @@
                 body:JSON.stringify(newData,null,2)
             });
 
-            let status = response.status;
+            let status =  await response.status;
             console.log(`Creación, ´respuesta de estado ${status}`);
-            if(status == 201) {
+            if( status === 201) {
                 getData();
                 document.getElementById('message-container').textContent = "Creación exitosa.";
-            } else if(status == 409) {
+                Msg = "El dato se ha creado correctamente";
+            } else if(status === 400) {
                 document.getElementById('message-container').textContent = "El dato no tiene los campos esperados.";
-            } else if(status == 400){
+                Msg = "El dato ya existe";
+            } else if(status === 409){
                 document.getElementById('message-container').textContent = "No se puede crear el dato indicado porque ya existe en la base de datos.";
+                Msg = "No se puede crear el dato indicado porque ya existe en la base de datos.";
             } else {
                 document.getElementById('message-container').textContent = + response.status;
             }
 
         } catch(e) {
             Msg = e;
-           
+            document.getElementById('message-container').textContent = "Error al procesar la solicitud.";
         }
     }
 
@@ -209,6 +212,9 @@
 <button class="button" on:click="{createData}">Crear nuevo dato</button>
 <button class="button"  on:click="{deleteAllData}">Eliminar todos los datos</button>
 
+{#if Msg != ""}
+{Msg}
+{/if}
 </body>
 
 
