@@ -262,32 +262,17 @@ const data_AMD = [
 
 function loadBackend_álvaro (app, db) {
 
+    db.insert(data_AMD);
+
     app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data/docs", (req, res) => {
         console.log(`REDIRECT TO structural-payment-data/docs`);
         res.status(301).redirect("https://documenter.getpostman.com/view/33058352/2sA2xh3CpF")
     
     });
 
-    app.get(API_BASE+"/socioeconomics-traker-using-unconventional-data/loadInitialData",(req, res) =>{
-        db.find({},(err,data) => {
-
-            if(err){
-                res.sendStatus(500, "Internal Error")
-            }else{
-                if(data.length==0){
-                    db.insert(data_AMD)
-                    res.sendStatus(200, "Ok")
-                }else{
-                    res.sendStatus(200, "Data is already inserted")
-                }
-            }
-        })
-
-    });
-
     app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data", (req, res) => {
         const queryParameters = req.query;
-        const limit = parseInt(queryParameters.limit) || 10;
+        const limit = parseInt(queryParameters.limit) || 20;
         const offset = parseInt(queryParameters.offset) || 0;
         let from = req.query.from;
         let to = req.query.to;
@@ -365,6 +350,25 @@ function loadBackend_álvaro (app, db) {
             });
         }
     });
+
+    app.get(API_BASE+"/socioeconomics-traker-using-unconventional-data/loadInitialData",(req, res) =>{
+        db.find({},(err,data) => {
+
+            if(err){
+                res.sendStatus(500, "Internal Error")
+            }else{
+                if(data.length==0){
+                    db.insert(data_AMD)
+                    res.sendStatus(200, "Ok")
+                }else{
+                    res.sendStatus(200, "Data is already inserted")
+                }
+            }
+        })
+
+    });
+
+    
     
     
     //GET - ACCESS SPECIFIC DATA
