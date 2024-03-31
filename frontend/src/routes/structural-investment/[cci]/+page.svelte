@@ -168,7 +168,7 @@
                 <th>Financiación previa anual acumulativa</th>
                 <th>Financiación previa cubierta por gastos</th>
                 <th>Recuperación de la financiación previa anual</th>
-            </tr> 
+            </tr>  
             <tr>
                 <td><input bind:value={updateNet_planned_eu_amount }></td>
                 <td><input bind:value={updateCumulative_initial_pre_financing }></td>
