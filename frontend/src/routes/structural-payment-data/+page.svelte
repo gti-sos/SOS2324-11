@@ -1,6 +1,7 @@
 <script>
     import {onMount} from "svelte";
     import {dev} from "$app/environment";
+	import { response } from "express";
 
     let API = "/api/v2/structural-payment-data";
     if(dev)
@@ -63,10 +64,18 @@
 
             let status = await response.status;
             console.log(`Creation response status ${status}`);
-            if(status==201)
+            if(response.status==201){
                 getData();
-            else
-                errorMsg = "Code: " + status;
+                errorMsg = "El dato se ha creado correctamente";
+            } else if (response.status == 409) {
+                errorMsg = "El dato ya existe";
+            }else if(response.status==400){
+                errorMsg = "El dato no tiene los campos esperados";
+            } else if (response.status == 500) {
+                errorMsg = "Error interno";
+            }else{
+                errorMsg = "Code: " + response.status;
+            }
         
         }catch(e){
              errorMsg = e;
@@ -78,10 +87,16 @@
             let response = await fetch(API, {
                                 method: "DELETE"
                         });
-            if(response.status==200)
+            if(response.status==200){
                 getData();
-            else
-                errorMsg = "Code: " + response.status;
+                errorMsg = "Se han eliminado todos los datos correctamente";
+            } else if (response.status == 404) {
+                errorMsg = "No se ha encontrado";
+            } else if (response.status == 500) {
+                errorMsg = "Error interno";
+            }else{
+                errorMsg = "Error, código: " + response.status;
+            }
         
         }catch(e){
             errorMsg = e;
@@ -89,15 +104,20 @@
     }
 
     async function deleteData(ms_name,fund){
-        console.log(`Deleting contact with name ${ms_name} and fund ${fund}`)
         try{
             let response = await fetch(API+"/"+ms_name+"/"+fund,{
                                 method: "DELETE"
                         });
-            if(response.status==200)
+            if(response.status==200){
                 getData();
-            else
+                errorMsg = "Dato eliminado correctamente";
+            } else if (response.status == 404) {
+                errorMsg = `No se ha encontrado el país ${ms_name} con fondo ${fund}`;
+            } else if (response.status == 500) {
+                errorMsg = "Error interno";
+            }else{
                 errorMsg = "Code: " + response.status;
+            }
         
         }catch(e){
             errorMsg = e;
@@ -131,69 +151,27 @@
     </thead>
     <tbody>
         <tr>
-            <td>
-                <input bind:value={newData.ms}>
-            </td>
-            <td>
-                <input bind:value={newData.ms_name}> 
-            </td>
-            <td>
-                <input bind:value={newData.fund}> 
-            </td>
-            <td>
-                <input bind:value={newData.year}> 
-            </td>
-            <td>
-                <input bind:value={newData.planned_eu_amount}> 
-            </td>
-            <td>
-                <input bind:value={newData.n_3_decommitment_amount}> 
-            </td>
-            <td>
-                <input bind:value={newData.net_planned_eu_amount}> 
-            </td>
-            <td>
-                <input bind:value={newData.cumulative_initial_pre_financing}> 
-            </td>
-            <td>
-                <input bind:value={newData.cumulative_additional_initial_pre_financing}> 
-            </td>
-            <td>
-                <input bind:value={newData.recovery_of_initial_pre_financing}> 
-            </td>
-            <td>
-                <input bind:value={newData.net_initial_pre_financing}> 
-            </td>
-            <td>
-                <input bind:value={newData.cumulative_annual_pre_financing}> 
-            </td>
-            <td>
-                <input bind:value={newData.annual_pre_financing_covered_by_expenditure}> 
-            </td>
-            <td>
-                <input bind:value={newData.recovery_of_annual_pre_financing}> 
-            </td>
-            <td>
-                <input bind:value={newData.net_annual_pre_financing}> 
-            </td>
-            <td>
-                <input bind:value={newData.cumulative_interim_payment}> 
-            </td>
-            <td>
-                <input bind:value={newData.recovery_of_expense}> 
-            </td>
-            <td>
-                <input bind:value={newData.net_interim_payment}> 
-            </td>
-            <td>
-                <input bind:value={newData.total_net_payment}> 
-            </td>
-            <td>
-                <input bind:value={newData.eu_payment_rate}> 
-            </td>
-            <td>
-                <input bind:value={newData.eu_payment_rate_on_planned_eu_amount}> 
-            </td>
+            <td><input bind:value={newData.ms}></td>
+            <td><input bind:value={newData.ms_name}></td>
+            <td><input bind:value={newData.fund}></td>
+            <td><input bind:value={newData.year}></td>
+            <td><input bind:value={newData.planned_eu_amount}></td>
+            <td><input bind:value={newData.n_3_decommitment_amount}></td>
+            <td><input bind:value={newData.net_planned_eu_amount}></td>
+            <td><input bind:value={newData.cumulative_initial_pre_financing}></td>
+            <td><input bind:value={newData.cumulative_additional_initial_pre_financing}></td>
+            <td><input bind:value={newData.recovery_of_initial_pre_financing}></td>
+            <td><input bind:value={newData.net_initial_pre_financing}></td>
+            <td><input bind:value={newData.cumulative_annual_pre_financing}></td>
+            <td><input bind:value={newData.annual_pre_financing_covered_by_expenditure}></td>
+            <td><input bind:value={newData.recovery_of_annual_pre_financing}></td>
+            <td><input bind:value={newData.net_annual_pre_financing}></td>
+            <td><input bind:value={newData.cumulative_interim_payment}></td>
+            <td><input bind:value={newData.recovery_of_expense}></td>
+            <td><input bind:value={newData.net_interim_payment}></td>
+            <td><input bind:value={newData.total_net_payment}></td>
+            <td><input bind:value={newData.eu_payment_rate}></td>
+            <td><input bind:value={newData.eu_payment_rate_on_planned_eu_amount}></td>
         </tr>
     </tbody>
 </table>
@@ -209,5 +187,5 @@
 <button on:click="{deleteAllData}">Eliminar todos los datos</button>
 
 {#if errorMsg != ""}
-ERROR: {errorMsg}
+{errorMsg}
 {/if}
