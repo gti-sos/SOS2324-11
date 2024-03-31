@@ -6,4 +6,5 @@
         mode="development";
 </script>
 
-This is the data manager app in {mode} mode
+<br><br>
+<h4>Esta es la aplicación de administrador de datos en modo {mode}</h4>

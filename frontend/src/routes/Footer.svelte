@@ -1,4 +1,4 @@
-<p>by SOS2324-11</p>
+<p>página desarollada por el grupo 11 del curso de SOS2324</p>
 
 <style>
     p {

@@ -19,10 +19,10 @@
     let dato = [];
     let result = "";
     let resultStatus = "";
-    let message = "";
 
 
     async function getData() {
+
         resultStatus = result = "";
         const res = await fetch(API + "/" + cci, {
             method: "GET",
@@ -31,40 +31,42 @@
             const data = await res.json();
             result = JSON.stringify(data, null, 2);
             dato = data;
-            updateMs: dato.ms;
-            updateMsName: dato.ms_name;
-            updateCCI: dato.cci;
-            updateTitle: dato.title;
-            updateFund: dato.fund;
-            updateCategory_of_region: dato.category_of_region;
-            updateYear:dato.year;
-            updateNet_planned_eu_amount: datonet_planned_eu_amount;
-            updateCumulative_initial_pre_financing: dato.cumulative_initial_pre_financing;
-            updateVumulative_additional_initial_pre_financing: dato.cumulative_additional_initial_pre_financing;
-            updateRecovery_of_initial_pre_financing: dato.recovery_of_initial_pre_financing;
-            updateCumulative_annual_pre_financing: dato.cumulative_annual_pre_financing;
-            updatePre_financing_covered_by_expenditure: dato.pre_financing_covered_by_expenditure;
-            updateRecovery_of_annual_pre_financing:datorecovery_of_annual_pre_financing;
-            updateNet_pre_financing: dato.net_pre_financing;
-            updateCumulative_interim_payments: dato.cumulative_interim_payments;
-            updateRecovery_of_expenses: dato.recovery_of_expenses;
-            updateNet_interim_payments: dato.net_interim_payments;
-            updateTotal_net_payments: dato.total_net_payments;
-            updateEu_payment_rate: dato.eu_payment_rate;
-            updateEu_payment_rate_on_planned_eu_amount: dato.eu_payment_rate_on_planned_eu_amount;
-        } catch (error) {
-            console.log(`Error parsing result: ${error}`);
+            updateMs = dato.ms;
+            updateMsName = dato.ms_name;
+            updateCCI = dato.cci;
+            updateTitle = dato.title;
+            updateFund = dato.fund;
+            updateCategory_of_region = dato.category_of_region;
+            updateYear = dato.year;
+            updateNet_planned_eu_amount = dato.net_planned_eu_amount;
+            updateCumulative_initial_pre_financing = dato.cumulative_initial_pre_financing;
+            updateVumulative_additional_initial_pre_financing = dato.cumulative_additional_initial_pre_financing;
+            updateRecovery_of_initial_pre_financing = dato.recovery_of_initial_pre_financing;
+            updateCumulative_annual_pre_financing = dato.cumulative_annual_pre_financing;
+            updatePre_financing_covered_by_expenditure = dato.pre_financing_covered_by_expenditure;
+            updateRecovery_of_annual_pre_financing = dato.recovery_of_annual_pre_financing; 
+            updateNet_pre_financing = dato.net_pre_financing;
+            updateCumulative_interim_payments = dato.cumulative_interim_payments;
+            updateRecovery_of_expenses = dato.recovery_of_expenses;
+            updateNet_interim_payments = dato.net_interim_payments;
+            updateTotal_net_payments = dato.total_net_payments;
+            updateEu_payment_rate = dato.eu_payment_rate;
+            updateEu_payment_rate_on_planned_eu_amount = dato.eu_payment_rate_on_planned_eu_amount;
+
+        } catch (e) {
+            console.log(`Error parsing result: ${e}`);
+            document.getElementById('message-container').textContent = "Error al parserar los datos.";
         }
         const status = await res.status;
         resultStatus = status;
         if (status == 404) {
-            message = `El elemento: ${cci} ; No encontrado`;
+            document.getElementById('message-container').textContent = `El elemento: ${cci} , no ha sido encontrado.`;
         }
         if (status == 500) {
-            message = "Error interno";
+            document.getElementById('message-container').textContent = "Error ineterno del servidor.";
         }
     }
-        
+   
     let updateMs = "";
     let updateMsName = "";
     let updateCCI = cci; 
@@ -87,58 +89,74 @@
     let updateEu_payment_rate = "";
     let updateEu_payment_rate_on_planned_eu_amount = "";
 
-
     async function updateData() {
+            
         resultStatus = result = "";
+        const requestBody = {
+            ms: updateMs,
+            ms_name: updateMsName,
+            cci: updateCCI,
+            title: updateTitle,
+            fund: updateFund,
+            category_of_region: updateCategory_of_region,
+            year: updateYear,
+            net_planned_eu_amount: updateNet_planned_eu_amount,
+            cumulative_initial_pre_financing: updateCumulative_initial_pre_financing,
+            cumulative_additional_initial_pre_financing: updateVumulative_additional_initial_pre_financing,
+            recovery_of_initial_pre_financing: updateRecovery_of_initial_pre_financing,
+            cumulative_annual_pre_financing: updateCumulative_annual_pre_financing,
+            pre_financing_covered_by_expenditure: updatePre_financing_covered_by_expenditure,
+            recovery_of_annual_pre_financing: updateRecovery_of_annual_pre_financing,
+            net_pre_financing: updateNet_pre_financing,
+            cumulative_interim_payments: updateCumulative_interim_payments,
+            recovery_of_expenses: updateRecovery_of_expenses,
+            net_interim_payments: updateNet_interim_payments,
+            total_net_payments: updateTotal_net_payments,
+            eu_payment_rate: updateEu_payment_rate,
+            eu_payment_rate_on_planned_eu_amount: updateEu_payment_rate_on_planned_eu_amount
+        };
+
+        // Verificar si alguno de los campos está vacío o undefined
+        for (const key in requestBody) {
+            if (requestBody[key] === undefined || requestBody[key] === "") {
+                document.getElementById('message-container').textContent = "Rellene todos los campos.";
+                return; 
+            }
+        }
+
         const res = await fetch(API + "/" + cci, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({
-                ms: updateMs,
-                ms_name:updateMsName,
-                cci: updateCCI,
-                title: updateTitle,
-                fund: updateFund,
-                category_of_region: updateCategory_of_region,
-                year: updateYear,
-                net_planned_eu_amount: updateNet_planned_eu_amount,
-                cumulative_initial_pre_financing: updateCumulative_initial_pre_financing,
-                cumulative_additional_initial_pre_financing: updateVumulative_additional_initial_pre_financing,
-                recovery_of_initial_pre_financing: updateRecovery_of_initial_pre_financing,
-                cumulative_annual_pre_financing: updateCumulative_annual_pre_financing,
-                pre_financing_covered_by_expenditure: updatePre_financing_covered_by_expenditure,
-                recovery_of_annual_pre_financing: updateRecovery_of_annual_pre_financing,
-                net_pre_financing: updateNet_pre_financing,
-                cumulative_interim_payments: updateCumulative_interim_payments,
-                recovery_of_expenses: updateRecovery_of_expenses,
-                net_interim_payments: updateNet_interim_payments,
-                total_net_payments: updateTotal_net_payments,
-                eu_payment_rate: updateEu_payment_rate,
-                eu_payment_rate_on_planned_eu_amount: updateEu_payment_rate_on_planned_eu_amount
-            }),
+            body: JSON.stringify(requestBody),
         });
+
         const status = await res.status;
         resultStatus = status;
 
-        if (status == 200) {
-            message = "El elemento se ha actualizado";
-            getData();
-        } else if (status == 400) {
-            message = "Rellena todos los campos";
-        } else if (status == 500) {
-            message = "Error interno";
-        }
+            if (status == 200) {
+                document.getElementById('message-container').textContent = "El elemento ha sido actualizado.";
+                getData();
+            } else if (status == 400) {
+                document.getElementById('message-container').textContent = "Rellene todos los campos.";
+            } else if (status == 500) {
+                document.getElementById('message-container').textContent = "Error interno del servidor.";
+            }
     }
+
+
 </script>
 
 <body>
     
     <br> <br>
     <div id="message-container"></div>
+
+    <br> 
+    <h2>Detalles sobre el dato con {cci} </h2> 
     
-    <br> <br>
+    <br> 
     <table class="tabla-datos">
     
         <thead>
@@ -240,11 +258,12 @@
         text-align: center; 
         text-decoration: none; 
         display: inline-block; 
-        font-size: 16px; 
+        font-size: 20px; 
         margin: 4px 2px; 
         cursor: pointer; 
         border-radius: 4px; 
-        margin-left: 1%;
+        margin-top: 10px;
+        margin-left: 10px;
         }
     
         .button:hover {
@@ -265,5 +284,3 @@
     
     
     </style>
-
-Detalles sobre el dato con {cci} 
