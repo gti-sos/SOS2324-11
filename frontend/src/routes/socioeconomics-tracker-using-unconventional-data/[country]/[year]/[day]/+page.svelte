@@ -51,7 +51,7 @@
             updatedNet_interim_payment = dato.net_interim_payment;
             updatedTotal_net_payment = dato.total_net_payment;
             updatedEu_payment_rate = dato.eu_payment_rate;
-            updatedEu_payment_rate_on_planned_eu_amount = dato.eu_payment_rate_on_planned_eu_amount;
+            
         } catch (error) {
             console.log(`Error parsing result: ${error}`);
         }
