@@ -600,7 +600,7 @@ function loadBackend_isabel (app, db) {
         });
     });
 
-    //DELETE - DELETE SPECIFIC DATA
+    //DELETE- DELETE SPECIFIC DATA
     app.delete(API_BASE + "/structural-payment-data/:ms_name/:fund", (req, res) => {
         let country = req.params.ms_name;
         let fund = req.params.fund;
