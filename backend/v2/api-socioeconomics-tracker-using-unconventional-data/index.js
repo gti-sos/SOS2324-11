@@ -266,7 +266,7 @@ function loadBackend_álvaro (app, db) {
 
     app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data/docs", (req, res) => {
         console.log(`REDIRECT TO structural-payment-data/docs`);
-        res.status(301).redirect("https://documenter.getpostman.com/view/33058352/2sA2xh3CpF")
+        res.status(301).redirect("https://documenter.getpostman.com/view/33058352/2sA35HX1cU")
     
     });
 

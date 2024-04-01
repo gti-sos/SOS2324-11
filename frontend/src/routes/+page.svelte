@@ -52,7 +52,7 @@
     <p>
        <a href="https://sos2324-11.appspot.com/api/v2/structural-investment-data/docs"><span>V2 structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
        <a href="https://sos2324-11.appspot.com/api/v2/structural-payment-data/docs"><span>V2 structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data/docs"><span> V2socioeconomics-traker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data/docs"><span> V2 socioeconomics-traker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
     </p>
 </div>
 
