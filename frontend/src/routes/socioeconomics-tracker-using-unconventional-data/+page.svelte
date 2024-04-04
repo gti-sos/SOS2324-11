@@ -30,7 +30,7 @@
     let Msg ="";
 
     onMount(()=>{
-        getData();
+        getDataWithPagination();
     })
 
     async function getData(){
@@ -121,6 +121,59 @@
         }
     }
 
+    let fromYear = '';
+    let toYear = '';
+    let currentPage = 1;
+    let totalPages = 1;
+    let resultsPerPage = 10;
+    let totalResults = 0;
+
+    // Función para buscar datos
+    async function searchData() {
+        try {
+            let searchURL = `${API}?from=${fromYear}&to=${toYear}&limit=${resultsPerPage}&offset=${(currentPage - 1) * resultsPerPage}`;
+            let response = await fetch(searchURL);
+            let dat = await response.json();
+            data = dat;
+            console.log(data);
+        } catch (e) {
+            Msg = e;
+        }
+    }
+
+    // Función para obtener datos con paginación
+    async function getDataWithPagination() {
+        try {
+            let response = await fetch(`${API}?limit=${resultsPerPage}&offset=${(currentPage - 1) * resultsPerPage}`);
+            let dat = await response.json();
+            data = dat;
+            console.log(data);
+        } catch (e) {
+            Msg = e;
+        }
+    }
+
+    // Función para calcular el total de páginas
+    function calculateTotalPages() {
+        totalPages = Math.ceil(totalResults / resultsPerPage);
+    }
+
+    // Función para ir a la página anterior
+    function previousPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            getDataWithPagination();
+        }
+    }
+
+    // Función para ir a la página siguiente
+    function nextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            getDataWithPagination();
+        }
+    }
+
 </script>
 
 <br>
@@ -207,4 +260,24 @@
 {#if Msg != ""}
 MENSAJE: {Msg}
 {/if}
+<br>
+<br>
+<label>
+    Desde:
+    <input type="number" bind:value={fromYear}>
+</label>
+<label>
+    Hasta:
+    <input type="number" bind:value={toYear}>
+</label>
+<button on:click={searchData}>Buscar</button>
+
+<!-- Agrega controles de paginación -->
+<br>
+<br>
+<button on:click={previousPage} disabled={currentPage === 1}>Página anterior</button>
+<button on:click={nextPage} disabled={currentPage >= totalPages}>Página siguiente</button>
+
+<!-- Lista de resultados -->
+
 
