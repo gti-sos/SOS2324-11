@@ -31,7 +31,21 @@
         "eu_payment_rate": "Cantidad",
         "eu_payment_rate_on_planned_eu_amount": "Cantidad"
     };
+
+    const colors = [
+    'primary',
+    'secondary',
+    'success',
+    'danger',
+    'warning',
+    'info',
+    'light',
+    'dark'
+  ];
+
+    let c="";
     let errorMsg ="";
+    let limit = 10;
 
     onMount(()=>{
         getData();
@@ -39,7 +53,7 @@
 
     async function getData(){
         try{
-            let response = await fetch(API, {
+            let response = await fetch(API+`?offset=0&&limit=${limit}`, {
                                 method: "GET"
                         });
 
@@ -48,6 +62,36 @@
             console.log(data);
         }catch(e){
             errorMsg = e;
+        }
+    }
+
+    async function getInitialData() {
+        let response = await fetch(API+"/loadInitialData", {
+                                        method: "GET",
+        });
+        try {
+            const dat = await res.json();
+            data = dat;
+        } catch (error) {
+            console.log(`Error al parsear el resultado: ${error}`);
+        }
+        let status = await response.status;
+        if(status==200){
+            getData();
+            errorMsg = "Los datos han sido insertados correctamente.";
+        }
+    }
+
+    async function getNextPage() {
+        let response = await fetch(API+`?offset=10&&limit=${limit}`, {
+            method: "GET",
+        });
+        try {
+            let dat = await response.json();
+            data = dat;
+            console.log(data);
+        } catch (error) {
+            console.log(`Error al parsear el resultado: ${error}`);
         }
     }
 
@@ -80,6 +124,32 @@
              errorMsg = e;
         }
     }
+
+    
+    let getFrom = null;
+    let getTo = null;
+
+    async function getFromTo(getFrom,getTo) {
+            let response = await fetch(API+`?from=${getFrom}&to=${getTo}`, {
+                method: "GET",
+            });
+            try {
+                let dat = await response.json();
+                data = dat;
+                console.log(data);
+            } catch (error) {
+                console.log(`Error al parsear el resultado: ${error}`);
+            }
+            let status = await response.status;
+            if (status == 200) {
+                errorMsg = "Se ha realizado la petición correctamente";
+            } else if (status == 400) {
+                errorMsg = "La petición no es correcta."
+            } else if (status == 500) {
+                errorMsg = "Error del servidor";
+            } 
+    }
+        
 
     async function deleteAllData(){
         try{
@@ -177,16 +247,30 @@
         </tr>
     </tbody>
 </table>
+
 <ul>
-    
     {#each data as d}
         <li><a href="/structural-payment-data/{d.ms_name}/{d.fund}">{d.ms_name}-{d.fund}</a><button on:click="{deleteData(d.ms_name, d.fund)}">Delete</button>
         </li>
     {/each}
 </ul>
 
+<br>
+    <div>
+        <input placeholder="Año de inicio" bind:value={getFrom} />
+        <input placeholder="Año de fin" bind:value={getTo} />
+        <button on:click={getFromTo(getFrom,getTo)}>Buscar por rango de año</button>
+    </div>
+<br>
 <button on:click="{createData}">Crear nuevo dato</button>
 <button on:click="{deleteAllData}">Eliminar todos los datos</button>
+
+{#if data.length == 0}
+<button on:click="{getInitialData}">Cargar datos iniciales</button>
+{:else if data.length > 0}
+<button on:click="{getData}">1</button>
+<button on:click="{getNextPage}">2</button>
+{/if}
 
 {#if errorMsg != ""}
 {errorMsg}
