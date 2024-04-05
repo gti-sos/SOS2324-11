@@ -16,6 +16,6 @@
   - [/v2/socioeconomics-traker-using-unconventional-data/docs ](https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data/docs) (developed by Álvaro Marcos Delgado)
   -  **FrontEnds**:
   -   [structural-investment-data ](https://sos2324-11.appspot.com/structural-investment)   (developed by Sharay Portillo Jurado)
-  -   [structural-payment-data ]([https://sos2324-11.appspot.com/api/v2/structural-payment-data/docs](https://sos2324-11.appspot.com/structural-payment-data)) (developed by Isabel María Trapero Romero)
+  -   [structural-payment-data ](https://sos2324-11.appspot.com/structural-payment-data) (developed by Isabel María Trapero Romero)
   -   [socioeconomics-traker-using-unconventional-data ](https://sos2324-11.appspot.com/socioeconomics-tracker-using-unconventional-data) (developed by Álvaro Marcos Delgado)
-  -   
+    
