@@ -283,7 +283,7 @@ function loadBackend_álvaro (app, db) {
             const toYear = parseInt(to);
             console.log(fromYear, toYear);
             if (isNaN(fromYear) || isNaN(toYear)) {
-                return res.status(400).send("Invalid year format. Please provide valid year values.");
+                return res.status(400).send("Invalid year format. Please provide valid year valuess.");
             }
             // Si los años son válidos, construye la consulta para filtrar por el rango de años
             queryParameters.year = { $gte: fromYear, $lte: toYear };
