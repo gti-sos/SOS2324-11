@@ -3,7 +3,9 @@
     import Footer from "./Footer.svelte";
 </script>
 
-
+<svelte:head>
+    <title>SOS2324-11</title>
+</svelte:head>
 
 <body>
 <h1>SOS2324-11</h1>

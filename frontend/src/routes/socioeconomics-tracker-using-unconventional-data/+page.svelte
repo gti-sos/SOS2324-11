@@ -266,7 +266,7 @@
     <ul>
         
         {#each data as d}
-            <li><a href="/socioeconomics-tracker-using-unconventional-data/{d.country}/{d.year}/{d.day}">{d.country}-{d.year}-{d.day}</a><button class="button" on:click="{deleteData(d.country, d.year, d.day)}">  Borrar</button>
+            <li class = "dataItem"><a href="/socioeconomics-tracker-using-unconventional-data/{d.country}/{d.year}/{d.day}">{d.country}-{d.year}-{d.day}</a><button class="button" on:click="{deleteData(d.country, d.year, d.day)}">  Borrar</button>
             </li>
         {/each}
     </ul>

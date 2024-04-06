@@ -119,7 +119,14 @@
 <br>
 <br>
 <br>
-<table>
+
+<div id="message-container">
+    {#if message != ""}
+    {message}
+    {/if}
+</div>
+
+<table class="tabla-datos">
     <thead>
         <th>Fecha</th>
         <th>Año</th>
@@ -128,13 +135,6 @@
         <th>Recuento de cantidad de documentos </th>
         <th>Tasa de popularidad</th>
         <th>Cantidad media</th>
-        <th>Cantidad con peso media</th>
-        <th>tone_cum</th>
-        <th>Codigo amd1</th>
-        <th>Pais</th>
-        <th>Area</th>
-        <th>Referencia de tiempo</th>
-        <th>Tema</th>
     </thead>
 
     <tbody>
@@ -149,7 +149,7 @@
                 <input bind:value={updatedMonth}> 
             </td>
             <td>
-                {updatedDay}
+                {updatedDay}  
             </td>
             <td>
                 <input bind:value={updatedTone_doc_count}> 
@@ -160,82 +160,109 @@
             <td>
                 <input bind:value={updatedTone_avg}> 
             </td>
-            <td>
-                <input bind:value={updatedTone_w_avg}> 
-            </td>
-            <td>
-                <input bind:value={updatedTone_cum}> 
-            </td>
-            <td>
-                <input bind:value={updatedAmd1code}> 
-            </td>
-            <td>
-                {updatedCountry}
-            </td>
-            <td>
-                <input bind:value={updatedArea}> 
-            </td>
-            <td>
-                <input bind:value={updatedRef_time}> 
-            </td>
-            <td>
-                <input bind:value={updatedTopic}> 
-            </td>
         </tr>
-
-        <tr>
-            <td>
-                {updatedDate}
-            </td>
-            <td>
-                {updatedYear} 
-            </td>
-            <td>
-                {updatedMonth}
-            </td>
-            <td>
-                {updatedDay}
-            </td>
-            <td>
-                {updatedTone_doc_count}
-            </td>
-            <td>
-                {updatedPopularity_rate}
-            </td>
-            <td>
-                {updatedTone_avg}
-            </td>
-            <td>
-                {updatedTone_w_avg} 
-            </td>
-            <td>
-                {updatedTone_cum}
-            </td>
-            <td>
-                {updatedAmd1code}
-            </td>
-            <td>
-                {updatedCountry}
-            </td>
-            <td>
-                {updatedArea}
-            </td>
-            <td>
-                {updatedRef_time}
-            </td>
-            <td>
-                {updatedTopic}
-            </td>
-        </tr>
-
     </tbody>
+
+    <thead>
+        <th>Cantidad con peso media</th>
+        <th>tone_cum</th>
+        <th>Codigo amd1</th>
+        <th>Pais</th>
+        <th>Area</th>
+        <th>Referencia de tiempo</th>
+        <th>Tema</th>
+    </thead>
+
+    <tr>
+        <td>
+            <input bind:value={updatedTone_w_avg}> 
+        </td>
+        <td>
+            <input bind:value={updatedTone_cum}> 
+        </td>
+        <td>
+            <input bind:value={updatedAmd1code}> 
+        </td>
+        <td>
+            {updatedCountry}
+        </td>
+        <td>
+            <input bind:value={updatedArea}> 
+        </td>
+        <td>
+            <input bind:value={updatedRef_time}> 
+        </td>
+        <td>
+            <input bind:value={updatedTopic}> 
+        </td>
+    </tr>
 </table>
 
-<button on:click="{updateData}">Actualizar dato</button>
+
+
+<button class="button" on:click="{updateData}">Actualizar dato</button>
 
 {#if message != ""}
 {message}
 {/if}
+
+<style>
+    .tabla-datos {
+        border: 2px solid #000; 
+        background-color: #ADD8E6; 
+        border-collapse: collapse; 
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    /* Estilo para las celdas de la tabla */
+    .tabla-datos th, .tabla-datos td {
+        border: 1px solid #000; 
+        padding: 20px; 
+        text-align: center; 
+        
+    }
+
+    /* Estilo para las celdas de encabezado */
+    .tabla-datos th {
+        background-color: #4682B4; 
+        color: white; 
+        text-align: center; 
+        
+    }
+
+    .button {
+    background-color: #007BFF; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px; 
+    margin: 4px 2px; 
+    cursor: pointer; 
+    border-radius: 4px; 
+    margin-left: 1%;
+    }
+
+    .button:hover {
+        background-color: #0056b3; 
+    }
+
+    /* Mensaje de error*/
+    #message-container {
+    padding: 10px;
+    font-size: 28px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 0px;
+    background-color: #f8b8a3; 
+    color: #000000; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    }
+
+</style>
 
 
 
