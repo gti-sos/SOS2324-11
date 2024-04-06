@@ -28,14 +28,15 @@
 
     
     let Msg ="";
+    let limit = 10;
 
     onMount(()=>{
-        getDataWithPagination();
+        getData();
     })
 
     async function getData(){
         try{
-            let response = await fetch(API, {
+            let response = await fetch(API+`?offset=0&&limit=${limit}`, {
                                 method: "GET"
                         });
 
@@ -45,6 +46,60 @@
         }catch(e){
             Msg = e;
         }
+    }
+
+    async function getInitialData() {
+        let response = await fetch(API+"/loadInitialData", {
+                                        method: "GET",
+        });
+        try {
+            const dat = await res.json();
+            data = dat;
+        } catch (error) {
+            console.log(`Error al parsear el resultado: ${error}`);
+        }
+        let status = await response.status;
+        if(status==200){
+            getData();
+            Msg = "Los datos han sido insertados correctamente.";
+        }
+    }
+
+    async function getNextPage() {
+        let response = await fetch(API+`?offset=10&&limit=${limit}`, {
+            method: "GET",
+        });
+        try {
+            let dat = await response.json();
+            data = dat;
+            console.log(data);
+        } catch (error) {
+            console.log(`Error al parsear el resultado: ${error}`);
+        }
+    }
+
+    let getFrom = null;
+    let getTo = null;
+
+    async function getFromTo(getFrom,getTo) {
+            let response = await fetch(API+`?from=${getFrom}&to=${getTo}`, {
+                method: "GET",
+            });
+            try {
+                let dat = await response.json();
+                data = dat;
+                console.log(data);
+            } catch (error) {
+                console.log(`Error al parsear el resultado: ${error}`);
+            }
+            let status = await response.status;
+            if (status == 200) {
+                Msg = "Se ha realizado la petición correctamente";
+            } else if (status == 400) {
+                Msg = "La petición no es correcta."
+            } else if (status == 500) {
+                Msg = "Error del servidor";
+            } 
     }
 
     async function createData(){
@@ -121,105 +176,68 @@
         }
     }
 
-    let fromYear = '';
-    let toYear = '';
-    let currentPage = 1;
-    let totalPages = 1;
-    let resultsPerPage = 10;
-    let totalResults = 0;
-
-    // Función para buscar datos
-    async function searchData() {
-        try {
-            let searchURL = `${API}?from=${fromYear}&to=${toYear}&limit=${resultsPerPage}&offset=${(currentPage - 1) * resultsPerPage}`;
-            let response = await fetch(searchURL);
-            let dat = await response.json();
-            data = dat;
-            console.log(data);
-        } catch (e) {
-            Msg = e;
-        }
-    }
-
-    // Función para obtener datos con paginación
-    async function getDataWithPagination() {
-        try {
-            let response = await fetch(`${API}?limit=${resultsPerPage}&offset=${(currentPage - 1) * resultsPerPage}`);
-            let dat = await response.json();
-            data = dat;
-            console.log(data);
-        } catch (e) {
-            Msg = e;
-        }
-    }
-
-    // Función para calcular el total de páginas
-    function calculateTotalPages() {
-        totalPages = Math.ceil(totalResults / resultsPerPage);
-    }
-
-    // Función para ir a la página anterior
-    function previousPage() {
-        if (currentPage > 1) {
-            currentPage--;
-            getDataWithPagination();
-        }
-    }
-
-    // Función para ir a la página siguiente
-    function nextPage() {
-        if (currentPage < totalPages) {
-            currentPage++;
-            getDataWithPagination();
-        }
-    }
-
 </script>
 
-<br>
-<br>
-<br>
-<table>
-    <thead>
-        <th>Fecha</th>
-        <th>Año</th>
-        <th>Mes</th>
-        <th> Dia</th>
-        <th>Recuento de cantidad de documentos </th>
-        <th>Tasa de popularidad</th>
-        <th>Cantidad media</th>
-        <th>Cantidad con peso media</th>
-        <th>tone_cum</th>
-        <th>Codigo amd1</th>
-        <th>Pais</th>
-        <th>Area</th>
-        <th>Referencia de tiempo</th>
-        <th>Tema</th>
-    </thead>
+<body>
 
-    <tbody>
+    <br> <br>
+    <div id="message-container">
+        {#if Msg != ""}
+        {Msg}
+        {/if}
+    </div>
+
+    <br>
+    <br>
+    
+    <table class="tabla-datos">
+        <thead>
+            <th>Fecha</th>
+            <th>Año</th>
+            <th>Mes</th>
+            <th> Dia</th>
+            <th>Recuento de cantidad de documentos </th>
+            <th>Tasa de popularidad</th>
+            <th>Cantidad media</th>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    <input bind:value={newData.date}>
+                </td>
+                <td>
+                    <input bind:value={newData.year} type="number"> 
+                </td>
+                <td>
+                    <input bind:value={newData.month}> 
+                </td>
+                <td>
+                    <input bind:value={newData.day} type="number"> 
+                </td>
+                <td>
+                    <input bind:value={newData.tone_doc_count}> 
+                </td>
+                <td>
+                    <input bind:value={newData.popularity_rate}> 
+                </td>
+                <td>
+                    <input bind:value={newData.tone_avg}> 
+                </td>
+            </tr>
+        </tbody>
+
+        <thead>
+            <th>Cantidad con peso media</th>
+            <th>tone_cum</th>
+            <th>Codigo amd1</th>
+            <th>Pais</th>
+            <th>Area</th>
+            <th>Referencia de tiempo</th>
+            <th>Tema</th>
+        </thead>
+
         <tr>
-            <td>
-                <input bind:value={newData.date}>
-            </td>
-            <td>
-                <input bind:value={newData.year} type="number"> 
-            </td>
-            <td>
-                <input bind:value={newData.month}> 
-            </td>
-            <td>
-                <input bind:value={newData.day} type="number"> 
-            </td>
-            <td>
-                <input bind:value={newData.tone_doc_count}> 
-            </td>
-            <td>
-                <input bind:value={newData.popularity_rate}> 
-            </td>
-            <td>
-                <input bind:value={newData.tone_avg}> 
-            </td>
             <td>
                 <input bind:value={newData.tone_w_avg}> 
             </td>
@@ -242,42 +260,107 @@
                 <input bind:value={newData.topic}> 
             </td>
         </tr>
-    </tbody>
-</table>
+    </table>
 
 
-<ul>
-    
-    {#each data as d}
-        <li><a href="/socioeconomics-tracker-using-unconventional-data/{d.country}/{d.year}/{d.day}">{d.country}-{d.year}-{d.day}</a><button on:click="{deleteData(d.country, d.year, d.day)}">Borrar</button>
-        </li>
-    {/each}
-</ul>
+    <ul>
+        
+        {#each data as d}
+            <li><a href="/socioeconomics-tracker-using-unconventional-data/{d.country}/{d.year}/{d.day}">{d.country}-{d.year}-{d.day}</a><button class="button" on:click="{deleteData(d.country, d.year, d.day)}">  Borrar</button>
+            </li>
+        {/each}
+    </ul>
 
-<button on:click="{createData}">Crear nuevo dato</button>
-<button on:click="{deleteAllData}">Eliminar todos los datos</button>
+    <button class="button" on:click="{createData}">Crear nuevo dato</button>
+    <button class="button" on:click="{deleteAllData}">Eliminar todos los datos</button>
 
-{#if Msg != ""}
-MENSAJE: {Msg}
-{/if}
-<br>
-<br>
-<label>
-    Desde:
-    <input type="number" bind:value={fromYear}>
-</label>
-<label>
-    Hasta:
-    <input type="number" bind:value={toYear}>
-</label>
-<button on:click={searchData}>Buscar</button>
 
-<!-- Agrega controles de paginación -->
-<br>
-<br>
-<button on:click={previousPage} disabled={currentPage === 1}>Página anterior</button>
-<button on:click={nextPage} disabled={currentPage >= totalPages}>Página siguiente</button>
+    <br>
+    <br>
+    <label>
+        Desde:
+        <input type="number" bind:value={getFrom}>
+    </label>
+    <label>
+        Hasta:
+        <input type="number" bind:value={getTo}>
+    </label>
+    <button class="button" on:click={getFromTo(getFrom,getTo)}>Buscar</button>
 
-<!-- Lista de resultados -->
+    <!-- Agrega controles de paginación -->
+    <br>
+    <br>
+
+    {#if data.length == 0}
+    <button class="button" on:click="{getInitialData}">Cargar datos iniciales</button>
+    {:else if data.length > 0}
+    <button class="button" on:click="{getData}">Pagina anterior</button>
+    <button class="button" on:click="{getNextPage}">Pagina siguiente</button>
+    {/if}
+</body>
+
+
+<style>
+    /* Estilo para la tabla */
+    .tabla-datos {
+        border: 2px solid #000; 
+        background-color: #ADD8E6; 
+        border-collapse: collapse; 
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    /* Estilo para las celdas de la tabla */
+    .tabla-datos th, .tabla-datos td {
+        border: 1px solid #000; 
+        padding: 20px; 
+        text-align: center; 
+        
+    }
+
+    /* Estilo para las celdas de encabezado */
+    .tabla-datos th {
+        background-color: #4682B4; 
+        color: white; 
+        text-align: center; 
+        
+    }
+
+    /* Estilo para los botones */
+    .button {
+    background-color: #007BFF; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 16px; 
+    margin: 4px 2px; 
+    cursor: pointer; 
+    border-radius: 4px; 
+    margin-left: 1%;
+    }
+
+    .button:hover {
+        background-color: #0056b3; 
+    }
+
+    /* Mensaje de error*/
+    #message-container {
+    padding: 10px;
+    font-size: 28px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 0px;
+    background-color: #f8b8a3; 
+    color: #000000; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+
+</style>
+
+
 
 
