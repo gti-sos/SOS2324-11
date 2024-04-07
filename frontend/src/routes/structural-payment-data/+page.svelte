@@ -6,7 +6,7 @@
     if(dev)
         API = "http://localhost:10000"+API;
 
-
+    
     let data = [];
     let newData = {
         "ms": "Código",
@@ -32,25 +32,185 @@
         "eu_payment_rate_on_planned_eu_amount": "Cantidad"
     };
 
-    const colors = [
-    'primary',
-    'secondary',
-    'success',
-    'danger',
-    'warning',
-    'info',
-    'light',
-    'dark'
-  ];
+    let ms = "";
+    let ms_name = "";
+    let fund = "";
+    let year = "";
+    let planned_eu_amount = "";
+    let n_3_decommitment_amount = "";
+    let net_planned_eu_amount = "";
+    let cumulative_initial_pre_financing= "";
+    let cumulative_additional_initial_pre_financing= "";
+    let recovery_of_initial_pre_financing= "";
+    let net_initial_pre_financing= "";
+    let cumulative_annual_pre_financing= "";
+    let annual_pre_financing_covered_by_expenditure= "";
+    let recovery_of_annual_pre_financing= "";
+    let net_annual_pre_financing= "";
+    let cumulative_interim_payment= "";
+    let recovery_of_expense= "";
+    let net_interim_payment= "";
+    let total_net_payment= "";
+    let eu_payment_rate= "";
+    let eu_payment_rate_on_planned_eu_amount= "";
+    let from = ""; 
+    let to = "";
 
-    let c="";
+  
     let errorMsg ="";
-    let limit = 10;
+    let currentPage = 0;
+    let pageSize = 10;
+    let mostrarTabla = false;
+    
+
 
     onMount(()=>{
-        getData();
+        mostrarTabla = false;
+        filterApplied = false;
+        getStudents();
+        
     })
 
+    let filterApplied = false; // Variable para controlar si se ha aplicado un filtro
+
+    async function getData() {
+    try {
+        let response;
+        let parametros = `?limit=${pageSize}`;
+        if (currentPage > 0) {
+            const offset = currentPage * pageSize;
+            parametros += `&offset=${offset}`;
+        }
+
+        // Verificamos si se han introducido parámetros de búsqueda
+        if (ms !== "") {
+            parametros += `&ms=${ms}`;
+        }
+        if (ms_name !== "") {
+            parametros += `&ms_name=${ms_name}`;
+        }
+        if (fund !== "") {
+            parametros += `&fund=${fund}`;
+        }
+        if (year !== "") {
+            parametros += `&year=${year}`;
+        }
+        if (planned_eu_amount !== "") {
+            parametros += `&planned_eu_amount=${planned_eu_amount}`;
+        }
+        if (n_3_decommitment_amount !== "") {
+            parametros += `&n_3_decommitment_amount=${n_3_decommitment_amount}`;
+        }
+        if (net_planned_eu_amount !== "") {
+            parametros += `&net_planned_eu_amount=${net_planned_eu_amount}`;
+        }
+        if (cumulative_initial_pre_financing !== "") {
+            parametros += `&cumulative_initial_pre_financing=${cumulative_initial_pre_financing}`;
+        }
+        if (cumulative_additional_initial_pre_financing !== "") {
+            parametros += `&cumulative_additional_initial_pre_financing=${cumulative_additional_initial_pre_financing}`;
+        }
+        if (recovery_of_initial_pre_financing !== "") {
+            parametros += `&recovery_of_initial_pre_financing=${recovery_of_initial_pre_financing}`;
+        }
+        if (net_initial_pre_financing !== "") {
+            parametros += `&net_initial_pre_financing=${net_initial_pre_financing}`;
+        }
+        if (cumulative_annual_pre_financing !== "") {
+            parametros += `&cumulative_annual_pre_financing=${cumulative_annual_pre_financing}`;
+        }
+        if (annual_pre_financing_covered_by_expenditure !== "") {
+            parametros += `&annual_pre_financing_covered_by_expenditure=${annual_pre_financing_covered_by_expenditure}`;
+        }
+        if (recovery_of_annual_pre_financing !== "") {
+            parametros += `&recovery_of_annual_pre_financing=${recovery_of_annual_pre_financing}`;
+        }
+        if (net_annual_pre_financing !== "") {
+            parametros += `&net_annual_pre_financing=${net_annual_pre_financing}`;
+        }
+        if (cumulative_interim_payment !== "") {
+            parametros += `&cumulative_interim_payment=${cumulative_interim_payment}`;
+        }
+        if (recovery_of_expense !== "") {
+            parametros += `&recovery_of_expense=${recovery_of_expense}`;
+        }
+        if (net_interim_payment !== "") {
+            parametros += `&net_interim_payment=${net_interim_payment}`;
+        }
+        if (total_net_payment !== "") {
+            parametros += `&total_net_payment=${total_net_payment}`;
+        }
+        if (eu_payment_rate !== "") {
+            parametros += `&eu_payment_rate=${eu_payment_rate}`;
+        }
+        if (eu_payment_rate_on_planned_eu_amount !== "") {
+            parametros += `&eu_payment_rate_on_planned_eu_amount=${eu_payment_rate_on_planned_eu_amount}`;
+        }
+
+
+        response = await fetch(API + parametros, {
+            method: "GET",
+        });
+
+        let status = await response.status;
+        if (status === 404) {
+            document.getElementById('message-container').textContent = "No se encontraron datos que coincidan con los filtros especificados.";
+            data = []; // Limpiar el arreglo de estudiantes
+
+            
+
+            return;
+        }
+        let dat = await response.json();
+        // Filtrar por rango de año si se especifica
+        if (from !== "" && to !== "") {
+            dat = dat.filter(d => d.year >= from && d.year <= to);
+        }
+
+        data = dat;
+        console.log(dat);
+
+        // Verificar si se han aplicado filtros
+        if (
+            ms !== "" ||
+            ms_name !== "" ||
+            fund !== "" ||
+            year !== "" ||
+            planned_eu_amount !== "" ||
+            n_3_decommitment_amount !== "" ||
+            net_planned_eu_amount !== "" ||
+            cumulative_initial_pre_financing !== "" ||
+            cumulative_additional_initial_pre_financing !== "" ||
+            recovery_of_initial_pre_financing !== "" ||
+            net_initial_pre_financing !== "" ||
+            cumulative_annual_pre_financing !== "" ||
+            annual_pre_financing_covered_by_expenditure !== "" ||
+            recovery_of_annual_pre_financing !== "" ||
+            net_annual_pre_financing !== "" ||
+            cumulative_interim_payment !== "" ||
+            recovery_of_expense !== "" ||
+            net_interim_payment !== "" ||
+            total_net_payment !== "" ||
+            eu_payment_rate !== "" ||
+            eu_payment_rate_on_planned_eu_amount !== "" ||
+            from !== "" ||
+            to !== ""
+        ) {
+            filterApplied = true;
+        } else {
+            filterApplied = false;
+        }
+
+        if (dat.length > 0 && filterApplied) {
+
+            // Mostrar mensaje de éxito
+            document.getElementById('message-container').textContent = "La búsqueda se ha realizado con éxito.";
+        }
+    } catch (e) {
+        errorMsg = e;
+    }
+}
+/*
     async function getData(){
         try{
             let response = await fetch(API+`?offset=0&&limit=${limit}`, {
@@ -63,7 +223,7 @@
         }catch(e){
             errorMsg = e;
         }
-    }
+    }*/
 
     async function getInitialData() {
         let response = await fetch(API+"/loadInitialData", {
@@ -81,7 +241,7 @@
             document.getElementById('message-container').textContent = "Los datos han sido insertados correctamente.";
         }
     }
-
+/*
     async function getNextPage() {
         let response = await fetch(API+`?offset=10&&limit=${limit}`, {
             method: "GET",
@@ -93,7 +253,7 @@
         } catch (error) {
             console.log(`Error al parsear el resultado: ${error}`);
         }
-    }
+    }*/
 
     async function createData(){
         try{
@@ -125,7 +285,32 @@
         }
     }
 
+    function toggleTabla() {
+        mostrarTabla = !mostrarTabla;
+    }
+
     
+
+async function nextPage() {
+    if (Students.length >= pageSize) {
+      currentPage++;
+      await getStudents();
+    } else {
+      errorMsg = "No hay más datos disponibles en la página siguiente.";
+    }
+  }
+
+  async function prevPage() {
+    if (currentPage > 0) {
+      currentPage--;
+      await getStudents();
+    } else {
+      errorMsg = "Ya estás en la primera página.";
+    }
+  }
+
+
+   /*
     let getFrom = null;
     let getTo = null;
 
@@ -149,7 +334,7 @@
                 document.getElementById('message-container').textContent = "Error del servidor";
             } 
     }
-        
+        */
 
     async function deleteAllData(){
         try{
@@ -267,22 +452,94 @@
 </ul>
 
 <div id="message-container"></div>
-
-<br>
-    <div>
-        <input placeholder="Año de inicio" bind:value={getFrom} />
-        <input placeholder="Año de fin" bind:value={getTo} />
-        <button class="button" on:click={getFromTo(getFrom,getTo)}>Buscar por rango de año</button>
-    </div>
-<br>
+<button class="button" on:click="{getData}">Crear nuevo dato</button>
 <button class="button" on:click="{createData}">Crear nuevo dato</button>
 <button class="button" on:click="{deleteAllData}">Eliminar todos los datos</button>
+<button class="button" on:click={toggleTabla}>Filtrar</button>
 
 {#if data.length == 0}
 <button class="button" on:click="{getInitialData}">Cargar datos iniciales</button>
 {:else if data.length > 0}
-<button class="button" on:click="{getData}">1</button>
-<button class="button" on:click="{getNextPage}">2</button>
+<button class="button" on:click="{prevPage}">1</button>
+<button class="button" on:click="{nextPage}">2</button>
+{/if}
+
+{#if mostrarTabla}
+    <div>
+    <table class:tabla-datos={mostrarTabla}>
+        <caption><div>
+            Menú de búsqueda
+          </div></caption>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Fondo</th>
+                <th> Año</th>
+                <th>Cantidad planificada de la UE </th>
+                <th>Cantidad de descompromiso n-3</th>
+                </tr>
+                <tr>
+                    <td><input bind:value={ms}></td>
+                    <td><input bind:value={ms_name}></td>
+                    <td><input bind:value={fund}></td>
+                    <td><input bind:value={year}></td>
+                    <td><input bind:value={planned_eu_amount}></td>
+                    <td><input bind:value={n_3_decommitment_amount}></td>
+                </tr>
+                <tr>
+                <th>Cantidad neta planificada de la UE</th>
+                <th>Financiamiento inicial acumulativo</th>
+                <th>Financiamiento inicial adicional acumulativo </th>
+                <th>Recuperación del financiamiento inicial</th>
+                <th>Financiamiento inicial neto</th>
+                <th>Financiamiento anual acumulativo </th>
+                </tr>
+                <tr>
+                    <td><input bind:value={net_planned_eu_amount}></td>
+                    <td><input bind:value={cumulative_initial_pre_financing}></td>
+                    <td><input bind:value={cumulative_additional_initial_pre_financing}></td>
+                    <td><input bind:value={recovery_of_initial_pre_financing}></td>
+                    <td><input bind:value={net_initial_pre_financing}></td>
+                    <td><input bind:value={cumulative_annual_pre_financing}></td>
+                </tr>
+                <tr>
+                <th>Financiamiento anual cubierto por gastos</th>
+                <th>Recuperación del financiamiento anual</th>
+                <th>Financiamiento anual neto</th>
+                <th>Pago interino acumulativo</th>
+                <th>Recuperación del gasto</th>
+                <th>Pago interino neto</th>
+                </tr>
+                <tr>
+                    <td><input bind:value={annual_pre_financing_covered_by_expenditure}></td>
+                    <td><input bind:value={recovery_of_annual_pre_financing}></td>
+                    <td><input bind:value={net_annual_pre_financing}></td>
+                    <td><input bind:value={cumulative_interim_payment}></td>
+                    <td><input bind:value={recovery_of_expense}></td>
+                    <td><input bind:value={net_interim_payment}></td>
+                </tr>
+                <tr>
+                <th>Pago neto total</th>
+                <th>Tasa de pago de la UE</th>
+                <th>Tasa de pago de la UE sobre la cantidad planificada de la UE </th>
+                <th> Desde el año </th>
+                <th> Hasta el año </th>
+                </tr>
+                <tr>
+                    <td><input bind:value={total_net_payment}></td>
+                    <td><input bind:value={eu_payment_rate}></td>
+                    <td><input bind:value={eu_payment_rate_on_planned_eu_amount}></td>
+                    <td><input bind:value={from} /></td>
+                    <td>
+                        <input bind:value={to} />
+                    </td>
+                </tr>
+    </table>
+    </div>
+        <button class="button" on:click={getData}>Buscar</button>
+
+
 {/if}
 
 
