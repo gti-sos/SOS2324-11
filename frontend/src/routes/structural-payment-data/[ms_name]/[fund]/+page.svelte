@@ -19,7 +19,6 @@
     let dato = [];
     let result = "";
     let resultStatus = "";
-    let message = "";
 
     async function getData() {
         resultStatus = result = "";
@@ -57,10 +56,10 @@
         const status = await res.status;
         resultStatus = status;
         if (status == 404) {
-            message = `El elemento: ${ms_name} ${fund}; No encontrado`;
+            document.getElementById('message-container').textContent = `El elemento: ${ms_name} ${fund}; No encontrado`;
         }
         if (status == 500) {
-            message = "Error interno";
+            document.getElementById('message-container').textContent = "Error interno";
         }
     }
 
@@ -121,41 +120,29 @@
         resultStatus = status;
 
         if (status == 200) {
-            message = "El elemento se ha actualizado";
+            document.getElementById('message-container').textContent = "El elemento se ha actualizado";
             getData();
         } else if (status == 400) {
-            message = "Rellena todos los campos";
+            document.getElementById('message-container').textContent = "Rellena todos los campos";
         } else if (status == 500) {
-            message = "Error interno";
+            document.getElementById('message-container').textContent = "Error interno";
         }
     }
 </script>
 
-<table>
+
+<br>
+<br>
+<table class="tabla-datos">
     <thead>
+        <tr>
         <th>Código</th>
         <th>Nombre</th>
         <th>Fondo</th>
         <th> Año</th>
         <th>Cantidad planificada de la UE </th>
         <th>Cantidad de descompromiso n-3</th>
-        <th>Cantidad neta planificada de la UE</th>
-        <th>Financiamiento inicial acumulativo</th>
-        <th>Financiamiento inicial adicional acumulativo </th>
-        <th>Recuperación del financiamiento inicial</th>
-        <th>Financiamiento inicial neto</th>
-        <th>Financiamiento anual acumulativo </th>
-        <th>Financiamiento anual cubierto por gastos</th>
-        <th>Recuperación del financiamiento anual</th>
-        <th>Financiamiento anual neto</th>
-        <th>Pago interino acumulativo</th>
-        <th>Recuperación del gasto</th>
-        <th>Pago interino neto</th>
-        <th>Pago neto total</th>
-        <th>Tasa de pago de la UE</th>
-        <th>Tasa de pago de la UE sobre la cantidad planificada de la UE </th>
-    </thead>
-    <tbody>
+        </tr>
         <tr>
             <td><input bind:value={updatedMs}></td>
             <td>{updatedMs_name}</td>
@@ -163,50 +150,117 @@
             <td><input bind:value={updatedYear}></td>
             <td><input bind:value={updatedPlanned_eu_amount}></td>
             <td><input bind:value={updatedN_3_decommitment_amount}></td>
+        </tr>
+        <tr>
+        <th>Cantidad neta planificada de la UE</th>
+        <th>Financiamiento inicial acumulativo</th>
+        <th>Financiamiento inicial adicional acumulativo </th>
+        <th>Recuperación del financiamiento inicial</th>
+        <th>Financiamiento inicial neto</th>
+        <th>Financiamiento anual acumulativo </th>
+        </tr>
+        <tr>
             <td><input bind:value={updatedNet_planned_eu_amount}></td>
             <td><input bind:value={updatedCumulative_initial_pre_financing}></td>
             <td><input bind:value={updatedCumulative_additional_initial_pre_financing}></td>
             <td><input bind:value={updatedRecovery_of_initial_pre_financing}></td>
             <td><input bind:value={updatedNet_initial_pre_financing}></td>
             <td><input bind:value={updatedCumulative_annual_pre_financing}></td>
+        </tr>
+        <tr>
+        <th>Financiamiento anual cubierto por gastos</th>
+        <th>Recuperación del financiamiento anual</th>
+        <th>Financiamiento anual neto</th>
+        <th>Pago interino acumulativo</th>
+        <th>Recuperación del gasto</th>
+        <th>Pago interino neto</th>
+        </tr>
+        <tr>
             <td><input bind:value={updatedAnnual_pre_financing_covered_by_expenditure}></td>
             <td><input bind:value={updatedRecovery_of_annual_pre_financing}></td>
             <td><input bind:value={updatedNet_annual_pre_financing}></td>
             <td><input bind:value={updatedCumulative_interim_payment}></td>
             <td><input bind:value={updatedRecovery_of_expense}></td>
             <td><input bind:value={updatedNet_interim_payment}></td>
+        </tr>
+        <tr>
+        <th>Pago neto total</th>
+        <th>Tasa de pago de la UE</th>
+        <th>Tasa de pago de la UE sobre la cantidad planificada de la UE </th>
+        </tr>
+        <tr>
             <td><input bind:value={updatedTotal_net_payment}></td>
             <td><input bind:value={updatedEu_payment_rate}></td>
             <td><input bind:value={updatedEu_payment_rate_on_planned_eu_amount}></td>
         </tr>
-        <tr>
-            <td>{updatedMs}</td>
-            <td>{updatedMs_name}</td>
-            <td>{updatedFund}</td>
-            <td>{updatedYear}</td>
-            <td>{updatedPlanned_eu_amount}</td>
-            <td>{updatedN_3_decommitment_amount}</td>
-            <td>{updatedNet_planned_eu_amount}</td>
-            <td>{updatedCumulative_initial_pre_financing}</td>
-            <td>{updatedCumulative_additional_initial_pre_financing}</td>
-            <td>{updatedRecovery_of_initial_pre_financing}</td>
-            <td>{updatedNet_initial_pre_financing}</td>
-            <td>{updatedCumulative_annual_pre_financing}</td>
-            <td>{updatedAnnual_pre_financing_covered_by_expenditure}</td>
-            <td>{updatedRecovery_of_annual_pre_financing}</td>
-            <td>{updatedNet_annual_pre_financing}</td>
-            <td>{updatedCumulative_interim_payment}</td>
-            <td>{updatedRecovery_of_expense}</td>
-            <td>{updatedNet_interim_payment}</td>
-            <td>{updatedTotal_net_payment}</td>
-            <td>{updatedEu_payment_rate}</td>
-            <td>{updatedEu_payment_rate_on_planned_eu_amount}</td>
-        </tr>
-    </tbody>
+        
+    </thead>
 </table>
 
-<button on:click="{updateData}">Actualizar dato</button>
+<div id="message-container"></div>
 
-{#if message != ""}
-{message}
-{/if}
+<button class="button" on:click="{updateData}">Actualizar dato</button>
+
+
+
+
+<style>
+    /* Estilo para la tabla */
+    .tabla-datos {
+        border: 2px solid #000; 
+        background-color: #ADD8E6; 
+        border-collapse: collapse; 
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    /* Estilo para las celdas de la tabla */
+    .tabla-datos th, .tabla-datos td {
+        border: 1px solid #000; 
+        padding: 20px; 
+        text-align: center; 
+        
+    }
+
+    /* Estilo para las celdas de encabezado */
+    .tabla-datos th {
+        background-color: #4682B4; 
+        color: white; 
+        text-align: center; 
+        
+    }
+
+    /* Estilo para los botones */
+    .button {
+    background-color: #007BFF; 
+    color: white; 
+    border: none; 
+    padding: 10px 20px; 
+    text-align: center; 
+    text-decoration: none; 
+    display: inline-block; 
+    font-size: 20px; 
+    margin: 4px 2px; 
+    cursor: pointer; 
+    border-radius: 4px; 
+    margin-top: 10px;
+    margin-left: 10px;
+    }
+
+    .button:hover {
+        background-color: #0056b3; 
+    }
+
+    /* Mensaje de error*/
+    #message-container {
+    padding: 10px;
+    font-size: 28px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 0px;
+    background-color: #f8b8a3; 
+    color: #000000; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+</style>
