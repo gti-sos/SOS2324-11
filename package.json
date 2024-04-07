@@ -5,10 +5,18 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test-structural-investment": "npx newman run ./tests/structural-investment-API-v2.json -e ./tests/environments/gcloud.json",
-    "test-structural-payment-data": "npx newman run ./tests/structural-payment-data-v2.json -e ./tests/environments/gcloud.json",
-    "test-socioeconomics-tracker-using-unconventional-data": "npx newman run ./tests/socioeconomics-tracker-using-unconventional-data-API-v2.json -e ./tests/environments/gcloud.json",
-    "test": "npm run test-structural-investment && npm run test-structural-payment-data && npm run test-socioeconomics-tracker-using-unconventional-data"
+    "pretest": "npm start &",
+   
+    "test-structural-investment-integration": "npx newman run ./tests/integration/structural-investment-API-v2.json -e ./tests/integration/environments/gcloud.json",
+    "test-structural-payment-data-integration": "npx newman run ./tests/integration/structural-payment-data-v2.json -e ./tests/integration/environments/gcloud.json",
+    "test-socioeconomics-tracker-using-unconventional-data-integration": "npx newman run ./tests/integration/socioeconomics-tracker-using-unconventional-data-API-v2.json -e ./tests/integration/environments/gcloud.json",
+    "test-structural-payment-data-e2e": "npx playwright test /structural-payment-data.spec.cjs",
+    "test-socioeconomics-tracker-using-unconventional-data-e2e": "npx playwright test /socioeconomics-tracker-using-unconventional-data.spec.cjs",
+    "test-structural-investment-e2e":  "npx playwright test /structural-investment.spec.cjs",
+    "test-integration": "npm run test-structural-investment-integration && npm run test-structural-payment-data-integration && npm run test-socioeconomics-tracker-using-unconventional-data-integration",
+    "test-e2e": "npx playwright test",
+    "test": "npm run test-integration && npm run test-e2e",
+    "posttest": "kill `ps -uax | grep \"node index\" | grep -v \"grep\" | grep -v \"sh\" | awk '{print $2}'`"
   },
   "author": "sharay",
   "license": "GPL-3.0",
@@ -21,5 +29,9 @@
     "nedb": "^1.8.0",
     "newman": "^6.1.1"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@playwright/test": "^1.43.0",
+    "@types/node": "^20.12.5"
+  }
 }

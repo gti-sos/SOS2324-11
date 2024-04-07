@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import { dev } from "$app/environment";
     import {page} from '$app/stores';
+    import Mensaje from "../../Mensaje.svelte";
 
     
     onMount(async () => {
@@ -16,9 +17,11 @@
         API = "http://localhost:10000" + API;
     }
 
-    let dato = [];
+    let errorMsg = "";
+    let msg = "";
     let result = "";
     let resultStatus = "";
+    let dato = [];
 
 
     async function getData() {
@@ -54,16 +57,17 @@
             updateEu_payment_rate_on_planned_eu_amount = dato.eu_payment_rate_on_planned_eu_amount;
 
         } catch (e) {
-            console.log(`Error parsing result: ${e}`);
-            document.getElementById('message-container').textContent = "Error al parserar los datos.";
+            errorMsg = "Error al parserar los datos.";
+            console.error(`Error parsing result: ${e}`);
         }
+
         const status = await res.status;
         resultStatus = status;
-        if (status == 404) {
-            document.getElementById('message-container').textContent = `El elemento: ${cci} , no ha sido encontrado.`;
+        if (resultStatus === 404) {
+            errorMsg = `El elemento: ${cci} , no ha sido encontrado.`;
         }
-        if (status == 500) {
-            document.getElementById('message-container').textContent = "Error ineterno del servidor.";
+        if (resultStatus === 500) {
+            errorMsg = "Error interno del servidor.";
         }
     }
    
@@ -90,7 +94,7 @@
     let updateEu_payment_rate_on_planned_eu_amount = "";
 
     async function updateData() {
-            
+
         resultStatus = result = "";
         const requestBody = {
             ms: updateMs,
@@ -119,12 +123,29 @@
         // Verificar si alguno de los campos está vacío o undefined
         for (const key in requestBody) {
             if (requestBody[key] === undefined || requestBody[key] === "") {
-                document.getElementById('message-container').textContent = "Rellene todos los campos.";
+                errorMsg = "Rellene todos los campos, por favor.";
                 return; 
             }
         }
 
+       // Verificar si los campos son iguales a un dato existente
         const res = await fetch(API + "/" + cci, {
+            method: "GET",
+        });
+        const existingData = await res.json();
+
+        // Comparar los campos del dato existente con los campos del formulario
+        const fieldsAreEqual = Object.keys(requestBody).every(key => {
+            return requestBody[key] === existingData[key];
+        });
+
+        if (fieldsAreEqual) {
+            errorMsg = "Existe un dato idéntico, cambie algún campo para actulizar el dato.";
+            return;
+        }
+
+        // Si los campos son diferentes, proceder con la actualización
+        const putResponse = await fetch(API + "/" + cci, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -135,151 +156,156 @@
         const status = await res.status;
         resultStatus = status;
 
-            if (status == 200) {
-                document.getElementById('message-container').textContent = "El elemento ha sido actualizado.";
+            if (resultStatus === 200) {
+                msg = "El elemento ha sido actualizado correctamente.";
                 getData();
-            } else if (status == 400) {
-                document.getElementById('message-container').textContent = "Rellene todos los campos.";
-            } else if (status == 500) {
-                document.getElementById('message-container').textContent = "Error interno del servidor.";
+            } else if (resultStatus === 400) {
+                errorMsg = "Rellene todos los campos, por favor.";
+            } else if (resultStatus === 500) {
+                errorMsg = "Error interno del servidor.";
             }
+
     }
 
 
 </script>
 
-<body>
-    
-    <br> <br>
-    <div id="message-container"></div>
+<br><br>
 
-    <br> 
-    <h2>Detalles sobre el dato con {cci} </h2> 
-    
-    <br> 
-    <table class="tabla-datos">
-    
-        <thead>
-            <tr>
-                <th>Código país</th>
-                <th>Nombre país</th>
-                <th>Código identificador</th>
-                <th>Título</th>
-                <th>Nombre del fondo</th>
-                <th>Categoría de la región</th>
-                <th>Año</th>
-            </tr>
-            <tr>
-                <td><input bind:value={updateMs}></td>
-                <td><input bind:value={updateMsName}></td>
-                <td>{updateCCI}</td>
-                <td><input bind:value={updateTitle}></td>
-                <td><input bind:value={updateFund}></td>
-                <td><input bind:value={updateCategory_of_region}></td>
-                <td><input bind:value={updateYear}></td>
-            </tr>
-            <tr>
-                <th>Cantidad neta planificada de la UE</th>
-                <th>Financiación previa inicial acumulativa</th>
-                <th>Financiación previa inicial adicional acumulativa</th>
-                <th>Recuperación de la financiación previa inicial</th>
-                <th>Financiación previa anual acumulativa</th>
-                <th>Financiación previa cubierta por gastos</th>
-                <th>Recuperación de la financiación previa anual</th>
-            </tr>  
-            <tr>
-                <td><input bind:value={updateNet_planned_eu_amount }></td>
-                <td><input bind:value={updateCumulative_initial_pre_financing }></td>
-                <td><input bind:value={updateVumulative_additional_initial_pre_financing }></td>
-                <td><input bind:value={updateRecovery_of_initial_pre_financing }></td>
-                <td><input bind:value={updateCumulative_annual_pre_financing }></td>
-                <td><input bind:value={updatePre_financing_covered_by_expenditure }></td>
-                <td><input bind:value={updateRecovery_of_annual_pre_financing }></td>
-             
-            </tr>
-            <tr>
-                <th>Financiación previa neta</th>
-                <th>Pago interino acumulativo</th>
-                <th>Recuperación de gasto</th>
-                <th>Pagos intermedios netos</th>
-                <th>Total de pagos netos</th>
-                <th>Tasa de pago de la UE</th>
-                <th>Tasa de pago de la UE sobre la cantidad planificada de la UE</th>
-            </tr>
-            <tr>
-                <td><input bind:value={updateNet_pre_financing }></td>
-                <td><input  bind:value={updateCumulative_interim_payments }></td>
-                <td><input bind:value={updateRecovery_of_expenses }></td>
-                <td><input bind:value={updateNet_interim_payments }></td>
-                <td><input bind:value={updateTotal_net_payments }></td>
-                <td><input  bind:value={updateEu_payment_rate }></td>
-                <td><input bind:value={updateEu_payment_rate_on_planned_eu_amount }></td>
-            </tr>
-        </thead>
-    
-    </table>
-    
-    <button class="button" on:click="{updateData}">Actualizar dato</button>
-    </body>
-    
-    
-    <style>
-        /* Estilo para la tabla */
-        .tabla-datos {
-            border: 2px solid #000; 
-            background-color: #ADD8E6; 
-            border-collapse: collapse; 
-            margin-left: 10px;
-            margin-right: 10px;
-        }
-    
-        /* Estilo para las celdas de la tabla */
-        .tabla-datos th, .tabla-datos td {
-            border: 1px solid #000; 
-            padding: 20px; 
-            text-align: center; 
+{#if msg!=""}
+<div>
+    <Mensaje tipo="exito" mensaje={msg} />
+</div>
+{/if}
+
+{#if errorMsg!=""}
+    <div>
+        <Mensaje tipo="error" mensaje={errorMsg} />
+    </div>
+{/if}
+
+
+<br> 
+<t>Detalles sobre el dato con "cci" {cci} </t> 
+<br> <br> 
+
+<br> 
+<table class="tabla-datos">
+
+    <thead>
+        <tr>
+            <th>Código país</th>
+            <th>Nombre país</th>
+            <th>Código identificador</th>
+            <th>Título</th>
+            <th>Nombre del fondo</th>
+            <th>Categoría de la región</th>
+            <th>Año</th>
+        </tr>
+        <tr>
+            <td><input bind:value={updateMs}></td>
+            <td><input bind:value={updateMsName}></td>
+            <td>{updateCCI}</td>
+            <td><input bind:value={updateTitle}></td>
+            <td><input bind:value={updateFund}></td>
+            <td><input bind:value={updateCategory_of_region}></td>
+            <td><input bind:value={updateYear}></td>
+        </tr>
+        <tr>
+            <th>Cantidad neta planificada de la UE</th>
+            <th>Financiación previa inicial acumulativa</th>
+            <th>Financiación previa inicial adicional acumulativa</th>
+            <th>Recuperación de la financiación previa inicial</th>
+            <th>Financiación previa anual acumulativa</th>
+            <th>Financiación previa cubierta por gastos</th>
+            <th>Recuperación de la financiación previa anual</th>
+        </tr>  
+        <tr>
+            <td><input bind:value={updateNet_planned_eu_amount }></td>
+            <td><input bind:value={updateCumulative_initial_pre_financing }></td>
+            <td><input bind:value={updateVumulative_additional_initial_pre_financing }></td>
+            <td><input bind:value={updateRecovery_of_initial_pre_financing }></td>
+            <td><input bind:value={updateCumulative_annual_pre_financing }></td>
+            <td><input bind:value={updatePre_financing_covered_by_expenditure }></td>
+            <td><input bind:value={updateRecovery_of_annual_pre_financing }></td>
             
-        }
+        </tr>
+        <tr>
+            <th>Financiación previa neta</th>
+            <th>Pago interino acumulativo</th>
+            <th>Recuperación de gasto</th>
+            <th>Pagos intermedios netos</th>
+            <th>Total de pagos netos</th>
+            <th>Tasa de pago de la UE</th>
+            <th>Tasa de pago de la UE sobre la cantidad planificada de la UE</th>
+        </tr>
+        <tr>
+            <td><input bind:value={updateNet_pre_financing }></td>
+            <td><input  bind:value={updateCumulative_interim_payments }></td>
+            <td><input bind:value={updateRecovery_of_expenses }></td>
+            <td><input bind:value={updateNet_interim_payments }></td>
+            <td><input bind:value={updateTotal_net_payments }></td>
+            <td><input  bind:value={updateEu_payment_rate }></td>
+            <td><input bind:value={updateEu_payment_rate_on_planned_eu_amount }></td>
+        </tr>
+    </thead>
+
+</table>
+
+<button class="button" on:click="{updateData}">Actualizar dato</button>
+
+
     
-        /* Estilo para las celdas de encabezado */
-        .tabla-datos th {
-            background-color: #4682B4; 
-            color: white; 
-            text-align: center; 
-            
-        }
-    
-        /* Estilo para los botones */
-        .button {
-        background-color: #007BFF; 
-        color: white; 
-        border: none; 
-        padding: 10px 20px; 
+<style>
+    t {
+        font-family: ''; 
+        font-size: 40px; 
+        color: #0e2ac8; 
+        text-shadow: 2px 2px 4px rgba(111, 54, 191, 0.5); 
         text-align: center; 
-        text-decoration: none; 
-        display: inline-block; 
-        font-size: 20px; 
-        margin: 4px 2px; 
-        cursor: pointer; 
-        border-radius: 4px; 
-        margin-top: 10px;
+        margin-top: 50px; 
+        margin-bottom: 30px;
+        margin-left: 800px;
+    }
+    /* Estilo para la tabla */
+    .tabla-datos {
+        border: 2px solid #000; 
+        background-color: #ADD8E6; 
+        border-collapse: collapse; 
         margin-left: 10px;
-        }
-    
-        .button:hover {
-            background-color: #0056b3; 
-        }
-    
-        /* Mensaje de error*/
-        #message-container {
-        padding: 10px;
-        font-size: 28px;
-        border: 1px solid #ccc;
+        margin-right: 10px;
+    }
+
+    /* Estilo para las celdas de la tabla */
+    .tabla-datos th, .tabla-datos td {
+        border: 1px solid #000; 
+        padding: 20px; 
+        text-align: center; 
+        
+    }
+
+    /* Estilo para las celdas de encabezado */
+    .tabla-datos th {
+        background-color: #4682B4; 
+        color: white; 
+        text-align: center; 
+        
+    }
+
+    .button {
+        background-color: #ADD8E6; 
+        color: rgb(0, 0, 0);
+        border: none;
+        padding: 10px 25px;
         border-radius: 5px;
-        margin-bottom: 0px;
-        background-color: #f8b8a3; 
-        color: #000000; 
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+        cursor: pointer;
+        margin-left: 950px;
+        font-size: 38px; 
+        margin-top: 30px;
+    }
+
+    .button:hover {
+        background-color: #4682B4; 
     }
     
-    </style>
+</style>
