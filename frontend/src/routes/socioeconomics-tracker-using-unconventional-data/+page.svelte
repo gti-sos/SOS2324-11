@@ -164,7 +164,7 @@
                 getData();
                 Msg = "Dato eliminado correctamente";
             } else if (response.status == 404) {
-                Msg = `No se ha encontrado el país ${ms_name} con fondo ${fund}`;
+                Msg = `No se ha encontrado el país ${country} con año ${parseInt(year)} y dia ${parseInt(day)}`;
             } else if (response.status == 500) {
                 Msg = "Error interno";
             }else{
@@ -271,6 +271,7 @@
         {/each}
     </ul>
 
+    
     <button class="button" on:click="{createData}">Crear nuevo dato</button>
     <button class="button" on:click="{deleteAllData}">Eliminar todos los datos</button>
 
@@ -291,9 +292,9 @@
     <br>
     <br>
 
-    {#if data.length == 0}
+    
     <button class="button" on:click="{getInitialData}">Cargar datos iniciales</button>
-    {:else if data.length > 0}
+    {#if data.length >= 6}
     <button class="button" on:click="{getData}">Pagina anterior</button>
     <button class="button" on:click="{getNextPage}">Pagina siguiente</button>
     {/if}
