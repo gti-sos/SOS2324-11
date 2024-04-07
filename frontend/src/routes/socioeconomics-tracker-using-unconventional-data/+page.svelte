@@ -26,14 +26,35 @@
         
     };
 
+    let from = "";
+    let to = "";
+    let date = "";
+    let year = "";
+    let month = "";
+    let day = "";
+    let tone_doc_count = "";
+    let popularity_rate = "";
+    let tone_avg = "";
+    let tone_w_avg = "";
+    let tone_cum = "";
+    let amd1code = "";
+    let country = "";
+    let area = "";
+    let ref_time = "";
+    let topic = "";
     
     let Msg ="";
     let limit = 10;
+    let currentPage = 0;
 
     onMount(()=>{
+        filterApplied = false;
+        mostrarTabla = false;
         getData();
     })
 
+    let filterApplied = false;
+    let mostrarTabla = false;
     async function getData(){
         try{
             let response = await fetch(API+`?offset=0&&limit=${limit}`, {
@@ -44,6 +65,115 @@
             data = dat;
             console.log(data);
         }catch(e){
+            Msg = e;
+        }
+    }
+
+    async function getDataFilter() {
+        try {
+            let response;
+            let parametros = `?limit=${limit}`;
+            if (currentPage > 0) {
+                const offset = currentPage * limit;
+                parametros += `&offset=${offset}`;
+            }
+    
+            // Verificamos si se han introducido parámetros de búsqueda
+            if (date !== "") {
+                parametros += `&date=${date}`;
+            }
+            if (year !== "") {
+                parametros += `&year=${year}`;
+            }
+            if (month !== "") {
+                parametros += `&month=${month}`;
+            }
+            if (day !== "") {
+                parametros += `&day=${day}`;
+            }
+            if (tone_doc_count !== "") {
+                parametros += `&tone_doc_count=${tone_doc_count}`;
+            }
+            if (popularity_rate !== "") {
+                parametros += `&popularity_rate=${popularity_rate}`;
+            }
+            if (tone_avg !== "") {
+                parametros += `&tone_avg=${tone_avg}`;
+            }
+            if (tone_w_avg !== "") {
+                parametros += `&tone_w_avg=${tone_w_avg}`;
+            }
+            if (tone_cum !== "") {
+                parametros += `&tone_cum=${tone_cum}`;
+            }
+            if (amd1code !== "") {
+                parametros += `&amd1code=${amd1code}`;
+            }
+            if (country !== "") {
+                parametros += `&country=${country}`;
+            }
+            if (area !== "") {
+                parametros += `&area=${area}`;
+            }
+            if (ref_time !== "") {
+                parametros += `&ref_time=${ref_time}`;
+            }
+            if (topic !== "") {
+                parametros += `&topic=${topic}`;
+            }
+            console.log(parametros);
+    
+            response = await fetch(API + parametros, {
+                method: "GET",
+            });
+    
+            if (response.status === 404) {
+                Msg = "No se encontraron datos que coincidan con los filtros especificados.";
+                datas = []; 
+                return;
+            }
+    
+            let datas = await response.json();
+
+            if (from !== "" && to !== "") {
+                datas = datas.filter(d => d.year >= from && d.year <= to);
+            }
+
+            data = datas;
+            console.log(datas);
+
+            if (
+                date !== "" ||
+                year !== "" ||
+                month !== "" ||
+                day !== "" ||
+                tone_doc_count !== "" ||
+                popularity_rate !== "" ||
+                tone_avg !== "" ||
+                tone_w_avg !== "" ||
+                tone_cum !== "" ||
+                amd1code !== "" ||
+                country !== "" ||
+                area !== "" ||
+                ref_time !== "" ||
+                topic !== "" ||
+                from !== "" ||
+                to !== "") {
+                filterApplied = true;
+            } else {
+                filterApplied = false;
+            }
+
+
+    
+            // Verificar si la respuesta contiene datos después de aplicar los filtros
+            if (datas.length === 0 && filterApplied) {
+                // Mostrar mensaje de éxito
+                Msg = "No se encuentran datos con esos campos";
+            }else if(datas.length > 0 && filterApplied){
+                Msg = "La busqueda se ha realizado correctamente"
+            }
+        } catch (e) {
             Msg = e;
         }
     }
@@ -60,47 +190,52 @@
         }
         let status = await response.status;
         if(status==200){
-            getData();
-            Msg = "Los datos han sido insertados correctamente.";
-        }
-    }
-
-    async function getNextPage() {
-        let response = await fetch(API+`?offset=10&&limit=${limit}`, {
-            method: "GET",
-        });
-        try {
-            let dat = await response.json();
-            data = dat;
-            console.log(data);
-        } catch (error) {
-            console.log(`Error al parsear el resultado: ${error}`);
+            if(data.length>0){
+                Msg = "La lista de datos tiene elementos"
+            }
+            else{
+                getDataFilter();
+                Msg = "Los datos han sido insertados correctamente.";
+            }
+            
         }
     }
 
     let getFrom = null;
     let getTo = null;
 
-    async function getFromTo(getFrom,getTo) {
-            let response = await fetch(API+`?from=${getFrom}&to=${getTo}`, {
+    async function getFromTo(getFrom, getTo, currentPage) {
+        try {
+            let parametros = `?from=${getFrom}&to=${getTo}`;
+            
+            // Calcular el offset para la paginación
+            const offset = currentPage * limit;
+            parametros += `&offset=${offset}`;
+            
+            const response = await fetch(API + parametros, {
                 method: "GET",
             });
-            try {
-                let dat = await response.json();
-                data = dat;
-                console.log(data);
-            } catch (error) {
-                console.log(`Error al parsear el resultado: ${error}`);
+
+            if (response.status === 200) {
+                const datas = await response.json();
+                console.log(datas);
+                data = datas;
+
+                if (data.length === 0) {
+                    Msg = "No se encontraron datos que coincidan con los filtros especificados.";
+                } else {
+                    Msg = "Se ha realizado la búsqueda correctamente.";
+                }
+            } else if (response.status === 404) {
+                Msg = "No se encontraron datos que coincidan con los filtros especificados.";
+            } else {
+                Msg = "Error al obtener datos. Código de estado: " + response.status;
             }
-            let status = await response.status;
-            if (status == 200) {
-                Msg = "Se ha realizado la petición correctamente";
-            } else if (status == 400) {
-                Msg = "La petición no es correcta."
-            } else if (status == 500) {
-                Msg = "Error del servidor";
-            } 
+        } catch (error) {
+            Msg = "Error al obtener datos: " + error;
+        }
     }
+
 
     async function createData(){
         try{
@@ -115,7 +250,7 @@
             let status = await response.status;
             console.log(`Creation response status ${status}`);
             if(response.status==201){
-                getData();
+                getDataFilter();
                 Msg = "El dato se ha creado correctamente";
             } else if (response.status == 409) {
                 Msg = "El dato ya existe";
@@ -175,6 +310,58 @@
             Msg = e;
         }
     }
+
+    function toggleTabla() {
+        mostrarTabla = !mostrarTabla;
+    }
+
+    function limpiarCampos() {
+         date = "";
+         year = "";
+         month = "";
+         day = "";
+         tone_doc_count = "";
+         popularity_rate = "";
+         tone_avg = "";
+         tone_w_avg = "";
+         tone_cum = "";
+         amd1code = "";
+         country = "";
+         area = "";
+         ref_time = "";
+         topic = "";
+        getDataFilter();
+    }
+
+    function limpiarCamposFromTo() {
+         getFrom = "";
+         getTo = "";
+        getDataFilter();
+    }
+
+    async function nextPage() {
+        if (data.length >= limit) {
+          currentPage++;
+          await getDataFilter();
+        } else {
+          Msg = "No hay más datos disponibles en la página siguiente.";
+          setTimeout(() => {
+            Msg = "";
+          }, 5000);
+        }
+      }
+
+      async function prevPage() {
+        if (currentPage > 0) {
+          currentPage--;
+          await getDataFilter();
+        } else {
+          Msg = "Ya estás en la primera página.";
+          setTimeout(() => {
+            Msg = "";
+          }, 5000);
+        }
+      }
 
 </script>
 
@@ -273,8 +460,8 @@
 
     
     <button class="button" on:click="{createData}">Crear nuevo dato</button>
+    <button class="button" on:click="{getInitialData}">Cargar datos iniciales</button>
     <button class="button" on:click="{deleteAllData}">Eliminar todos los datos</button>
-
 
     <br>
     <br>
@@ -287,16 +474,100 @@
         <input type="number" bind:value={getTo}>
     </label>
     <button class="button" on:click={getFromTo(getFrom,getTo)}>Buscar</button>
+    <button class="button" on:click={limpiarCamposFromTo}>Limpiar busqueda</button>
+
+    <br>
+    <br>
+    <button class="button" on:click={toggleTabla}>Filtrar</button>
 
     <!-- Agrega controles de paginación -->
     <br>
     <br>
 
     
-    <button class="button" on:click="{getInitialData}">Cargar datos iniciales</button>
-    {#if data.length >= 6}
-    <button class="button" on:click="{getData}">Pagina anterior</button>
-    <button class="button" on:click="{getNextPage}">Pagina siguiente</button>
+    
+    
+    <button class="button" on:click="{prevPage}">Pagina anterior</button>
+    <button class="button" on:click="{nextPage}">Pagina siguiente</button>
+    
+
+    {#if mostrarTabla}
+    <table class="tabla-datos">
+        <thead>
+            <th>Fecha</th>
+            <th>Año</th>
+            <th>Mes</th>
+            <th> Dia</th>
+            <th>Recuento de cantidad de documentos </th>
+            <th>Tasa de popularidad</th>
+            <th>Cantidad media</th>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    <input bind:value={date}>
+                </td>
+                <td>
+                    <input bind:value={year} type="number"> 
+                </td>
+                <td>
+                    <input bind:value={month}> 
+                </td>
+                <td>
+                    <input bind:value={day} type="number"> 
+                </td>
+                <td>
+                    <input bind:value={tone_doc_count}> 
+                </td>
+                <td>
+                    <input bind:value={popularity_rate}> 
+                </td>
+                <td>
+                    <input bind:value={tone_avg}> 
+                </td>
+            </tr>
+        </tbody>
+
+        <thead>
+            <th>Cantidad con peso media</th>
+            <th>tone_cum</th>
+            <th>Codigo amd1</th>
+            <th>Pais</th>
+            <th>Area</th>
+            <th>Referencia de tiempo</th>
+            <th>Tema</th>
+        </thead>
+
+        <tr>
+            <td>
+                <input bind:value={tone_w_avg}> 
+            </td>
+            <td>
+                <input bind:value={tone_cum}> 
+            </td>
+            <td>
+                <input bind:value={amd1code}> 
+            </td>
+            <td>
+                <input bind:value={country}> 
+            </td>
+            <td>
+                <input bind:value={area}> 
+            </td>
+            <td>
+                <input bind:value={ref_time}> 
+            </td>
+            <td>
+                <input bind:value={topic}> 
+            </td>
+        </tr>
+        
+        <tr>
+            <button class="button" on:click={getDataFilter}>Buscar</button>
+            <button class="button" on:click={limpiarCampos}>Limpiar búsqueda</button>
+        </tr>
+    </table>
     {/if}
 </body>
 

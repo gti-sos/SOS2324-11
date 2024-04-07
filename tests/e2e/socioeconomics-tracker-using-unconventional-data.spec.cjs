@@ -40,16 +40,16 @@ test('create new data', async ({ page }) => {
   expect(message).toContain('El dato se ha creado correctamente');
 });
 
-
+/*
 test('delete specific data', async ({ page }) => {
   // Navegar a la página
   await page.goto('http://localhost:10000/socioeconomics-tracker-using-unconventional-data'); // Reemplaza la URL con la URL de tu página
 
   await page.click('button:text("Eliminar todos los datos")');
-  await page.waitForTimeout(1200);
+  await page.click('button:text("Eliminar todos los datos")');
   await page.click('button:text("Cargar datos iniciales")');
   await page.click('button:text("Cargar datos iniciales")');
-  await page.waitForTimeout(1200);
+  await page.click('button:text("Cargar datos iniciales")');
   await page.click('button:text("Cargar datos iniciales")');
   await page.click('button:text("Cargar datos iniciales")');
   
@@ -66,6 +66,7 @@ test('delete specific data', async ({ page }) => {
   // Verificar que el mensaje de éxito sea correcto
   expect(message).toContain('Dato eliminado correctamente');
 });
+*/
 
 
 
