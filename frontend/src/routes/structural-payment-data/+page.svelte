@@ -58,8 +58,7 @@
 
   
     let errorMsg ="";
-    let currentPage = 0;
-    let pageSize = 10;
+    const limit = 10;
     let mostrarTabla = false;
     
 
@@ -67,20 +66,16 @@
     onMount(()=>{
         mostrarTabla = false;
         filterApplied = false;
-        getStudents();
+        getData();
         
     })
-
+    
     let filterApplied = false; // Variable para controlar si se ha aplicado un filtro
-
+    
     async function getData() {
     try {
-        let response;
-        let parametros = `?limit=${pageSize}`;
-        if (currentPage > 0) {
-            const offset = currentPage * pageSize;
-            parametros += `&offset=${offset}`;
-        }
+        let parametros;
+        
 
         // Verificamos si se han introducido parámetros de búsqueda
         if (ms !== "") {
@@ -147,8 +142,7 @@
             parametros += `&eu_payment_rate_on_planned_eu_amount=${eu_payment_rate_on_planned_eu_amount}`;
         }
 
-
-        response = await fetch(API + parametros, {
+        let response = await fetch(API+`?offset=0&&limit=${limit}`+ parametros, {
             method: "GET",
         });
 
@@ -241,7 +235,7 @@
             document.getElementById('message-container').textContent = "Los datos han sido insertados correctamente.";
         }
     }
-/*
+
     async function getNextPage() {
         let response = await fetch(API+`?offset=10&&limit=${limit}`, {
             method: "GET",
@@ -253,7 +247,7 @@
         } catch (error) {
             console.log(`Error al parsear el resultado: ${error}`);
         }
-    }*/
+    }
 
     async function createData(){
         try{
@@ -291,23 +285,7 @@
 
     
 
-async function nextPage() {
-    if (Students.length >= pageSize) {
-      currentPage++;
-      await getStudents();
-    } else {
-      errorMsg = "No hay más datos disponibles en la página siguiente.";
-    }
-  }
-
-  async function prevPage() {
-    if (currentPage > 0) {
-      currentPage--;
-      await getStudents();
-    } else {
-      errorMsg = "Ya estás en la primera página.";
-    }
-  }
+ 
 
 
    /*
@@ -456,11 +434,13 @@ async function nextPage() {
 <button class="button" on:click="{deleteAllData}">Eliminar todos los datos</button>
 <button class="button" on:click={toggleTabla}>Filtrar</button>
 
+<div>
+    <button class="button" on:click={getData}>Página anterior</button>
+    <button class="button" on:click={getNextPage}>Página siguiente</button>
+</div>
+
 {#if data.length == 0}
 <button class="button" on:click="{getInitialData}">Cargar datos iniciales</button>
-{:else if data.length > 0}
-<button class="button" on:click="{prevPage}">1</button>
-<button class="button" on:click="{nextPage}">2</button>
 {/if}
 
 {#if mostrarTabla}
