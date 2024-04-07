@@ -12,7 +12,7 @@ afterAll(async () => {
 
 
 beforeEach(async () => {
-  await page.goto('http://localhost:5176/structural-investment');
+  await page.goto('http://localhost:10000/structural-investment');
   await page.waitForLoadState('load');
   await page.waitForTimeout(1000);
   await page.waitForSelector('.final button:nth-child(2)');
@@ -72,7 +72,7 @@ test('has specific text8', async ({ page }) => {
 
 
 test('load pag', async () => {
-  await page.goto('http://localhost:5176/structural-investment');
+  await page.goto('http://localhost:10000/structural-investment');
   await page.waitForLoadState('load');
   const items = await page.$$('.card-container .card');
   expect(items.length).toBe(0);
@@ -80,8 +80,7 @@ test('load pag', async () => {
 
 
 test('load and list data', async () => {
-  await page.goto('http://localhost:5176/structural-investment');
-  //   await page.goto('http://localhost:10000/structural-investment');
+  await page.goto('http://localhost:10000/structural-investment');
   await page.waitForLoadState('load');
   await page.click('.initial');
   await page.waitForTimeout(10000); 
@@ -91,7 +90,7 @@ test('load and list data', async () => {
 
 
 test('delete all data', async () => {
-  await page.goto('http://localhost:5176/structural-investment');
+  await page.goto('http://localhost:10000/structural-investment');
   await page.waitForLoadState('load');
   await page.waitForSelector('.final button:nth-child(2)');
   await page.click('.final button:nth-child(2)');
