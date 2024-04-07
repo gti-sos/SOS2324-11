@@ -28,6 +28,8 @@ test('create new data', async ({ page }) => {
 
   
   await page.click('button:text("Eliminar todos los datos")');
+
+  await page.click('button:text("Cargar datos iniciales")');
   
   // Hacer clic en el botón "Crear nuevo dato"
   await page.click('button:text("Crear nuevo dato")');
