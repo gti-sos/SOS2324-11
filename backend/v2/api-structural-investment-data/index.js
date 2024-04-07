@@ -354,9 +354,6 @@ const data_SPJ = [
 function loadBackend_sharay (app, db) {
 
 
-    db.insert(data_SPJ);
-
-
     //Redirect to the documentation portal generated in POSTMAN
     app.get(API_BASE + "/structural-investment-data/docs", (req, res) => {
         console.log(`REDIRECT TO structural-investment-data/docs`);
