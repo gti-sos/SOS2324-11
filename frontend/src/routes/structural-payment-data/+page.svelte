@@ -452,7 +452,6 @@ async function nextPage() {
 </ul>
 
 <div id="message-container"></div>
-<button class="button" on:click="{getData}">Crear nuevo dato</button>
 <button class="button" on:click="{createData}">Crear nuevo dato</button>
 <button class="button" on:click="{deleteAllData}">Eliminar todos los datos</button>
 <button class="button" on:click={toggleTabla}>Filtrar</button>
