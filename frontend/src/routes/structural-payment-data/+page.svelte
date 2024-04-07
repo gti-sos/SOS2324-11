@@ -261,7 +261,7 @@
 
 <ul>
     {#each data as d}
-        <li><a href="/structural-payment-data/{d.ms_name}/{d.fund}">{d.ms_name} - {d.fund}</a><button class="button" on:click="{deleteData(d.ms_name, d.fund)}">Delete</button>
+        <li class = "dataItem"><a href="/structural-payment-data/{d.ms_name}/{d.fund}">{d.ms_name} - {d.fund}</a><button class="button" on:click="{deleteData(d.ms_name, d.fund)}">Delete</button>
         </li>
     {/each}
 </ul>
