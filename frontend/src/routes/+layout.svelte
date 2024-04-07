@@ -11,6 +11,7 @@
 <h1>SOS2324-11</h1>
 <Header/>
 <slot></slot>
+<br><br><br>
 <Footer/>
 </body>
 

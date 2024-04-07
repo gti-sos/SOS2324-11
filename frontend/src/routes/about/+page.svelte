@@ -7,4 +7,4 @@
 </script>
 
 <br><br>
-<h4>Esta es la aplicación de administrador de datos en modo {mode}</h4>
+<h2 style="margin-left: 20px;"> ❥ Esta es la aplicación de administrador de datos en modo {mode} </h2>
