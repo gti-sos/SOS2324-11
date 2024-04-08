@@ -54,7 +54,7 @@ test('delete specific data', async ({ page }) => {
   await page.click('button:text("Cargar datos iniciales")');
   await page.click('button:text("Cargar datos iniciales")');
   await page.click('button:text("Cargar datos iniciales")');
-  await page.click('button:text("Cargar datos iniciales")');
+  await page.click('button:text("Cargar datos iniciales")' );
   
   // Esperar a que aparezca el botón "Borrar"
   await page.waitForSelector('button:text("Borrar")');
