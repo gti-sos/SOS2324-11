@@ -5,7 +5,7 @@
     <p>
        Sharay Portillo Jurado <strong>⇝</strong> <m>structural-investment-data</m> <br>
        Isabel María Trapero Romero<strong>⇝</strong> <m >structural-payment-data</m> <br>
-       Álvaro Marcos Delgado <strong>⇝</strong> <m>socioeconomics-traker-using-unconventional-data</m><br>
+       Álvaro Marcos Delgado <strong>⇝</strong> <m>socioeconomics-tracker-using-unconventional-data</m><br>
     </p>
 </div>
 
@@ -38,7 +38,7 @@
     <p>
        <a href="https://sos2324-11.appspot.com/api/v1/structural-investment-data"><span>structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
        <a href="https://sos2324-11.appspot.com/api/v1/structural-payment-data"><span>structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data"><span>socioeconomics-traker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data"><span>socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
     </p>
 </div>
 
@@ -47,12 +47,12 @@
     <p>
        <a href="https://sos2324-11.appspot.com/api/v1/structural-investment-data/docs"><span>V1 structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
        <a href="https://sos2324-11.appspot.com/api/v1/structural-payment-data/docs"><span>V1 structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data/docs"><span> V1 socioeconomics-traker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data/docs"><span> V1 socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
     </p>
     <p>
        <a href="https://sos2324-11.appspot.com/api/v2/structural-investment-data/docs"><span>V2 structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
        <a href="https://sos2324-11.appspot.com/api/v2/structural-payment-data/docs"><span>V2 structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data/docs"><span> V2 socioeconomics-traker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data/docs"><span> V2 socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
     </p>
 </div>
 
@@ -61,7 +61,7 @@
     <p>
        <a href="https://sos2324-11.appspot.com/structural-investment"><span>structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
        <a href="https://sos2324-11.appspot.com/structural-payment-data"><span>structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/socioeconomics-tracker-using-unconventional-data"><span>socioeconomics-traker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/socioeconomics-tracker-using-unconventional-data"><span>socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
     </p>
 </div>
 
