@@ -6,7 +6,6 @@
     if(dev)
         API = "http://localhost:10000"+API;
 
-    
     let data = [];
     let newData = {
         "ms": "Código",
