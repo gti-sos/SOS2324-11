@@ -8,7 +8,7 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/SOS2324-11/);
 });
 
-/*
+
 test('list data', async ({ page }) => {
   await page.goto('http://localhost:10000/socioeconomics-tracker-using-unconventional-data');
 
@@ -40,9 +40,10 @@ test('create new data', async ({ page }) => {
   const message = await page.textContent('#message-container');
 
   // Verificar que el mensaje de éxito sea correcto
-  expect(message).toContain('Los datos han sido insertados correctamente.');
+  expect(message).toContain('El dato se ha creado correctamente');
 });
 
+/*
 test('delete specific data', async ({ page }) => {
   // Navegar a la página
   await page.goto('http://localhost:10000/socioeconomics-tracker-using-unconventional-data'); // Reemplaza la URL con la URL de tu página
@@ -69,6 +70,7 @@ test('delete specific data', async ({ page }) => {
   expect(message).toContain('Dato eliminado correctamente');
 });
 */
+
 
 
 
