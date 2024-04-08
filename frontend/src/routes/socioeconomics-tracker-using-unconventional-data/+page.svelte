@@ -336,7 +336,7 @@
     function limpiarCamposFromTo() {
          getFrom = "";
          getTo = "";
-        getDataFilter();
+        getDataFilter() ;
     }
 
     async function nextPage() {
