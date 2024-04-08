@@ -58,9 +58,9 @@
 
   
     let errorMsg ="";
-    const limit = 10;
     let mostrarTabla = false;
-    
+    let limit =10;
+    let currentPage=0;
 
 
     onMount(()=>{
@@ -70,14 +70,18 @@
         
     })
     
-    let filterApplied = false; // Variable para controlar si se ha aplicado un filtro
+    let filterApplied = false; 
     
     async function getData() {
     try {
-        let parametros;
+       
+        let parametros = `?limit=${limit}`;
+            if (currentPage > 0) {
+                const offset = currentPage * limit;
+                parametros += `&offset=${offset}`;
+            }
         
 
-        // Verificamos si se han introducido parámetros de búsqueda
         if (ms !== "") {
             parametros += `&ms=${ms}`;
         }
@@ -142,21 +146,21 @@
             parametros += `&eu_payment_rate_on_planned_eu_amount=${eu_payment_rate_on_planned_eu_amount}`;
         }
 
-        let response = await fetch(API+`?offset=0&&limit=${limit}`+ parametros, {
+        let response = await fetch(API+ parametros, {
             method: "GET",
         });
 
         let status = await response.status;
         if (status === 404) {
             document.getElementById('message-container').textContent = "No se encontraron datos que coincidan con los filtros especificados.";
-            data = []; // Limpiar el arreglo de estudiantes
+            data = []; 
 
             
 
             return;
         }
         let dat = await response.json();
-        // Filtrar por rango de año si se especifica
+        
         if (from !== "" && to !== "") {
             dat = dat.filter(d => d.year >= from && d.year <= to);
         }
@@ -164,7 +168,7 @@
         data = dat;
         console.log(dat);
 
-        // Verificar si se han aplicado filtros
+        
         if (
             ms !== "" ||
             ms_name !== "" ||
@@ -196,28 +200,12 @@
         }
 
         if (dat.length > 0 && filterApplied) {
-
-            // Mostrar mensaje de éxito
             document.getElementById('message-container').textContent = "La búsqueda se ha realizado con éxito.";
         }
     } catch (e) {
         errorMsg = e;
     }
 }
-/*
-    async function getData(){
-        try{
-            let response = await fetch(API+`?offset=0&&limit=${limit}`, {
-                                method: "GET"
-                        });
-
-            let dat = await response.json();
-            data = dat;
-            console.log(data);
-        }catch(e){
-            errorMsg = e;
-        }
-    }*/
 
     async function getInitialData() {
         let response = await fetch(API+"/loadInitialData", {
@@ -236,18 +224,24 @@
         }
     }
 
+    
     async function getNextPage() {
-        let response = await fetch(API+`?offset=10&&limit=${limit}`, {
-            method: "GET",
-        });
-        try {
-            let dat = await response.json();
-            data = dat;
-            console.log(data);
-        } catch (error) {
-            console.log(`Error al parsear el resultado: ${error}`);
+        if (data.length >= limit) {
+          currentPage++;
+          await getData();
+        } else {
+            document.getElementById('message-container').textContent = "No hay más datos disponibles en la página siguiente.";
         }
-    }
+      }
+
+      async function prevPage() {
+        if (currentPage > 0) {
+          currentPage--;
+          await getData();
+        } else {
+          Msg = "Ya estás en la primera página.";
+        }
+      }
 
     async function createData(){
         try{
@@ -282,37 +276,6 @@
     function toggleTabla() {
         mostrarTabla = !mostrarTabla;
     }
-
-    
-
- 
-
-
-   /*
-    let getFrom = null;
-    let getTo = null;
-
-    async function getFromTo(getFrom,getTo) {
-            let response = await fetch(API+`?from=${getFrom}&to=${getTo}`, {
-                method: "GET",
-            });
-            try {
-                let dat = await response.json();
-                data = dat;
-                console.log(data);
-            } catch (error) {
-                console.log(`Error al parsear el resultado: ${error}`);
-            }
-            let status = await response.status;
-            if (status == 200) {
-                document.getElementById('message-container').textContent = "Se ha realizado la petición correctamente";
-            } else if (status == 400) {
-                document.getElementById('message-container').textContent = "La petición no es correcta."
-            } else if (status == 500) {
-                document.getElementById('message-container').textContent = "Error del servidor";
-            } 
-    }
-        */
 
     async function deleteAllData(){
         try{
@@ -435,7 +398,7 @@
 <button class="button" on:click={toggleTabla}>Filtrar</button>
 
 <div>
-    <button class="button" on:click={getData}>Página anterior</button>
+    <button class="button" on:click={prevPage}>Página anterior</button>
     <button class="button" on:click={getNextPage}>Página siguiente</button>
 </div>
 
