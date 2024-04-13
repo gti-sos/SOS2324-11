@@ -5,7 +5,7 @@
 <script>
     import { onMount } from "svelte";
 
-    let DATAAPI = "http://localhost:10000/api/v2/structural-investment-data";
+    let DATAAPI = "https://sos2324-11.appspot.com/api/v2/structural-investment-data";
 
     async function getData() {
         try {
