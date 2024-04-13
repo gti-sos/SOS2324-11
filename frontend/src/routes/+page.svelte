@@ -1,4 +1,4 @@
-<br> <br>
+<br> 
 
 <div class="card">
     <h2>Participantes y datos</h2>
@@ -36,10 +36,15 @@
 <div class="card">
     <h2>APIs</h2>
     <p>
-       <a href="https://sos2324-11.appspot.com/api/v1/structural-investment-data"><span>structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
-       <a href="https://sos2324-11.appspot.com/api/v1/structural-payment-data"><span>structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data"><span>socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/api/v1/structural-investment-data"><span>V1 structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
+       <a href="https://sos2324-11.appspot.com/api/v1/structural-payment-data"><span>V1 structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
+       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data"><span>V1 socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
     </p>
+    <p>
+      <a href="https://sos2324-11.appspot.com/api/v2/structural-investment-data"><span>V2 structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
+      <a href="https://sos2324-11.appspot.com/api/v2/structural-payment-data"><span>V2 structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
+      <a href="https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data"><span>V2 socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+   </p>
 </div>
 
 <div class="card">
@@ -67,43 +72,52 @@
 
 <style>
 
-    .card {
-       background-color: white;
-       border: 1px solid #ddd;
-       border-radius: 5px;
-       padding: 20px;
-       margin: 20px;
-       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-       transition: 0.3s;
-    }
+   .card {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px; 
+      margin: 10px; 
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+   }
+  
+   .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+   }
+  
+   .card a {
+      color: #007BFF;
+      text-decoration: none;
+      font-size: 0.9em; 
+   }
+  
+   .card a:hover {
+      color: #0056b3;
+   }
+
+   .card p {
+      color: #000000;
+      text-decoration: none;
+      font-size: 0.9em; 
+   }
+  
+   .card h2 {
+      color: #007BFF;
+      font-size: 0.9em; 
+      margin-bottom: 8px; 
+   }
+  
+   .card span {
+      color: #812bbf;
+      font-weight: bold;
+      font-size: 1.0em; 
+   }
    
-    .card:hover {
-       box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    }
-   
-    .card a {
-       color: #007BFF;
-       text-decoration: none;
-    }
-   
-    .card a:hover {
-       color: #0056b3;
-    }
-   
-    .card h2 {
-       color: #007BFF;
-       font-size: 1.5em;
-       margin-bottom: 10px;
-    }
-   
-    .card span {
-       color: #812bbf;
-       font-weight: bold;
-    }
-    
-    .card m {
-       color: #75beb7;
-       font-weight: bold;
-    }
+   .card m {
+      color: #75beb7;
+      font-weight: bold;
+      font-size: 0.9em;
+   }
 
 </style>

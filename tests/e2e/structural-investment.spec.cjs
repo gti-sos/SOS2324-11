@@ -98,8 +98,3 @@ test('delete all data', async () => {
   const elements = await page.$$('.card-container .card');
   expect(elements.length).toBe(0);
  });
-
-
- 
- 
-

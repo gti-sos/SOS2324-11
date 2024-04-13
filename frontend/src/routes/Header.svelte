@@ -1,12 +1,21 @@
+<br>
 <header> 
     <nav>
         <div class="container"> 
-            <span class="sos-code" style="margin-left: 20px;">SOS2324-11</span>
-            <a href="/" style="margin-left: 10px;">Inicio</a>
-            <a href="/about" style="margin-left: 10px;">Estado</a>
-            <a href="/structural-investment" style="margin-left: 10px;">Inversión estructural</a>
-            <a href="/structural-payment-data" style="margin-left: 10px;">Pagos estructurales</a>
-            <a href="/socioeconomics-tracker-using-unconventional-data" style="margin-left: 10px;">Rastreador de socioeconomía</a>
+            <span class="sos-code" style="margin-left: 20px; font-size: 19px;">SOS2324-11</span>
+            <a href="/" >Inicio</a>
+            <a href="/about" >Estado</a>
+            <a href="/structural-investment" >Inversión estructural</a>
+            <a href="/structural-payment-data" >Pagos estructurales</a>
+            <a href="/socioeconomics-tracker-using-unconventional-data" >Rastreador de socioeconomía</a>
+            <div class="dropdown">
+                <button class="dropbtn" >Vistas</button>
+                <div class="dropdown-content">
+                    <a href="/structural-investment/vista">Inversión estructural</a>
+                    <a href="/vista2">Pagos estructurales</a>
+                    <a href="/vista3">Rastreador de socioeconomía</a>
+                </div>
+            </div>
         </div>
     </nav>
 </header>
@@ -29,28 +38,72 @@
         padding: 0 20px; 
     }
 
-    a, .sos-code {
-        color : rgb(0, 0, 0);
+    a, .sos-code, .dropbtn {
+        color: #000;
         font-weight: bold; 
         text-decoration: none;
-        font-size: 25px; 
+        font-size: 18px; 
         padding-top: 30px;
         margin-left: 30px; 
-        margin-right: 100px;
+        margin-right: 25px;
         margin-bottom: 30px;
     }
 
     .sos-code {
         color: #076c8e; 
-        font-size: 30px;
+        font-size: 14px; 
     }
 
     a:hover {
-        color: rgb(0, 179, 255); 
+        color: #00b3ff; 
     }
 
     a:active {
         color: blue; 
     }
+
+    /* Dropdown Button */
+    .dropbtn {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px; 
+        transition: background-color 0.3s;
+    }
+
+    .dropbtn:hover{
+        color: #00b3ff; 
+    }
+
+    /* Dropdown content (hidden by default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #9bcedf; 
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 5px;
+        overflow: hidden; 
+    }
+
+    /* Links */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        font-size: 16px; 
+        transition: background-color 0.3s; 
+    }
+
+    .dropdown-content a:hover {
+        color: #00b3ff; 
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
 
 </style>
