@@ -3,6 +3,7 @@
     import {onMount} from "svelte";
     import {dev} from "$app/environment";
     import Mensaje from "../Mensaje.svelte";
+    import { page } from '$app/stores';
 
     let API = "/api/v2/structural-investment-data";
     if(dev)
@@ -62,9 +63,10 @@
         "eu_payment_rate_on_planned_eu_amount": 100
     };
 
-    onMount(()=>{
+
+    onMount(() => {
         getData();
-    })
+    });
 
 
     async function loadData() {
@@ -211,12 +213,6 @@
     //Filtro
     async function searchParam() {
     try {
-        // Verificar si no se han seleccionado filtros
-        if (Object.values(selectedFilter).every(value => value === '')) {
-            errorMsg = 'Debes seleccionar al menos un filtro para realizar la búsqueda.';
-            return;
-        }
-
         // Construye la URL de búsqueda a partir de los filtros proporcionados
         let searchParams = new URLSearchParams();
         
@@ -298,35 +294,48 @@
 
 }
 
+async function cleanFilter() {
+    // Reinicia todos los valores de los filtros
+    selectedFilter = {
+        ms: '',
+        ms_name: '',
+        cci: '',
+        title: '',
+        fund: '',
+        category_of_region: '',
+        year: '',
+        net_planned_eu_amount: '',
+        cumulative_initial_pre_financing: '',
+        cumulative_additional_initial_pre_financing: '',
+        recovery_of_initial_pre_financing: '',
+        cumulative_annual_pre_financing: '',
+        pre_financing_covered_by_expenditure: '',
+        recovery_of_annual_pre_financing: '',
+        net_pre_financing: '',
+        cumulative_interim_payments: '',
+        recovery_of_expenses: '',
+        net_interim_payments: '',
+        total_net_payments: '',
+        eu_payment_rate: '',
+        eu_payment_rate_on_planned_eu_amount: '',
+        from: '',
+        to: ''
+    };
 
-    async function cleanFilter(){
+     // Realiza una nueva búsqueda sin aplicar ningún filtro
+    msg = 'Al no introducir ningún filtro, se mostrarán todos los datos.';
+    setTimeout(async () => {
+            await searchParam();
+        }, 5000); 
 
-        try{
-            let response = await fetch(API, {
-                                method: "GET"
-                        });
+}
 
-            let investment = await response.json();
-            data = investment;
-            console.table(data);
-            
-            if(response.status === 200){
-                msg = 'Se han eliminado los filtros.';
-            }else{
-                errorMsg = "Ya se han borrado los filtros.";
-            }
 
-        }catch(e){
-            errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
-            console.error(e);
-        }
-
-    }
 
     
 </script>   
 
-<br> <br>
+<br>
 {#if msg!=""}
 <div>
     <Mensaje class="exito" tipo="exito" mensaje={msg} />
@@ -342,8 +351,8 @@
 
 <br><br>
     <button class="initial" on:click={loadData}>Cargar datos de prueba</button>  
-    <button class="filtro" on:click={() => {showFilter = true;}}>Filtros</button>
-    <button class="filtro2" on:click={cleanFilter}>Eliminar filtros</button>
+    <button class="filtro" on:click={() => {showFilter = true;}}>Filtros</button> <br>
+    <button class="filtro2" on:click={cleanFilter}>Limpiar  filtros</button>
     
 <br><br><br>
 
@@ -352,7 +361,7 @@
     <div class="modal">
         <div class="modal-content">
             <button class="close" on:click={() => { showFilter = false; }}>&times;</button>
-            <t style="margin-left: 400px; ;">Aplicar el filtro deseado</t>
+            <t >Aplicar el filtro deseado</t>
             <form on:submit|preventDefault={searchParam}>
                 <label>
                     Ciclas país 
@@ -380,7 +389,7 @@
                 </label>
                 <label>
                     Año 
-                    <input type="number" bind:value={selectedFilter.year}  />
+                    <input type="number" bind:value={selectedFilter.year} />
                 </label>
                 <label>
                     Cota inferior de año
@@ -414,7 +423,7 @@
                     Tasa de pago de la UE 
                     <input type="number" bind:value={selectedFilter.eu_payment_rate} style="margin-bottom: 10px;" />
                 </label>
-                <button type="submit" class="filtro" style="color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin-left: 500px;">Filtrar</button>
+                <button type="submit" class="filt" >Filtrar</button>
             </form>
         </div>
     </div>
@@ -429,7 +438,7 @@
 <div class="card-container">
     {#each paginate(data, itemsPerPage, currentPage) as item}
         <div class="card">
-            <h3>{item.title}</h3>
+            <t>{item.title}</t>
             <p><strong>País:</strong> {item.ms_name} ({item.ms})</p>
             <p><strong>Código identificador:</strong> {item.cci}</p>
             <p><strong>Fondo:</strong> {item.fund}</p>
@@ -450,14 +459,14 @@
             <p><strong>Tasa de pago de la UE:</strong> {item.eu_payment_rate}</p>
             <p><strong>Tasa de pago de la UE sobre la cantidad planificada de la UE:</strong> {item.eu_payment_rate_on_planned_eu_amount}</p>
             
-            <button class="button" onclick="window.location.href='/structural-investment/' + '{item.cci}'">Detalles</button>
-            <button class="button" on:click="{deleteDataByCci(item.cci)}">Borrar</button>
+            <button class="button-left" onclick="window.location.href='/structural-investment/' + '{item.cci}'">Detalles</button>
+            <button class="button-right" on:click="{deleteDataByCci(item.cci)}">Borrar</button>
 
         </div>
     {/each}
 </div>
 {:else}
-    <p class="inicio">No hay datos disponibles</p>
+    <e class="inicio">No hay datos disponibles</e>
 {/if}
 
 <div class="pagination">
@@ -465,113 +474,136 @@
     <button on:click={nextPage} disabled={currentPage === Math.ceil(data.length / itemsPerPage)}>Siguiente página</button>
 </div>
 
-<br><br><br><br><br>
+<br><br><br>
 <t> Creación de nuevos datos </t>
 <br>
 
 <br> 
-<table class="tabla-datos">
+<div class="tabla-container">
+    <table class="tabla-datos">
 
-    <thead>
-        <tr>
-            <th>Código país</th>
-            <th>Nombre país</th>
-            <th>Código identificador</th>
-            <th>Título</th>
-            <th>Nombre del fondo</th>
-            <th>Categoría de la región</th>
-            <th>Año</th>
-        </tr>
-        <tr>
-            <td><input bind:value={newData.ms}></td>
-            <td><input bind:value={newData.ms_name}></td>
-            <td><input bind:value={newData.cci}></td>
-            <td><input bind:value={newData.title}></td>
-            <td><input bind:value={newData.fund}></td>
-            <td><input bind:value={newData.category_of_region}></td>
-            <td><input bind:value={newData.year}></td>
-        </tr>
-        <tr>
-            <th>Cantidad neta planificada de la UE</th>
-            <th>Financiación previa inicial acumulativa</th>
-            <th>Financiación previa inicial adicional acumulativa</th>
-            <th>Recuperación de la financiación previa inicial</th>
-            <th>Financiación previa anual acumulativa</th>
-            <th>Financiación previa cubierta por gastos</th>
-            <th>Recuperación de la financiación previa anual</th>
-        </tr> 
-        <tr>
-            <td><input bind:value={newData.cumulative_additional_initial_pre_financing}></td>
-            <td><input bind:value={newData.recovery_of_initial_pre_financing}></td>
-            <td><input bind:value={newData.cumulative_annual_pre_financing}></td>
-            <td><input bind:value={newData.pre_financing_covered_by_expenditure}></td>
-            <td><input bind:value={newData.recovery_of_annual_pre_financing}></td>
-            <td><input bind:value={newData.net_pre_financing}></td>
-            <td><input bind:value={newData.cumulative_interim_payments}></td>
-         
-        </tr>
-        <tr>
-            <th>Financiación previa neta</th>
-            <th>Pago interino acumulativo</th>
-            <th>Recuperación de gasto</th>
-            <th>Pagos intermedios netos</th>
-            <th>Total de pagos netos</th>
-            <th>Tasa de pago de la UE</th>
-            <th>Tasa de pago de la UE sobre la cantidad planificada de la UE</th>
-        </tr>
-        <tr>
-            <td><input bind:value={newData.total_net_payments}></td>
-            <td><input  bind:value={newData.eu_payment_rate}></td>
-            <td><input bind:value={newData.eu_payment_rate_on_planned_eu_amount}></td>
-            <td><input bind:value={newData.recovery_of_expenses}></td>
-            <td><input bind:value={newData.net_interim_payments}></td>
-            <td><input  bind:value={newData.net_planned_eu_amount}></td>
-            <td><input bind:value={newData.cumulative_initial_pre_financing}></td>
-        </tr>
-    </thead>
+        <thead>
+            <tr>
+                <th>Código país</th>
+                <th>Nombre país</th>
+                <th>Código identificador</th>
+                <th>Título</th>
+            </tr>
+            <tr>
+                <td><input bind:value={newData.ms}></td>
+                <td><input bind:value={newData.ms_name}></td>
+                <td><input bind:value={newData.cci}></td>
+                <td><input bind:value={newData.title}></td>
+            </tr>
+            <tr>
+                <th>Nombre del fondo</th>
+                <th>Categoría de la región</th>
+                <th>Año</th>
+                <th>Cantidad neta planificada de la UE</th>
+            </tr>
+            <tr>
+                <td><input bind:value={newData.fund}></td>
+                <td><input bind:value={newData.category_of_region}></td>
+                <td><input bind:value={newData.year}></td>
+                <td><input bind:value={newData.cumulative_additional_initial_pre_financing}></td>
+            </tr>
+            <tr>
+                <th>Financiación previa inicial acumulativa</th>
+                <th>Financiación previa inicial adicional acumulativa</th>
+                <th>Recuperación de la financiación previa inicial</th>
+                <th>Financiación previa anual acumulativa</th>
+            </tr>
+            <tr>
+                <td><input bind:value={newData.recovery_of_initial_pre_financing}></td>
+                <td><input bind:value={newData.cumulative_annual_pre_financing}></td>
+                <td><input bind:value={newData.pre_financing_covered_by_expenditure}></td>
+                <td><input bind:value={newData.recovery_of_annual_pre_financing}></td>
+            </tr>
+            <tr>
+                <th>Financiación previa cubierta por gastos</th>
+                <th>Recuperación de la financiación previa anual</th>
+                <th>Financiación previa neta</th>
+                <th>Pago interino acumulativo</th>
+            </tr>
+            <tr>
+                <td><input bind:value={newData.net_pre_financing}></td>
+                <td><input bind:value={newData.cumulative_interim_payments}></td>
+                <td><input bind:value={newData.total_net_payments}></td>
+                <td><input bind:value={newData.eu_payment_rate}></td>
+            </tr>
+            <tr>
+                <th>Recuperación de gasto</th>
+                <th>Pagos intermedios netos</th>
+                <th>Total de pagos netos</th>
+                <th>Tasa de pago de la UE</th>
+            </tr>
+            <tr>
+                <td><input bind:value={newData.eu_payment_rate_on_planned_eu_amount}></td>
+                <td><input bind:value={newData.recovery_of_expenses}></td>
+                <td><input bind:value={newData.net_interim_payments}></td>
+                <td><input bind:value={newData.net_planned_eu_amount}></td>
+            </tr>
+            <tr>
+                <th>Tasa de pago de la UE sobre la cantidad planificada de la UE</th>
+                <td colspan="4" style="background-color: #f0f0f0;"></td>
+            </tr>
+            <tr>
+                <td><input bind:value={newData.cumulative_initial_pre_financing}></td>
+                <td colspan="4" style="background-color: #f0f0f0;"></td>
+            </tr>
+        </thead>
+        
+        
 
-</table>
+    </table>
+</div>
 
 
 <br>
 <div class="final">
-    <button class="final" on:click="{createData}">Crear nuevo dato</button>
+    <button on:click="{createData}">Crear nuevo dato</button>
     <button on:click="{deleteAllData}">Eliminar todos los datos</button>
 </div>
+
+
 
 
 
 <style>
 
     t {
-        font-family: ''; 
-        font-size: 40px; 
-        color: #0e2ac8; 
-        text-shadow: 2px 2px 4px rgba(111, 54, 191, 0.5); 
-        text-align: center; 
-        margin-top: 50px; 
-        margin-bottom: 30px;
-        margin-left: 800px;
+        font-family: '';
+        font-size: 40px;
+        color: #0e2ac8;
+        text-shadow: 2px 2px 4px rgba(111, 54, 191, 0.5);
+        text-align: center;
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
     }
 
-    .inicio {
-    font-weight: bold;
-    font-size: 50px;
-    text-align: center;
-    margin-right: 200px;
-    margin-bottom: 200px;
+    e {
+        font-family: '';
+        font-size: 40px;
+        color: #ff864a;
+        text-shadow: 2px 2px 4px rgba(254, 0, 0, 0.5);
+        text-align: center;
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
     }
 
-
+     /* Estilo botón de filtros */
     .filtro {
         background-color: #641b85; 
         color: white;
         border: none;
-        padding: 20px 35px;
         border-radius: 5px;
         cursor: pointer;
-        margin-left: 630px;
-        font-size: 38px; 
+        font-size: 25px; 
+        padding: 2vh 3vw; 
+        margin-left: 20px;
+        margin-right: auto;
     }
 
     .filtro:hover {
@@ -582,89 +614,129 @@
         background-color: #641b85; 
         color: white;
         border: none;
-        padding: 20px 35px;
         border-radius: 5px;
         cursor: pointer;
-        margin-left: 1860px;
-        margin-top: 30px;
-        font-size: 38px; 
+        font-size: 25px; 
+        padding: 2vh 3vw;
+        margin-left: 20px;
+        margin-right: auto; 
+        margin-top: 20px;
     }
 
     .filtro2:hover {
         background-color: #ab58de; 
     }
 
-    .initial {
-        background-color: #ba3da7; 
+    .filt {
+        background-color: #976faa; 
         color: white;
         border: none;
-        padding: 20px 35px;
         border-radius: 5px;
         cursor: pointer;
-        margin-left: 830px;
-        font-size: 38px; 
+        font-size: 25px; 
+        padding: 2vh 3vw;
+        margin-left: 300px;
+        margin-right: auto; 
+        margin-top: 20px;
+    }
+
+    .filt:hover {
+        background-color: #591d7e; 
+    }
+
+     /* Estilo botón de cargar datos */
+    .initial {
+        background-color: #ba3da7;
+        color: white;
+        border: none;
+        padding: 2vh 3vw;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 30px; 
+        margin-left: auto;
+        margin-right: auto;
+        display: block; 
     }
 
     .initial:hover {
-        background-color: #d64fb7; 
+        background-color: #d64fb7;
     }
+
 
     /* Estilo para la tabla */
+    .tabla-container {
+        overflow-x: auto; /* Hace que el contenedor sea desplazable horizontalmente si es necesario */
+        margin: 10px auto; /* Centra el contenedor horizontalmente */
+        width: 90%; /* Establece el ancho del contenedor al 90% del contenedor padre */
+    }
+
     .tabla-datos {
-        border: 2px solid #000; 
-        background-color: #ADD8E6; 
-        border-collapse: collapse; 
-        margin-left: 10px;
-        margin-right: 10px;
+        border: 2px solid #000;
+        background-color: #ADD8E6;
+        border-collapse: collapse;
+        width: 100%; /* Hace que la tabla ocupe todo el ancho del contenedor */
     }
 
-    /* Estilo para las celdas de la tabla */
-    .tabla-datos th, .tabla-datos td {
-        border: 1px solid #000; 
-        padding: 20px; 
-        text-align: center; 
-        
+    .tabla-datos th, 
+    .tabla-datos td {
+        border: 1px solid #000;
+        padding: 20px;
+        text-align: center;
     }
 
-    /* Estilo para las celdas de encabezado */
     .tabla-datos th {
-        background-color: #4682B4; 
-        color: white; 
-        text-align: center; 
-        
+        background-color: #4682B4;
+        color: white;
+        text-align: center;
     }
 
     /* Estilo para los botones cartas */
-    .button {
-    background-color: #007BFF; 
-    color: white; 
-    border: none; 
-    padding: 10px 20px; 
-    text-align: center; 
-    text-decoration: none; 
-    display: inline-block; 
-    font-size: 20px; 
-    margin: 5px 0px; 
-    cursor: pointer; 
-    border-radius: 4px; 
-    margin-left: 20%;
+    .button-left {
+        background-color:rgba(111, 54, 191, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-left: 90px;
     }
 
-    .button:hover {
-        background-color: #2267b1; 
+    .button-right {
+        background-color: rgba(111, 54, 191, 0.5);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 20px;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-left: 40px;
+    }
+
+    .button-left:hover,
+    .button-right:hover {
+        background-color: #5225ad;
     }
 
     /* Estilos para los botones de la creacion */
+    .final {
+        display: flex;
+        justify-content: center; /* Centra los elementos horizontalmente */
+    }
+
     .final button {
         background-color: #ADD8E6; 
         color: rgb(0, 0, 0);
         border: none;
-        padding: 10px 25px;
+        padding: 15px 25px;
         border-radius: 5px;
         cursor: pointer;
-        margin-right: -550px;
-        margin-left: 650px;
-        font-size: 38px; 
+        margin-right: 30px;
+        font-size: 30px; 
     }
 
     .final button:hover {
@@ -675,12 +747,12 @@
     .card-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
+        display: flex;
+        justify-content: center;
     }
 
     .card {
-
-        width: 23%; 
+        width: 30%; 
         margin-bottom: 20px;
         border: 1px solid #ccc;
         border-radius: 10px;
@@ -692,20 +764,20 @@
 
     /* Estilos de la paginación */
     .pagination {
-        margin-top: 20px;
-        margin-left: 720px;
-    }
+            margin-top: 20px;
+            text-align: center; /* Centra los botones de la paginación */
+        }
 
     /* Estilos para los botones de la paginación */
     .pagination button {
         background-color: #4394b0; 
         color: white;
         border: none;
-        padding: 20px 35px;
+        padding: 15px 25px;
         border-radius: 5px;
         cursor: pointer;
         margin-right: 30px;
-        font-size: 38px; 
+        font-size: 30px; 
     }
 
     .pagination button:hover {

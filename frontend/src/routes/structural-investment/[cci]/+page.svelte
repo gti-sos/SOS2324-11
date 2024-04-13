@@ -43,7 +43,7 @@
             updateYear = dato.year;
             updateNet_planned_eu_amount = dato.net_planned_eu_amount;
             updateCumulative_initial_pre_financing = dato.cumulative_initial_pre_financing;
-            updateVumulative_additional_initial_pre_financing = dato.cumulative_additional_initial_pre_financing;
+            updateCumulative_additional_initial_pre_financing = dato.cumulative_additional_initial_pre_financing;
             updateRecovery_of_initial_pre_financing = dato.recovery_of_initial_pre_financing;
             updateCumulative_annual_pre_financing = dato.cumulative_annual_pre_financing;
             updatePre_financing_covered_by_expenditure = dato.pre_financing_covered_by_expenditure;
@@ -80,7 +80,7 @@
     let updateYear = "";
     let updateNet_planned_eu_amount = "";
     let updateCumulative_initial_pre_financing = "";
-    let updateVumulative_additional_initial_pre_financing = ""; 
+    let updateCumulative_additional_initial_pre_financing = ""; 
     let updateRecovery_of_initial_pre_financing = "";
     let updateCumulative_annual_pre_financing = "";
     let updatePre_financing_covered_by_expenditure = "";
@@ -106,7 +106,7 @@
             year: updateYear,
             net_planned_eu_amount: updateNet_planned_eu_amount,
             cumulative_initial_pre_financing: updateCumulative_initial_pre_financing,
-            cumulative_additional_initial_pre_financing: updateVumulative_additional_initial_pre_financing,
+            cumulative_additional_initial_pre_financing: updateCumulative_additional_initial_pre_financing,
             recovery_of_initial_pre_financing: updateRecovery_of_initial_pre_financing,
             cumulative_annual_pre_financing: updateCumulative_annual_pre_financing,
             pre_financing_covered_by_expenditure: updatePre_financing_covered_by_expenditure,
@@ -170,7 +170,7 @@
 
 </script>
 
-<br><br>
+<br>
 
 {#if msg!=""}
 <div>
@@ -186,94 +186,116 @@
 
 
 <br> 
-<t>Detalles sobre el dato con "cci" {cci} </t> 
+<p style="text-align: center;">Detalles sobre el dato con "cci" {cci}</p> 
 <br> <br> 
 
 <br> 
-<table class="tabla-datos">
+<div class="tabla-container">
+        <table class="tabla-datos">
 
-    <thead>
-        <tr>
-            <th>Código país</th>
-            <th>Nombre país</th>
-            <th>Código identificador</th>
-            <th>Título</th>
-            <th>Nombre del fondo</th>
-            <th>Categoría de la región</th>
-            <th>Año</th>
-        </tr>
-        <tr>
-            <td><input bind:value={updateMs}></td>
-            <td><input bind:value={updateMsName}></td>
-            <td>{updateCCI}</td>
-            <td><input bind:value={updateTitle}></td>
-            <td><input bind:value={updateFund}></td>
-            <td><input bind:value={updateCategory_of_region}></td>
-            <td><input bind:value={updateYear}></td>
-        </tr>
-        <tr>
-            <th>Cantidad neta planificada de la UE</th>
-            <th>Financiación previa inicial acumulativa</th>
-            <th>Financiación previa inicial adicional acumulativa</th>
-            <th>Recuperación de la financiación previa inicial</th>
-            <th>Financiación previa anual acumulativa</th>
-            <th>Financiación previa cubierta por gastos</th>
-            <th>Recuperación de la financiación previa anual</th>
-        </tr>  
-        <tr>
-            <td><input bind:value={updateNet_planned_eu_amount }></td>
-            <td><input bind:value={updateCumulative_initial_pre_financing }></td>
-            <td><input bind:value={updateVumulative_additional_initial_pre_financing }></td>
-            <td><input bind:value={updateRecovery_of_initial_pre_financing }></td>
-            <td><input bind:value={updateCumulative_annual_pre_financing }></td>
-            <td><input bind:value={updatePre_financing_covered_by_expenditure }></td>
-            <td><input bind:value={updateRecovery_of_annual_pre_financing }></td>
+        <thead>
+            <tr>
+                <th>Código país</th>
+                <th>Nombre país</th>
+                <th>Código identificador</th>
+                <th>Título</th>
+            </tr>
+            <tr>
+                <td><input bind:value={updateMs}></td>
+                <td><input bind:value={updateMsName}></td>
+                <td>{updateCCI}</td>
+                <td><input bind:value={updateTitle}></td>
+            </tr>
+            <tr>
+                <th>Nombre del fondo</th>
+                <th>Categoría de la región</th>
+                <th>Año</th>
+                <th>Cantidad neta planificada de la UE</th>
+            </tr>
+            <tr>
+                <td><input bind:value={updateFund}></td>
+                <td><input bind:value={updateCategory_of_region}></td>
+                <td><input bind:value={updateYear}></td>
+                <td><input bind:value={updateNet_planned_eu_amount}></td>
+            </tr>
+            <tr>
+                <th>Financiación previa inicial acumulativa</th>
+                <th>Financiación previa inicial adicional acumulativa</th>
+                <th>Recuperación de la financiación previa inicial</th>
+                <th>Financiación previa anual acumulativa</th>
+            </tr>
+            <tr>
+                <td><input bind:value={updateCumulative_initial_pre_financing}></td>
+                <td><input bind:value={updateCumulative_additional_initial_pre_financing}></td>
+                <td><input bind:value={updateRecovery_of_initial_pre_financing}></td>
+                <td><input bind:value={updateCumulative_annual_pre_financing}></td>
+            </tr>
+            <tr>
+                <th>Financiación previa cubierta por gastos</th>
+                <th>Recuperación de la financiación previa anual</th>
+                <th>Financiación previa neta</th>
+                <th>Pago interino acumulativo</th>
+            </tr>
+            <tr>
+                <td><input bind:value={updatePre_financing_covered_by_expenditure}></td>
+                <td><input bind:value={updateRecovery_of_annual_pre_financing}></td>
+                <td><input bind:value={updateNet_pre_financing}></td>
+                <td><input bind:value={updateCumulative_interim_payments}></td>
+            </tr>
+            <tr>
+                <th>Recuperación de gasto</th>
+                <th>Pagos intermedios netos</th>
+                <th>Total de pagos netos</th>
+                <th>Tasa de pago de la UE</th>
+            </tr>
+            <tr>
+                <td><input bind:value={updateRecovery_of_expenses}></td>
+                <td><input bind:value={updateNet_interim_payments}></td>
+                <td><input bind:value={updateTotal_net_payments}></td>
+                <td><input bind:value={updateEu_payment_rate}></td>
+            </tr>
+            <tr>
+                <th>Tasa de pago de la UE sobre la cantidad planificada de la UE</th>
+                <td colspan="4" style="background-color: #f0f0f0;"></td>
+            </tr>
             
-        </tr>
-        <tr>
-            <th>Financiación previa neta</th>
-            <th>Pago interino acumulativo</th>
-            <th>Recuperación de gasto</th>
-            <th>Pagos intermedios netos</th>
-            <th>Total de pagos netos</th>
-            <th>Tasa de pago de la UE</th>
-            <th>Tasa de pago de la UE sobre la cantidad planificada de la UE</th>
-        </tr>
-        <tr>
-            <td><input bind:value={updateNet_pre_financing }></td>
-            <td><input  bind:value={updateCumulative_interim_payments }></td>
-            <td><input bind:value={updateRecovery_of_expenses }></td>
-            <td><input bind:value={updateNet_interim_payments }></td>
-            <td><input bind:value={updateTotal_net_payments }></td>
-            <td><input  bind:value={updateEu_payment_rate }></td>
-            <td><input bind:value={updateEu_payment_rate_on_planned_eu_amount }></td>
-        </tr>
-    </thead>
+            <tr>
+                <td><input bind:value={updateEu_payment_rate_on_planned_eu_amount}></td>
+                <td colspan="4" style="background-color: #f0f0f0;"></td>
+            </tr>
+        </thead>
 
-</table>
+    </table>
+</div>
 
 <button class="button" on:click="{updateData}">Actualizar dato</button>
 
 
-    
 <style>
-    t {
+    p {
         font-family: ''; 
         font-size: 40px; 
         color: #0e2ac8; 
         text-shadow: 2px 2px 4px rgba(111, 54, 191, 0.5); 
         text-align: center; 
-        margin-top: 50px; 
-        margin-bottom: 30px;
-        margin-left: 800px;
+        margin-top: 10px; 
+        margin-bottom: -30px;
     }
+
+     /* Estilo para la tabla */
+    .tabla-container {
+        overflow-x: auto; /* Hace que el contenedor sea desplazable horizontalmente si es necesario */
+        margin: 10px auto; /* Centra el contenedor horizontalmente */
+        width: 90%; /* Establece el ancho del contenedor al 90% del contenedor padre */
+    }
+
     /* Estilo para la tabla */
     .tabla-datos {
         border: 2px solid #000; 
         background-color: #ADD8E6; 
         border-collapse: collapse; 
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: auto;
+        margin-right: auto;
     }
 
     /* Estilo para las celdas de la tabla */
@@ -281,7 +303,6 @@
         border: 1px solid #000; 
         padding: 20px; 
         text-align: center; 
-        
     }
 
     /* Estilo para las celdas de encabezado */
@@ -289,23 +310,23 @@
         background-color: #4682B4; 
         color: white; 
         text-align: center; 
-        
     }
 
     .button {
         background-color: #ADD8E6; 
         color: rgb(0, 0, 0);
         border: none;
-        padding: 10px 25px;
+        padding: 8px 20px;
         border-radius: 5px;
         cursor: pointer;
-        margin-left: 950px;
-        font-size: 38px; 
         margin-top: 30px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: 30px; 
     }
 
     .button:hover {
         background-color: #4682B4; 
     }
-    
 </style>
