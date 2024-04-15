@@ -3,7 +3,6 @@
     import {onMount} from "svelte";
     import {dev} from "$app/environment";
     import Mensaje from "../Mensaje.svelte";
-    import { page } from '$app/stores';
 
     let API = "/api/v2/structural-investment-data";
     if(dev)
@@ -68,7 +67,7 @@
         getData();
     });
 
-
+    // Función asíncrona para cargar datos desde el servidor
     async function loadData() {
 
         try {
@@ -90,249 +89,255 @@
             errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
             console.error(e);
         }
-    }
-   
+    }   
 
-    async function getData(){
-
-        try{
+    // Función asíncrona para obtener datos de inversión desde el servidor
+    async function getData() {
+        try {
             let response = await fetch(API, {
-                                method: "GET"
-                        });
+                method: "GET" 
+            });
 
             let investment = await response.json();
             data = investment;
             console.table(data);
-
-        }catch(e){
+        } catch (e) {
             errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
-            console.error(e);
+            console.error(e); 
         }
-
     }
 
 
-    async function createData(){
+    // Función asíncrona para crear nuevos datos de inversión en el servidor
+    async function createData() {
+        try {
 
-        try{
             let response = await fetch(API, {
-                method: "POST",
-                headers:{
-                    "Content-Type":"application/json"
+                method: "POST", 
+                headers: {
+                    "Content-Type": "application/json" // Encabezado especificando el tipo de contenido como JSON
                 },
-                body:JSON.stringify(newData,null,2)
+                body: JSON.stringify(newData, null, 2) // Cuerpo de la solicitud, convierte el objeto newData a JSON
             });
 
-            let status =  await response.status;
-            console.log(`Creation response status ${status}`);
+            let status = await response.status; 
+            console.log(`Creation response status ${status}`); 
 
-            if( status === 201) {
+            if (status === 201) {
                 getData();
-                msg = "El nuevo dato se ha creado exitosamente.";
-            } else if(status === 400) {
+                msg = "El nuevo dato se ha creado exitosamente."; 
+            } else if (status === 400) {
                 errorMsg = "Solicitud incorrecta. Por favor, verifica los datos enviados.";
-            } else if(status === 409){
+            } else if (status === 409) {
                 errorMsg = `Lo sentimos, pero ya existe el dato con el cci ${newData.cci}. Por favor, intenta con un nombre diferente.`;
             } else {
                 errorMsg = "Error interno del servidor. Por favor, intenta de nuevo más tarde.";
             }
-
-        } catch(e) {
-            errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
-            console.error(e);
-        }
-
-    }
-
-
-    async function deleteAllData(){
-
-        console.log(`Deleting all`);
-        try{
-            let response = await fetch(API, {
-                                method: "DELETE"
-                        });
-
-            if(response.status === 200){
-                getData();
-                msg = "Se han borrado correctamente todos los datos."; 
-            } else if(response.status === 404) {
-                errorMsg = "Recursos no encontrados. Por favor, inserte datos para borrarlos, ya que no hay datos existentes.";
-            }else{ 
-                errorMsg = "Error interno del servidor. Por favor, intenta de nuevo más tarde.";
-            }
-
-        }catch(e){
-            errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
-            console.error(e);
-        }
-
-    }
-
-    async function deleteDataByCci(cci) {
-
-        console.log(`Deleting ${cci}`);
-        try {
-            let response = await fetch(API + "/" + cci, {
-                method: "DELETE"
-            });
-
-            if (response.status === 200) {
-                getData(); 
-                msg = "Dato borrado correctamente.";
-            } else if(response.status === 404) {
-                errorMsg = "Recurso no encontrado. Por favor, verifica la URL.";
-            } else {
-                errorMsg = "Error interno del servidor. Por favor, intenta de nuevo más tarde.";
-            }
-
         } catch (e) {
             errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
             console.error(e);
         }
-
     }
 
-    //Paginación
+
+    // Función asíncrona para eliminar todos los datos de inversión desde el servidor
+    async function deleteAllData() {
+        
+        console.log(`Deleting all`);
+
+        try {
+            
+            let response = await fetch(API, {
+                method: "DELETE"
+            });
+
+            if (response.status === 200) {
+                getData();
+                msg = "Se han borrado correctamente todos los datos.";
+            } else if (response.status === 404) {
+                errorMsg = "Recursos no encontrados. Por favor, inserte datos para borrarlos, ya que no hay datos existentes.";
+            } else { 
+                errorMsg = "Error interno del servidor. Por favor, intenta de nuevo más tarde.";
+            }
+
+        } catch (e) {
+            console.error(e);
+            errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
+        }
+    }
+
+
+    // Función asíncrona para eliminar un dato de inversión por su código CCI
+    async function deleteDataByCci(cci) {
+
+        console.log(`Deleting ${cci}`);
+
+        try {
+        
+            let response = await fetch(API + "/" + cci, {
+                method: "DELETE"
+            });
+
+            if (response.status === 200) {           
+                getData(); 
+                msg = "Dato borrado correctamente.";
+            } else if (response.status === 404) {
+                errorMsg = "Recurso no encontrado. Por favor, verifica la URL.";
+            }else {               
+                errorMsg = "Error interno del servidor. Por favor, intenta de nuevo más tarde.";
+            }
+
+        } catch (e) { 
+            console.error(e);
+            errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
+        }
+    }
+
+
+    // Función para paginar una matriz de datos
     function paginate(array, page_size, page_number) {
+        // Calcula el índice de inicio de los elementos en la página actual
         const startIndex = (page_number - 1) * page_size;
+        // Calcula el índice de fin de los elementos en la página actual
         const endIndex = startIndex + page_size;
+        // Devuelve una porción de la matriz original que contiene los elementos de la página actual
         return array.slice(startIndex, endIndex);
     }
 
-    function nextPage() {
+    // Función para avanzar a la siguiente página
+    function nextPage() {   
+        // Calcula el número total de páginas
         const totalPages = Math.ceil(data.length / itemsPerPage);
+        // Incrementa el número de página actual si no estamos en la última página
         currentPage = currentPage === totalPages ? currentPage : currentPage + 1;
     }
 
+    // Función para retroceder a la página anterior
     function previousPage() {
+        // Decrementa el número de página actual si no estamos en la primera página
         currentPage = currentPage === 1 ? 1 : currentPage - 1;
     }
 
 
-    //Filtro
+    // Función asíncrona para realizar una búsqueda de datos en la API basada en los filtros proporcionados
     async function searchParam() {
-    try {
-        // Construye la URL de búsqueda a partir de los filtros proporcionados
-        let searchParams = new URLSearchParams();
-        
-        // Filtros seleccionados
-        if (selectedFilter.length == 0) {
-            selectedFilter = {
-                ms: '',
-                ms_name: '',
-                cci: '',
-                title: '',
-                fund: '',
-                category_of_region: '',
-                year: '',
-                net_planned_eu_amount: '',
-                cumulative_initial_pre_financing: '',
-                cumulative_additional_initial_pre_financing: '',
-                recovery_of_initial_pre_financing: '',
-                cumulative_annual_pre_financing: '',
-                pre_financing_covered_by_expenditure: '',
-                recovery_of_annual_pre_financing: '',
-                net_pre_financing: '',
-                cumulative_interim_payments: '',
-                recovery_of_expenses: '',
-                net_interim_payments: '',
-                total_net_payments: '',
-                eu_payment_rate: '',
-                eu_payment_rate_on_planned_eu_amount: ''
-            };
-        }
-        
-        // Agregar filtros seleccionados a los parámetros de búsqueda
-        for (const key in selectedFilter) {
-            if (selectedFilter[key] !== '') {
-                searchParams.append(key, selectedFilter[key]);
+        try {
+            // Construye la URL de búsqueda a partir de los filtros proporcionados
+            let searchParams = new URLSearchParams();
+            
+            // Filtros seleccionados
+            if (selectedFilter.length == 0) {
+                // Si no se han seleccionado filtros, se reinician los valores
+                selectedFilter = {
+                    ms: '',
+                    ms_name: '',
+                    cci: '',
+                    title: '',
+                    fund: '',
+                    category_of_region: '',
+                    year: '',
+                    net_planned_eu_amount: '',
+                    cumulative_initial_pre_financing: '',
+                    cumulative_additional_initial_pre_financing: '',
+                    recovery_of_initial_pre_financing: '',
+                    cumulative_annual_pre_financing: '',
+                    pre_financing_covered_by_expenditure: '',
+                    recovery_of_annual_pre_financing: '',
+                    net_pre_financing: '',
+                    cumulative_interim_payments: '',
+                    recovery_of_expenses: '',
+                    net_interim_payments: '',
+                    total_net_payments: '',
+                    eu_payment_rate: '',
+                    eu_payment_rate_on_planned_eu_amount: ''
+                };
             }
-        }
-
-        // Construir el rango de años si se proporcionan 'from' y 'to'
-        if (selectedFilter.from && selectedFilter.to) {
-            searchParams.append('from', selectedFilter.from);
-            searchParams.append('to', selectedFilter.to);
-        }
-
-        // Construir la URL de búsqueda
-        let searchUrl = `${API}?${searchParams.toString()}`;
-        console.log(searchUrl);
-
-        // Realiza la petición GET a la API con la URL de búsqueda generada
-        let response = await fetch(searchUrl, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
+            
+            // Agregar filtros seleccionados a los parámetros de búsqueda
+            for (const key in selectedFilter) {
+                if (selectedFilter[key] !== '') {
+                    searchParams.append(key, selectedFilter[key]);
+                }
             }
-        });
 
-        // Manejo de la respuesta de la API
-        let status = response.status;
-        console.log(`Response status: ${status}`);
-
-        if (response.status === 200) {
-            // Actualiza los datos después de una búsqueda exitosa
-            let datosAct   = await response.json();
-            data  = datosAct ;
-            console.log(data );
-            msg = 'Ya se ha realizado el filtro indicado.';
-        } else {
-            if (response.status === 400) {
-                errorMsg = 'Error en la estructura de los datos.';
-            } else if (response.status === 409) {
-                errorMsg = 'Ya existe una entrada con esos datos.';
-            } else if (response.status === 404) {
-                errorMsg = 'Dato no encontrado.';
+            // Construir el rango de años si se proporcionan 'from' y 'to'
+            if (selectedFilter.from && selectedFilter.to) {
+                searchParams.append('from', selectedFilter.from);
+                searchParams.append('to', selectedFilter.to);
             }
+
+            // Construir la URL de búsqueda
+            let searchUrl = `${API}?${searchParams.toString()}`;
+            console.log(searchUrl);
+
+            let response = await fetch(searchUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            let status = response.status;
+            console.log(`Response status: ${status}`);
+
+            if (response.status === 200) {
+                let datosAct = await response.json();
+                data = datosAct;
+                console.log(data);
+                msg = 'Ya se ha realizado el filtro indicado.';
+            } else {
+                if (response.status === 400) {
+                    errorMsg = 'Error en la estructura de los datos.';
+                } else if (response.status === 409) {
+                    errorMsg = 'Ya existe una entrada con esos datos.';
+                } else if (response.status === 404) {
+                    errorMsg = 'Dato no encontrado.';
+                }
+            }
+        } catch (e) {
+            errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
+            console.error(e);
         }
-    } catch (e) {
-        errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
-        console.error(e);
     }
 
-}
+    // Función asíncrona para limpiar todos los filtros y realizar una nueva búsqueda sin filtros aplicados
+    async function cleanFilter() {
 
-async function cleanFilter() {
-    // Reinicia todos los valores de los filtros
-    selectedFilter = {
-        ms: '',
-        ms_name: '',
-        cci: '',
-        title: '',
-        fund: '',
-        category_of_region: '',
-        year: '',
-        net_planned_eu_amount: '',
-        cumulative_initial_pre_financing: '',
-        cumulative_additional_initial_pre_financing: '',
-        recovery_of_initial_pre_financing: '',
-        cumulative_annual_pre_financing: '',
-        pre_financing_covered_by_expenditure: '',
-        recovery_of_annual_pre_financing: '',
-        net_pre_financing: '',
-        cumulative_interim_payments: '',
-        recovery_of_expenses: '',
-        net_interim_payments: '',
-        total_net_payments: '',
-        eu_payment_rate: '',
-        eu_payment_rate_on_planned_eu_amount: '',
-        from: '',
-        to: ''
-    };
+        // Reinicia todos los valores de los filtros
+        selectedFilter = {
+            ms: '',
+            ms_name: '',
+            cci: '',
+            title: '',
+            fund: '',
+            category_of_region: '',
+            year: '',
+            net_planned_eu_amount: '',
+            cumulative_initial_pre_financing: '',
+            cumulative_additional_initial_pre_financing: '',
+            recovery_of_initial_pre_financing: '',
+            cumulative_annual_pre_financing: '',
+            pre_financing_covered_by_expenditure: '',
+            recovery_of_annual_pre_financing: '',
+            net_pre_financing: '',
+            cumulative_interim_payments: '',
+            recovery_of_expenses: '',
+            net_interim_payments: '',
+            total_net_payments: '',
+            eu_payment_rate: '',
+            eu_payment_rate_on_planned_eu_amount: '',
+            from: '',
+            to: ''
+        };
 
-     // Realiza una nueva búsqueda sin aplicar ningún filtro
-    msg = 'Al no introducir ningún filtro, se mostrarán todos los datos.';
-    setTimeout(async () => {
+        // Realiza una nueva búsqueda sin aplicar ningún filtro
+        msg = 'Al no introducir ningún filtro, se mostrarán todos los datos.';
+        setTimeout(async () => {
             await searchParam();
-        }, 5000); 
-
-}
-
+        }, 5000); // Espera 5 segundos antes de realizar la búsqueda sin filtros
+    }
 
 
-    
 </script>   
 
 <br>
@@ -470,7 +475,9 @@ async function cleanFilter() {
 {/if}
 
 <div class="pagination">
+    <!-- Si se pulsa va a la anteiror página y si estas en la primera página se deshabilitarse -->
     <button on:click={previousPage} disabled={currentPage === 1}>Anterior página</button>
+    <!-- Si se pulsa va a la siguiente página  y si estas en la última página se deshabilitarse-->
     <button on:click={nextPage} disabled={currentPage === Math.ceil(data.length / itemsPerPage)}>Siguiente página</button>
 </div>
 
@@ -568,9 +575,9 @@ async function cleanFilter() {
 
 
 
-
 <style>
 
+    /* Estilo de etxtos */
     t {
         font-family: '';
         font-size: 40px;
@@ -610,6 +617,7 @@ async function cleanFilter() {
         background-color: #ab58de; 
     }
 
+    /* Estilo botón de eliminar filtro */
     .filtro2 {
         background-color: #641b85; 
         color: white;
@@ -665,16 +673,16 @@ async function cleanFilter() {
 
     /* Estilo para la tabla */
     .tabla-container {
-        overflow-x: auto; /* Hace que el contenedor sea desplazable horizontalmente si es necesario */
-        margin: 10px auto; /* Centra el contenedor horizontalmente */
-        width: 90%; /* Establece el ancho del contenedor al 90% del contenedor padre */
+        overflow-x: auto; 
+        margin: 10px auto; 
+        width: 90%; 
     }
 
     .tabla-datos {
         border: 2px solid #000;
         background-color: #ADD8E6;
         border-collapse: collapse;
-        width: 100%; /* Hace que la tabla ocupe todo el ancho del contenedor */
+        width: 100%; 
     }
 
     .tabla-datos th, 
@@ -725,7 +733,7 @@ async function cleanFilter() {
     /* Estilos para los botones de la creacion */
     .final {
         display: flex;
-        justify-content: center; /* Centra los elementos horizontalmente */
+        justify-content: center; 
     }
 
     .final button {
@@ -765,7 +773,7 @@ async function cleanFilter() {
     /* Estilos de la paginación */
     .pagination {
             margin-top: 20px;
-            text-align: center; /* Centra los botones de la paginación */
+            text-align: center; 
         }
 
     /* Estilos para los botones de la paginación */
@@ -812,6 +820,7 @@ async function cleanFilter() {
         padding: 10px; 
 	}
 
+    /*Fomrulario botón*/
 	.close {
 		color: #aaa;
 		float: right;
@@ -826,6 +835,7 @@ async function cleanFilter() {
 		cursor: pointer;
 	}
 
+    /*Fomrulario celdas de datos*/
 	input[type='text'],
 	input[type='number'] {
 		width: 100%;

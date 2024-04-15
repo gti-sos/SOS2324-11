@@ -3,11 +3,13 @@
 </svelte:head>
 
 <script>
+
     import { onMount } from "svelte";
 
     let DATAAPI = "https://sos2324-11.appspot.com/api/v2/structural-investment-data";
 
     async function getData() {
+
         try {
             const res = await fetch(DATAAPI);
             const data = await res.json();
@@ -17,31 +19,39 @@
         } catch (error) {
             console.log(`Error fetching data: ${error}`);
         }
+
     }
 
     function aggregateDataByYear(data) {
-    const aggregatedData = {};
 
-    // Sumar la prefinanciación inicial acumulada por año
-    data.forEach(item => {
-        if (aggregatedData[item.year]) {
-            // Si el año ya está en el diccionario, sumar los montos
-            aggregatedData[item.year] += parseFloat(item.cumulative_initial_pre_financing);
-        } else {
-            // Si el año no está, inicializar con el primer monto encontrado
-            aggregatedData[item.year] = parseFloat(item.cumulative_initial_pre_financing);
-        }
-    });
+        const aggregatedData = {};
+
+        // Sumar la prefinanciación inicial acumulada por año
+        data.forEach(item => {
+            if (aggregatedData[item.year]) {
+                // Si el año ya está en el diccionario, sumar datos
+                aggregatedData[item.year] += parseFloat(item.cumulative_initial_pre_financing);
+            } else {
+                // Si el año no está, inicializar con el primer dato encontrado
+                aggregatedData[item.year] = parseFloat(item.cumulative_initial_pre_financing);
+            }
+
+        });
 
     // Convertir el objeto a un formato adecuado para Highcharts
-    return Object.keys(aggregatedData).map(year => ({
-        name: year,
-        y: aggregatedData[year]
-    }));
+        return Object.keys(aggregatedData).map(year => ({
+            name: year,
+            y: aggregatedData[year]
+        }));
+
     }
 
+    // Crear un gráfico de pastel utilizando Highcharts
     function createFirstGraph(data) {
+
+        // Procesar los datos para el gráfico de pastel
         const processedData = aggregateDataByYear(data);
+
         const pieChart = Highcharts.chart('pastel-container', {
             chart: {
                 type: 'pie',
@@ -70,7 +80,9 @@
         });
     }
 
+    // Crear un gráfico de dispersión utilizando Highcharts
     function createSecondGraph(data) {
+
         const scatterChart = Highcharts.chart('dispersion-container', {
             chart: {
                 type: 'scatter',
@@ -84,7 +96,7 @@
                 enabled: true,
                 text: 'Fondos Planificados',
                 style: {
-                    color: '#FF6347'  // Cambio de color a un tono de rojo para los Fondos Planificados
+                    color: '#FF6347'  
                 }
             },
             startOnTick: true,
@@ -95,7 +107,7 @@
             title: {
                 text: 'Pagos Netos',
                 style: {
-                    color: '#4682B4'  // Cambio de color a un tono de azul para los Pagos Netos
+                    color: '#4682B4'  
                 }
             }
         },
@@ -150,14 +162,18 @@
     onMount(() => {
         getData();
     });
+
 </script>
 
+
 <style>
+
     #pastel-container,
     #dispersion-container {
         width: 100%;
         height: 400px;
     }
+
 </style>
 
 

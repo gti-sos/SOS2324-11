@@ -1,4 +1,5 @@
 <script>
+
     import { onMount } from "svelte";
     import { dev } from "$app/environment";
     import {page} from '$app/stores';
@@ -9,31 +10,58 @@
         getData();
     });
 
-    let cci = $page.params.cci;
-
     let API = "/api/v2/structural-investment-data";
 
     if (dev) {
         API = "http://localhost:10000" + API;
     }
 
+    let cci = $page.params.cci; // Campo único
     let errorMsg = "";
     let msg = "";
     let result = "";
     let resultStatus = "";
     let dato = [];
+    let updateMs = "";
+    let updateMsName = "";
+    let updateCCI = cci; 
+    let updateTitle = "";
+    let updateFund = "";
+    let updateCategory_of_region = "";
+    let updateYear = "";
+    let updateNet_planned_eu_amount = "";
+    let updateCumulative_initial_pre_financing = "";
+    let updateCumulative_additional_initial_pre_financing = ""; 
+    let updateRecovery_of_initial_pre_financing = "";
+    let updateCumulative_annual_pre_financing = "";
+    let updatePre_financing_covered_by_expenditure = "";
+    let updateRecovery_of_annual_pre_financing = ""; 
+    let updateNet_pre_financing = "";
+    let updateCumulative_interim_payments = "";
+    let updateRecovery_of_expenses = ""; 
+    let updateNet_interim_payments = "";
+    let updateTotal_net_payments = "";
+    let updateEu_payment_rate = "";
+    let updateEu_payment_rate_on_planned_eu_amount = "";
 
 
+    // Función para obtener los datos de un elemento específico
     async function getData() {
 
         resultStatus = result = "";
+
+         // Realizar solicitud GET a la API para obtener los datos del elemento identificado por "cci"
         const res = await fetch(API + "/" + cci, {
             method: "GET",
         });
+
         try {
+            // Intentar analizar la respuesta JSON
             const data = await res.json();
             result = JSON.stringify(data, null, 2);
             dato = data;
+
+            // Asignar los datos obtenidos a las variables correspondientes
             updateMs = dato.ms;
             updateMsName = dato.ms_name;
             updateCCI = dato.cci;
@@ -63,39 +91,23 @@
 
         const status = await res.status;
         resultStatus = status;
+
         if (resultStatus === 404) {
             errorMsg = `El elemento: ${cci} , no ha sido encontrado.`;
         }
         if (resultStatus === 500) {
             errorMsg = "Error interno del servidor.";
         }
+
     }
    
-    let updateMs = "";
-    let updateMsName = "";
-    let updateCCI = cci; 
-    let updateTitle = "";
-    let updateFund = "";
-    let updateCategory_of_region = "";
-    let updateYear = "";
-    let updateNet_planned_eu_amount = "";
-    let updateCumulative_initial_pre_financing = "";
-    let updateCumulative_additional_initial_pre_financing = ""; 
-    let updateRecovery_of_initial_pre_financing = "";
-    let updateCumulative_annual_pre_financing = "";
-    let updatePre_financing_covered_by_expenditure = "";
-    let updateRecovery_of_annual_pre_financing = ""; 
-    let updateNet_pre_financing = "";
-    let updateCumulative_interim_payments = "";
-    let updateRecovery_of_expenses = ""; 
-    let updateNet_interim_payments = "";
-    let updateTotal_net_payments = "";
-    let updateEu_payment_rate = "";
-    let updateEu_payment_rate_on_planned_eu_amount = "";
 
+    // Función para actualizar los datos de un elemento
     async function updateData() {
 
         resultStatus = result = "";
+
+        // Crear objeto con los datos actualizados
         const requestBody = {
             ms: updateMs,
             ms_name: updateMsName,
@@ -120,7 +132,7 @@
             eu_payment_rate_on_planned_eu_amount: updateEu_payment_rate_on_planned_eu_amount
         };
 
-        // Verificar si alguno de los campos está vacío o undefined
+        // Verificar si alguno de los campos está vacío o indefinido
         for (const key in requestBody) {
             if (requestBody[key] === undefined || requestBody[key] === "") {
                 errorMsg = "Rellene todos los campos, por favor.";
@@ -166,7 +178,6 @@
             }
 
     }
-
 
 </script>
 
@@ -272,6 +283,7 @@
 
 
 <style>
+
     p {
         font-family: ''; 
         font-size: 40px; 
@@ -282,11 +294,11 @@
         margin-bottom: -30px;
     }
 
-     /* Estilo para la tabla */
+     /* Estilo contendero de la tabla */
     .tabla-container {
-        overflow-x: auto; /* Hace que el contenedor sea desplazable horizontalmente si es necesario */
-        margin: 10px auto; /* Centra el contenedor horizontalmente */
-        width: 90%; /* Establece el ancho del contenedor al 90% del contenedor padre */
+        overflow-x: auto; 
+        margin: 10px auto; 
+        width: 90%; 
     }
 
     /* Estilo para la tabla */
@@ -312,6 +324,7 @@
         text-align: center; 
     }
 
+      /* Botón de actulizar */
     .button {
         background-color: #ADD8E6; 
         color: rgb(0, 0, 0);
@@ -329,4 +342,5 @@
     .button:hover {
         background-color: #4682B4; 
     }
+
 </style>

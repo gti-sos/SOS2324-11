@@ -1,17 +1,22 @@
+// Importación de las funciones necesarias de Playwright
 const { test, expect, beforeAll, afterAll, beforeEach } = require('@playwright/test');
 let page;
 
+// Inicialización y limpieza del contexto de la página
 beforeAll(async ({ browser }) => {
+  // Crea una nueva página del navegador antes de todas las pruebas
   page = await browser.newPage();
 });
 
 
 afterAll(async () => {
+  // Cierra la página del navegador después de todas las pruebas
   await page.close();
 });
 
 
 beforeEach(async () => {
+  // Carga la página de la aplicación web y realiza algunas acciones necesarias antes de cada prueba
   await page.goto('http://localhost:10000/structural-investment');
   await page.waitForLoadState('load');
   await page.waitForTimeout(1000);
@@ -19,6 +24,7 @@ beforeEach(async () => {
   await page.click('.final button:nth-child(2)');
   await page.waitForTimeout(3000);
 });
+
 
 test('has specific text1', async ({ page }) => {
   await page.goto('http://localhost:10000');
@@ -70,7 +76,7 @@ test('has specific text8', async ({ page }) => {
   expect(pageContent).toContain(expectedText);
 });
 
-
+// Prueba de que la pagina está
 test('load pag', async () => {
   await page.goto('http://localhost:10000/structural-investment');
   await page.waitForLoadState('load');
@@ -78,7 +84,7 @@ test('load pag', async () => {
   expect(items.length).toBe(0);
 });
 
-
+// Prueba de carga y lista de datos
 test('load and list data', async () => {
   await page.goto('http://localhost:10000/structural-investment');
   await page.waitForLoadState('load');
@@ -88,7 +94,7 @@ test('load and list data', async () => {
   expect(items.length).toBeGreaterThan(0);
 });
 
-
+// Prueba de eliminación de todos los datos
 test('delete all data', async () => {
   await page.goto('http://localhost:10000/structural-investment');
   await page.waitForLoadState('load');

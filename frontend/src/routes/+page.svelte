@@ -19,12 +19,12 @@
 </div>
 
 <div class="card">
-    <h2>Project Description</h2>
-    <p>Our information sources are aimed at analyzing the relationships that exist between annual EU payments from 2014 to the present, together with details on payments to structural and investment programs. In addition, unconventional data collected from news and social networks is integrated to analyze socioeconomic trends.</p>
+    <h2>Descripción del proyecto</h2>
+    <p>Nuestras fuentes de información tienen como objetivo analizar las relaciones existentes entre los pagos anuales de la UE desde 2014 hasta la actualidad, junto con detalles sobre los pagos a programas estructurales y de inversión. Además, se integran datos no convencionales recogidos de noticias y redes sociales para analizar las tendencias socioeconómicas.</p>
 </div>
 
 <div class="card">
-    <h2>Repository</h2>
+    <h2>Repositorio de GitHub</h2>
     <p><a href="https://github.com/gti-sos/SOS2324-11"><span>github.com/gti-sos/SOS2324-11</span></a></p>
 </div>
 
@@ -36,37 +36,37 @@
 <div class="card">
     <h2>APIs</h2>
     <p>
-       <a href="https://sos2324-11.appspot.com/api/v1/structural-investment-data"><span>V1 structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
-       <a href="https://sos2324-11.appspot.com/api/v1/structural-payment-data"><span>V1 structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data"><span>V1 socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/api/v1/structural-investment-data"><span>V1 structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado) <br>
+       <a href="https://sos2324-11.appspot.com/api/v1/structural-payment-data"><span>V1 structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero)<br>
+       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data"><span>V1 socioeconomics-tracker-using-unconventional-data</span></a> (desarrollado por Álvaro Marcos Delgado)<br>
     </p>
     <p>
-      <a href="https://sos2324-11.appspot.com/api/v2/structural-investment-data"><span>V2 structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
-      <a href="https://sos2324-11.appspot.com/api/v2/structural-payment-data"><span>V2 structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-      <a href="https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data"><span>V2 socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+      <a href="https://sos2324-11.appspot.com/api/v2/structural-investment-data"><span>V2 structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado) <br>
+      <a href="https://sos2324-11.appspot.com/api/v2/structural-payment-data"><span>V2 structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero)<br>
+      <a href="https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data"><span>V2 socioeconomics-tracker-using-unconventional-data</span></a> (desarrollado por Álvaro Marcos Delgado)<br>
    </p>
 </div>
 
 <div class="card">
-    <h2>Postman Documents</h2>
+    <h2>Documentos de Postman</h2>
     <p>
-       <a href="https://sos2324-11.appspot.com/api/v1/structural-investment-data/docs"><span>V1 structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
-       <a href="https://sos2324-11.appspot.com/api/v1/structural-payment-data/docs"><span>V1 structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data/docs"><span> V1 socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/api/v1/structural-investment-data/docs"><span>V1 structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado) <br>
+       <a href="https://sos2324-11.appspot.com/api/v1/structural-payment-data/docs"><span>V1 structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero)<br>
+       <a href="https://sos2324-11.appspot.com/api/v1/socioeconomics-traker-using-unconventional-data/docs"><span> V1 socioeconomics-tracker-using-unconventional-data</span></a> (desarrollado por Álvaro Marcos Delgado)<br>
     </p>
     <p>
-       <a href="https://sos2324-11.appspot.com/api/v2/structural-investment-data/docs"><span>V2 structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
-       <a href="https://sos2324-11.appspot.com/api/v2/structural-payment-data/docs"><span>V2 structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data/docs"><span> V2 socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/api/v2/structural-investment-data/docs"><span>V2 structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado) <br>
+       <a href="https://sos2324-11.appspot.com/api/v2/structural-payment-data/docs"><span>V2 structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero)<br>
+       <a href="https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data/docs"><span> V2 socioeconomics-tracker-using-unconventional-data</span></a> (desarrollado por Álvaro Marcos Delgado)<br>
     </p>
 </div>
 
 <div class="card">
     <h2>Front-end</h2>
     <p>
-       <a href="https://sos2324-11.appspot.com/structural-investment"><span>structural-investment-data</span></a> (developed by Sharay Portillo Jurado) <br>
-       <a href="https://sos2324-11.appspot.com/structural-payment-data"><span>structural-payment-data</span></a> (developed by Isabel María Trapero Romero)<br>
-       <a href="https://sos2324-11.appspot.com/socioeconomics-tracker-using-unconventional-data"><span>socioeconomics-tracker-using-unconventional-data</span></a> (developed by Álvaro Marcos Delgado)<br>
+       <a href="https://sos2324-11.appspot.com/structural-investment"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado) <br>
+       <a href="https://sos2324-11.appspot.com/structural-payment-data"><span>structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero)<br>
+       <a href="https://sos2324-11.appspot.com/socioeconomics-tracker-using-unconventional-data"><span>socioeconomics-tracker-using-unconventional-data</span></a> (desarrollado por Álvaro Marcos Delgado)<br>
     </p>
 </div>
 

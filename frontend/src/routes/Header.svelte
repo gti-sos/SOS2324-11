@@ -20,6 +20,7 @@
     </nav>
 </header>
 
+
 <style> 
 
     header {
@@ -62,7 +63,7 @@
         color: blue; 
     }
 
-    /* Dropdown Button */
+    /* Botón desplegable */
     .dropbtn {
         background-color: transparent;
         border: none;
@@ -75,7 +76,7 @@
         color: #00b3ff; 
     }
 
-    /* Dropdown content (hidden by default) */
+    /* Contenido desplegable (oculto por defecto)  */
     .dropdown-content {
         display: none;
         position: absolute;
@@ -87,7 +88,7 @@
         overflow: hidden; 
     }
 
-    /* Links */
+    /* Links de dentro del desplegable*/
     .dropdown-content a {
         color: black;
         padding: 12px 16px;
@@ -104,6 +105,5 @@
     .dropdown:hover .dropdown-content {
         display: block;
     }
-
 
 </style>
