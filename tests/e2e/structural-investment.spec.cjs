@@ -41,13 +41,13 @@ test('has specific text2', async ({ page }) => {
 
 test('has specific text3', async ({ page }) => {
   await page.goto('http://localhost:10000');
-  const expectedText = 'Project Description';
+  const expectedText = 'Descripción del proyecto';
   const pageContent = await page.content();
   expect(pageContent).toContain(expectedText);
 });
 test('has specific text4', async ({ page }) => {
   await page.goto('http://localhost:10000');
-  const expectedText = 'Repository';
+  const expectedText = 'Repositorio de GitHub';
   const pageContent = await page.content();
   expect(pageContent).toContain(expectedText);
 });
@@ -65,7 +65,7 @@ test('has specific text6', async ({ page }) => {
 });
 test('has specific text7', async ({ page }) => {
   await page.goto('http://localhost:10000');
-  const expectedText = 'Postman Documents';
+  const expectedText = 'Documentos de Postman';
   const pageContent = await page.content();
   expect(pageContent).toContain(expectedText);
 });
