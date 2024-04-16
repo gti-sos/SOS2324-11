@@ -20,9 +20,11 @@
 
   // Función para obtener datos 
   async function fetchData(url) {
+
     const response = await fetch(url);
     const data = await response.json();
     return data;
+    
   }
 
   // Función para procesar los datos de las tres fuentes de datos
@@ -83,6 +85,7 @@
 
   // Función para crear el gráfico
   function createChart() {
+
       Highcharts.chart('chart-container', {
           chart: {
               type: 'column'
@@ -115,9 +118,11 @@
               yAxis: 1
           }]
       });
+
   }
 
   onMount(async () => {
+
     try {
       await processCountryData();
       createChart();
@@ -125,6 +130,7 @@
     } catch (error) {
       console.error('Error al obtener datos o crear el gráfico:', error);
     }
+
   });
 
 </script>
