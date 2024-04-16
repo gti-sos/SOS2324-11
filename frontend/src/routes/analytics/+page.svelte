@@ -12,9 +12,9 @@
   import { onMount } from 'svelte';
 
   // Define las URLs de las tres APIs
-  const apiUrl1 = 'http://localhost:10000/api/v2/structural-investment-data';
-  const apiUrl2 = 'http://localhost:10000/api/v2/structural-payment-data';
-  const apiUrl3 = 'http://localhost:10000/api/v2/socioeconomics-traker-using-unconventional-data';
+  const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-investment-data';
+  const apiUrl2 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
+  const apiUrl3 = 'https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data';
 
   let countryData = [];
 
