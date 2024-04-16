@@ -11,6 +11,7 @@
             <div class="dropdown">
                 <button class="dropbtn" >Vistas</button>
                 <div class="dropdown-content">
+                    <a href="/analytics">Gráfica grupal</a>
                     <a href="/structural-investment/vista">Inversión estructural</a>
                     <a href="/vista2">Pagos estructurales</a>
                     <a href="/vista3">Rastreador de socioeconomía</a>

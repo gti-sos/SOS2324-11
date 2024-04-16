@@ -93,6 +93,7 @@
 
     // Función asíncrona para obtener datos de inversión desde el servidor
     async function getData() {
+
         try {
             let response = await fetch(API, {
                 method: "GET" 
@@ -101,6 +102,7 @@
             let investment = await response.json();
             data = investment;
             console.table(data);
+
         } catch (e) {
             errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
             console.error(e); 
@@ -110,6 +112,7 @@
 
     // Función asíncrona para crear nuevos datos de inversión en el servidor
     async function createData() {
+
         try {
 
             let response = await fetch(API, {
@@ -133,10 +136,12 @@
             } else {
                 errorMsg = "Error interno del servidor. Por favor, intenta de nuevo más tarde.";
             }
+
         } catch (e) {
             errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
             console.error(e);
         }
+
     }
 
 
@@ -221,6 +226,7 @@
 
     // Función asíncrona para realizar una búsqueda de datos en la API basada en los filtros proporcionados
     async function searchParam() {
+
         try {
             // Construye la URL de búsqueda a partir de los filtros proporcionados
             let searchParams = new URLSearchParams();
@@ -294,10 +300,12 @@
                     errorMsg = 'Dato no encontrado.';
                 }
             }
+
         } catch (e) {
             errorMsg = "Error interno del servidor, compruebe el error por consola para más información.";
             console.error(e);
         }
+        
     }
 
     // Función asíncrona para limpiar todos los filtros y realizar una nueva búsqueda sin filtros aplicados

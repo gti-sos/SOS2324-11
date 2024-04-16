@@ -1,12 +1,18 @@
 <svelte:head>
+    
     <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 </svelte:head>
 
 <script>
 
     import { onMount } from "svelte";
+    let dataAvailable = false;
 
-    let DATAAPI = "https://sos2324-11.appspot.com/api/v2/structural-investment-data";
+    let DATAAPI = "http://localhost:10000/api/v2/structural-investment-data";
 
     async function getData() {
 
@@ -14,13 +20,38 @@
             const res = await fetch(DATAAPI);
             const data = await res.json();
             console.log(`Data received: ${JSON.stringify(data, null, 2)}`);
-            createFirstGraph(data);
-            createSecondGraph(data);
+
+            if (data.length > 0) {
+                dataAvailable = true; 
+                createFirstGraph(data);
+                createSecondGraph(data);
+            }
+
         } catch (error) {
             console.log(`Error fetching data: ${error}`);
         }
-
     }
+
+    // Función asíncrona para cargar datos desde el servidor
+    async function loadData() {
+
+        try {
+            let response = await fetch(DATAAPI + "/loadInitialData", {
+                method: "GET",
+            });
+
+            let status = await response.status;
+            console.log(`Status code: ${status}`);
+
+            if (status === 200) {
+                await getData();
+            } 
+
+        } catch (e) {
+            console.error(e);
+        }
+    }   
+
 
     function aggregateDataByYear(data) {
 
@@ -172,10 +203,45 @@
     #dispersion-container {
         width: 100%;
         height: 400px;
+        margin-bottom: 20px; /* Añadí este estilo para agregar un margen inferior */
+    }
+
+    e {
+        font-family: '';
+        font-size: 40px;
+        color: #ff864a;
+        text-shadow: 2px 2px 4px rgba(254, 0, 0, 0.5);
+        text-align: center;
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+    }
+
+    /* Estilo botón de cargar datos */
+    .initial {
+        background-color: #ba3da7;
+        color: white;
+        border: none;
+        padding: 2vh 3vw;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 30px; 
+        margin-left: auto;
+        margin-right: auto;
+        display: block; 
+        margin-top: 20px;
+    }
+
+    .initial:hover {
+        background-color: #d64fb7;
     }
 
 </style>
 
+{#if dataAvailable==false}
+    <e>No hay datos disponibles. Por favor, introduzca los datos.</e>
+    <button class="initial" on:click={loadData}>Cargar datos de prueba</button>
+{/if}
 
 <div id="pastel-container"></div>
 <br>
