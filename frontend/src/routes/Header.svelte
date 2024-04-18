@@ -13,7 +13,7 @@
                 <div class="dropdown-content">
                     <a href="/analytics">Gráfica grupal</a>
                     <a href="/structural-investment/vista">Inversión estructural</a>
-                    <a href="/vista2">Pagos estructurales</a>
+                    <a href="/structural-payment-data/vista">Pagos estructurales</a>
                     <a href="/vista3">Rastreador de socioeconomía</a>
                 </div>
             </div>
