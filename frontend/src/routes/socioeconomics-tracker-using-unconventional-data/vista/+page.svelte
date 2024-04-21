@@ -151,7 +151,7 @@ function toneCumByYear(data) {
                 },
                 yAxis: {
                     title: {
-                        text: 'Valor'
+                        text: 'Valor '
                     }
                 },
                 series: [{
