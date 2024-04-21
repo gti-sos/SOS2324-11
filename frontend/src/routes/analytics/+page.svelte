@@ -86,40 +86,42 @@
   // Función para crear el gráfico
   function createChart() {
 
-      Highcharts.chart('chart-container', {
-          chart: {
-              type: 'column'
-          },
-          title: {
-              text: 'Datos de los países'
-          },
-          xAxis: {
-              title: {
-                  text: 'País'
-              },
-              categories: countryData.map(country => country.name)
-          },
-          yAxis: [{
-              title: {
-                  text: 'Net Planned EU Amount'
-              }
-          }, {
-              title: {
-                  text: 'Popularity Rate'
-              },
-              opposite: true
-          }],
-          series: [{
-              name: 'Net Planned EU Amount',
-              data: countryData.map(country => country.net_planned_eu_amount)
-          }, {
-              name: 'Popularity Rate',
-              data: countryData.map(country => country.popularity_rate),
-              yAxis: 1
-          }]
-      });
+        Highcharts.chart('chart-container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Datos de los países'
+            },
+            xAxis: {
+                title: {
+                    text: 'País'
+                },
+                categories: countryData.map(country => country.name)
+            },
+            yAxis: [{
+                title: {
+                    text: 'Net Planned EU Amount'
+                }
+            }, {
+                title: {
+                    text: 'Popularity Rate'
+                },
+                opposite: true,
+                min: 0.1 // Establecer un mínimo en el eje y
+            }],
+            series: [{
+                name: 'Net Planned EU Amount',
+                data: countryData.map(country => country.net_planned_eu_amount)
+            }, {
+                name: 'Popularity Rate',
+                data: countryData.map(country => country.popularity_rate),
+                yAxis: 1
+            }]
+        });
 
-  }
+    }
+
 
   onMount(async () => {
 
