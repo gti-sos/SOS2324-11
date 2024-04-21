@@ -322,7 +322,7 @@ const data = [
         "eu_payment_rate": 91.2939466989615,
         "eu_payment_rate_on_planned_eu_amount": 91.2939466989615
     },
-    ,
+
 
     {
         "ms": "LU",

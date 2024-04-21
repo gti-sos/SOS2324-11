@@ -33,7 +33,7 @@
     }
 
     // Función asíncrona para cargar datos desde el servidor
-    async function loadData() {
+    async function loadData() { 
 
         try {
             let response = await fetch(DATAAPI + "/loadInitialData", {
