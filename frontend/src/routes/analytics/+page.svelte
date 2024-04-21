@@ -1,58 +1,89 @@
 <svelte:head>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://code.highcharts.com/modules/export-data.js"></script>
+  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
 </svelte:head>
 
 <script>
-    import { onMount } from 'svelte';
 
-    // Define las URLs de las tres APIs
-    const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-investment-data';
-    const apiUrl2 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
-    const apiUrl3 = 'https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data';
+  import { onMount } from 'svelte';
 
-    let countryData = [];
+  // Define las URLs de las tres APIs
+  const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-investment-data';
+  const apiUrl2 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
+  const apiUrl3 = 'https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data';
 
-    // Función para obtener datos 
-    async function fetchData(url) {
-        const response = await fetch(url);
-        const data = await response.json();
-        return data;
-    }
+  let countryData = [];
 
-    // Función para procesar los datos de las tres fuentes de datos
-    async function processCountryData() {
-        const data1 = await fetchData(apiUrl1);
-        const data2 = await fetchData(apiUrl2);
-        const data3 = await fetchData(apiUrl3);
+  // Función para obtener datos 
+  async function fetchData(url) {
 
-        const combinedData = {};
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
+    
+  }
 
-        function processData(data) {
-            data.forEach(entry => {
-                const country = entry.ms_name || entry.country;
-                if (!combinedData[country]) {
-                    combinedData[country] = {
-                        name: country,
-                        net_planned_eu_amount: 0,
-                        popularity_rate: 0
-                    };
-                }
-                combinedData[country].net_planned_eu_amount += entry.net_planned_eu_amount || 0;
-                combinedData[country].popularity_rate += entry.popularity_rate || 0;
-            });
-        }
+  // Función para procesar los datos de las tres fuentes de datos
+  async function processCountryData() {
 
-        processData(data1);
-        processData(data2);
-        processData(data3);
+      const data1 = await fetchData(apiUrl1);
+      console.log(data1)
+      const data2 = await fetchData(apiUrl2);
+      console.log(data2)
+      const data3 = await fetchData(apiUrl3);
+      console.log(data3)
 
-        countryData = Object.values(combinedData);
-    }
+      // Combinar los datos de las tres fuentes
+      const combinedData = {};
 
-    // Función para crear el gráfico
+      // Procesar datos de la primera fuente
+      data1.forEach(entry => {
+          const country = entry.ms_name;
+          if (!combinedData[country]) {
+              combinedData[country] = {
+                  name: country,
+                  net_planned_eu_amount: 0,
+                  popularity_rate: 0
+              };
+          }
+          combinedData[country].net_planned_eu_amount += entry.net_planned_eu_amount || 0;
+      });
+
+      // Procesar datos de la segunda fuente
+      data2.forEach(entry => {
+          const country = entry.ms_name;
+          if (!combinedData[country]) {
+              combinedData[country] = {
+                  name: country,
+                  net_planned_eu_amount: 0,
+                  popularity_rate: 0
+              };
+          }
+          combinedData[country].net_planned_eu_amount += entry.net_planned_eu_amount || 0;
+      });
+
+      // Procesar datos de la tercera fuente
+      data3.forEach(entry => {
+          const country = entry.country;
+          if (!combinedData[country]) {
+              combinedData[country] = {
+                  name: country,
+                  net_planned_eu_amount: 0,
+                  popularity_rate: 0
+              };
+          }
+          combinedData[country].popularity_rate += entry.popularity_rate || 0;
+      });
+
+      // Convertir objeto combinado en un array
+      countryData = Object.values(combinedData);
+  }
+
+  // Función para crear el gráfico
     function createChart() {
         Highcharts.chart('chart-container', {
             chart: {
@@ -89,22 +120,29 @@
         });
     }
 
-    onMount(async () => {
-        try {
-            await processCountryData();
-            createChart();
-        } catch (error) {
-            console.error('Error al obtener datos o crear el gráfico:', error);
-        }
-    });
+
+  onMount(async () => {
+
+    try {
+      await processCountryData();
+      createChart();
+
+    } catch (error) {
+      console.error('Error al obtener datos o crear el gráfico:', error);
+    }
+
+  });
+
 </script>
 
 <style>
-    #chart-container {
-        width: 100%;
-        max-width: 1000px;
-        margin: 0 auto;
-    }
+
+  #chart-container {
+  width: 100%; 
+  max-width: 1000px; 
+  margin: 0 auto; 
+  }
+
 </style>
 
 <div id="chart-container"></div>
