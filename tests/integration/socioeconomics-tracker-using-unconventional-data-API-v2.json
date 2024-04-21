@@ -170,7 +170,7 @@
 							"",
 							"pm.test(\"Array contains 16 objects, each with 14 attributes\", function () {",
 							"    var jsonData = pm.response.json();",
-							"    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(16);",
+							"    pm.expect(jsonData).to.be.an('array').that.has.lengthOf(20);",
 							"    jsonData.forEach((object) => {",
 							"        pm.expect(Object.keys(object)).to.have.lengthOf(14);",
 							"    });",

@@ -16,10 +16,10 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Response is an array of size 14\", function () {\r",
+							"pm.test(\"Response is an array of size 17\", function () {\r",
 							"    var responseBody = pm.response.json();\r",
 							"    pm.expect(responseBody).to.be.an('array');\r",
-							"    pm.expect(responseBody).to.have.length(14);\r",
+							"    pm.expect(responseBody).to.have.length(17);\r",
 							"});\r",
 							""
 						],
