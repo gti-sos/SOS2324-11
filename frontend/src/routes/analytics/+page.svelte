@@ -107,7 +107,7 @@
                     text: 'Popularity Rate'
                 },
                 opposite: true,
-                min: 0.1 // Establecer un mínimo en el eje y
+                min: 0.1 
             }],
             series: [{
                 name: 'Net Planned EU Amount',
