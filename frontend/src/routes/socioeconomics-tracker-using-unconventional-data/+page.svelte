@@ -209,8 +209,8 @@
             let parametros = `?from=${getFrom}&to=${getTo}`;
             
             // Calcular el offset para la paginación
-            const offset = currentPage * limit;
-            parametros += `&offset=${offset}`;
+            //const offset = currentPage * limit;
+            parametros += `?offset=0&&limit=${limit}`;
             
             const response = await fetch(API + parametros, {
                 method: "GET",
@@ -330,6 +330,8 @@
          area = "";
          ref_time = "";
          topic = "";
+         from = "";
+         to = "";
         getDataFilter();
     }
 
@@ -465,19 +467,6 @@
 
     <br>
     <br>
-    <label>
-        Desde:
-        <input type="number" bind:value={getFrom}>
-    </label>
-    <label>
-        Hasta:
-        <input type="number" bind:value={getTo}>
-    </label>
-    <button class="button" on:click={getFromTo(getFrom,getTo)}>Buscar</button>
-    <button class="button" on:click={limpiarCamposFromTo}>Limpiar busqueda</button>
-
-    <br>
-    <br>
     <button class="button" on:click={toggleTabla}>Filtrar</button>
 
     <!-- Agrega controles de paginación -->
@@ -560,6 +549,20 @@
             </td>
             <td>
                 <input bind:value={topic}> 
+            </td>
+        </tr>
+
+        <thead>
+            <th>Desde</th>
+            <th>Hasta</th>
+        </thead>
+        <tr>
+            <td>
+                <input bind:value={from} type="number"> 
+            </td>
+            
+            <td>
+                <input bind:value={to} type="number"> 
             </td>
         </tr>
         
