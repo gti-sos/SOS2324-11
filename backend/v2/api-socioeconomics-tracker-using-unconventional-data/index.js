@@ -416,7 +416,7 @@ const data_AMD = [
         "amd1code":"FI",
         "country":"Finland",
         "area":"FI",
-        "ref_time":"day",
+        "ref_time":"day",  
         "topic":"housing",
     },
     {

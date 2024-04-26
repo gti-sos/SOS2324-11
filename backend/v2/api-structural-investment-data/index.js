@@ -136,7 +136,7 @@ const data_SPJ = [
         "cumulative_interim_payments": 641582914.43,
         "recovery_of_expenses": 0,
         "net_interim_payments": 702259457.77,
-        "total_net_payments": 746745746,
+        "total_net_payments": 7467445746,
         "eu_payment_rate": 100,
         "eu_payment_rate_on_planned_eu_amount": 100
     },
