@@ -79,7 +79,7 @@ const data_SPJ = [
         "fund": "ERDF",
         "category_of_region": "REACT-EU",
         "year": 2023,
-        "net_planned_eu_amount": 1116267880,
+        "net_planned_eu_amount": 11162676880,
         "cumulative_initial_pre_financing": 0,
         "cumulative_additional_initial_pre_financing": 0,
         "recovery_of_initial_pre_financing": 0,

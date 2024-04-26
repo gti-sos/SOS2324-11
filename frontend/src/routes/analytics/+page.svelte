@@ -1,11 +1,14 @@
 <svelte:head>
+
   <script src="https://code.highcharts.com/highcharts.js"></script>
   <script src="https://code.highcharts.com/modules/exporting.js"></script>
   <script src="https://code.highcharts.com/modules/export-data.js"></script>
   <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+  
 </svelte:head>
 
 <script>
+
   import { onMount } from 'svelte';
 
   const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-investment-data';
@@ -15,13 +18,14 @@
   let countryData = [];
   let dataAvailable = false; 
 
+  // Función para realizar una solicitud GET a la API y obtener los datos
   async function fetchData(url) {
     const response = await fetch(url);
     const data = await response.json();
     return data;
   }
 
-
+  // Función para procesar los datos de los países
   async function processCountryData() {
     
       const data1 = await fetchData(apiUrl1);
@@ -35,12 +39,12 @@
 
       if (data1.length === 0) {
         dataAvailable = false;
-      // Combinar datos de las tres fuentes
       } else {
+         // Combinar datos de las tres fuentes
         dataAvailable = true;
         [data1, data2, data3].forEach(data => {
           data.forEach(entry => {
-              const country = entry.ms_name || entry.country; // Asegurarse de que se utilice el campo correcto para el país
+              const country = entry.ms_name || entry.country;
               if (!combinedData[country]) {
                   combinedData[country] = {
                       name: country,
@@ -59,13 +63,11 @@
 
       // Convertir el objeto combinedData en un array para facilitar su uso en la gráfica
       countryData = Object.values(combinedData);
+    }
 
-      // Establecer dataAvailable basado en si hay datos disponibles
-      dataAvailable = countryData.length > 0;
-  }
-
-
+    // Función para crear el gráfico con los datos procesados
   function createChart() {
+
     // Calcular los valores mínimos y máximos para cada conjunto de datos
     const minNetPlannedEuAmount = Math.min(...countryData.map(country => country.net_planned_eu_amount));
     const maxNetPlannedEuAmount = Math.max(...countryData.map(country => country.net_planned_eu_amount));
@@ -128,7 +130,7 @@
       let status = await response.status;
       console.log(`Status code: ${status}`);
       if (status === 200) {
-        await processCountryData(); // Asegurarse de que los datos se procesen antes de intentar crear el gráfico
+        await processCountryData(); 
         if (dataAvailable) {
           createChart();
         }
@@ -138,19 +140,21 @@
     }
  }
 
- onMount(async () => {
+  onMount(async () => {
     await processCountryData();
     if (dataAvailable) {
       createChart();
     }
- });
+  });
   
 </script>
 
 <style>
+
   #chart-container {
-    width: 100%;
-    max-width: 1000px;
+    width: 150%;
+    height: 500px; 
+    max-width: 1500px;
     margin: 0 auto;
   }
 
@@ -183,6 +187,7 @@
   .initial:hover {
     background-color: #d64fb7;
   }
+
 </style>
 
 {#if dataAvailable==false}

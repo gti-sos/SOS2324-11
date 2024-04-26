@@ -14,6 +14,7 @@
 
     let DATAAPI = "https://sos2324-11.appspot.com/api/v2/structural-investment-data";
 
+     // Función asíncrona para obetner datos
     async function getData() {
 
         try {
@@ -52,12 +53,11 @@
         }
     }   
 
-
+    // Función que acumula cumulative_initial_pre_financing por años
     function aggregateDataByYear(data) {
 
         const aggregatedData = {};
 
-        // Sumar la prefinanciación inicial acumulada por año
         data.forEach(item => {
             if (aggregatedData[item.year]) {
                 // Si el año ya está en el diccionario, sumar datos
@@ -69,7 +69,7 @@
 
         });
 
-    // Convertir el objeto a un formato adecuado para Highcharts
+        // Convertir el objeto a un formato adecuado para Highcharts
         return Object.keys(aggregatedData).map(year => ({
             name: year,
             y: aggregatedData[year]
@@ -105,43 +105,38 @@
                 }
             },
             series: [{
-                name: 'Cumulative Initial Pre Financing',
+                name: 'Prefinanciación inicial acumulada',
                 data: processedData
             }]
         });
     }
 
-    // Crear un gráfico de dispersión utilizando Highcharts
+    // Crear un gráfico de área utilizando Highcharts
     function createSecondGraph(data) {
 
-        const scatterChart = Highcharts.chart('dispersion-container', {
+        const areaChart = Highcharts.chart('dispersion-container', {
             chart: {
-                type: 'scatter',
+                type: 'area', 
                 zoomType: 'xy'
             },
             title: {
-                text: 'Relación entre "Fondos planificados" y "Pagos netos" por país'
+                text: '"Pagos Interinos Acumulados" por País'
             },
             xAxis: {
-            title: {
-                enabled: true,
-                text: 'Fondos Planificados',
-                style: {
-                    color: '#FF6347'  
+                title: {
+                    enabled: true,
+                    text: 'Países',
+                },
+                categories: data.map(item => item.ms_name), 
+                startOnTick: true,
+                endOnTick: true,
+                showLastLabel: true
+            },
+            yAxis: {
+                title: {
+                    text: 'Pagos Interinos Acumulados',
                 }
             },
-            startOnTick: true,
-            endOnTick: true,
-            showLastLabel: true
-        },
-        yAxis: {
-            title: {
-                text: 'Pagos Netos',
-                style: {
-                    color: '#4682B4'  
-                }
-            }
-        },
             legend: {
                 layout: 'vertical',
                 align: 'left',
@@ -153,42 +148,25 @@
                 borderWidth: 1
             },
             plotOptions: {
-                scatter: {
+                area: { 
                     marker: {
-                        radius: 5,
+                        enabled: false,
                         states: {
                             hover: {
-                                enabled: true,
-                                lineColor: 'rgb(100,100,100)'
+                                enabled: true
                             }
                         }
                     },
-                    states: {
-                        hover: {
-                            marker: {
-                                enabled: false
-                            }
-                        }
-                    },
-                    tooltip: {
-                        headerFormat: '<b>{series.name}</b><br>',
-                        pointFormat: '<span style="color:{series.color}">{point.name}</span>: <b style="color:#FF6347">{point.x}</b> Fondos Planificados, <b style="color:#4682B4">{point.y}</b> Pagos Netos'
-                    }
+                    fillOpacity: 0.7 
                 }
             },
             series: [{
-                name: 'Países',
+                name: 'Pagos Interinos Acumulados',
                 color: 'rgba(223, 83, 255, .5)',
-                data: data.map(item => ({
-                    name: item.ms_name,
-                    x: parseInt(item.net_planned_eu_amount),
-                    y: parseInt(item.total_net_payments)
-                }))
+                data: data.map(item => parseInt(item.cumulative_interim_payments))
             }]
         });
     }
-
-
 
     onMount(() => {
         getData();
@@ -202,8 +180,8 @@
     #pastel-container,
     #dispersion-container {
         width: 100%;
-        height: 400px;
-        margin-bottom: 20px; /* Añadí este estilo para agregar un margen inferior */
+        height: 410px;
+        margin-bottom: 20px; 
     }
 
     e {
