@@ -33,8 +33,12 @@
 
       const combinedData = {};
 
+      if (data1.length === 0) {
+        dataAvailable = false;
       // Combinar datos de las tres fuentes
-      [data1, data2, data3].forEach(data => {
+      } else {
+        dataAvailable = true;
+        [data1, data2, data3].forEach(data => {
           data.forEach(entry => {
               const country = entry.ms_name || entry.country; // Asegurarse de que se utilice el campo correcto para el país
               if (!combinedData[country]) {
@@ -51,6 +55,7 @@
               combinedData[country].popularity_rate += entry.popularity_rate || 0;
           });
       });
+    }
 
       // Convertir el objeto combinedData en un array para facilitar su uso en la gráfica
       countryData = Object.values(combinedData);
