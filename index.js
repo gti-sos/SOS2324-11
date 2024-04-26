@@ -20,7 +20,6 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-
 //v1
 loadBackend_sharay_v1(app, db_SPJ);
 loadBackend_isabel_v1(app, db_ITR);
