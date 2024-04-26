@@ -349,8 +349,8 @@ const data = [
     },
 
     {
-        "ms": "IT",
-        "ms_name": "Italy",
+        "ms": "ET",
+        "ms_name": "Estonia",
         "fund": "TOTAL",
         "year": 2022,
         "planned_eu_amount": 29101440102,
