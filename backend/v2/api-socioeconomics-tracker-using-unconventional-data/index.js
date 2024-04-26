@@ -151,7 +151,7 @@ const data_AMD = [
         "month":1,
         "day":4,
         "tone_doc_count":7.0,
-        "popularity_rate":0.26692,
+        "popularity_rate":0.2692307692307692,
         "tone_avg":-0.6958476825206091,
         "tone_w_avg":-0.7273542051605381,
         "tone_cum":-0.1463987228495722,
