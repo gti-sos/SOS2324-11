@@ -345,7 +345,7 @@ const data = [
         "net_interim_payment": 68443217.42,
         "total_net_payment": 81424872.04,
         "eu_payment_rate": 91.2939466989615,
-        "eu_payment_rate_on_planned_eu_amount": 91.2939466989615
+        "eu_payment_rate_on_planned_eu_amount": 91.2939466989617
     },
 
     {
