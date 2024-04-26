@@ -111,12 +111,12 @@
         });
     }
 
-    // Crear un gráfico de área utilizando Highcharts
+    // Crear un gráfico de puntos utilizando Highcharts
     function createSecondGraph(data) {
 
-        const areaChart = Highcharts.chart('dispersion-container', {
+        const scatterChart = Highcharts.chart('scatter-container', {
             chart: {
-                type: 'area', 
+                type: 'scatter', // Cambiamos el tipo de gráfico a scatter (puntos)
                 zoomType: 'xy'
             },
             title: {
@@ -125,7 +125,7 @@
             xAxis: {
                 title: {
                     enabled: true,
-                    text: 'Países',
+                    text: 'Países', 
                 },
                 categories: data.map(item => item.ms_name), 
                 startOnTick: true,
@@ -148,25 +148,31 @@
                 borderWidth: 1
             },
             plotOptions: {
-                area: { 
+                scatter: { 
                     marker: {
-                        enabled: false,
-                        states: {
-                            hover: {
-                                enabled: true
-                            }
-                        }
+                        radius: 5,
+                        symbol: 'circle' 
                     },
-                    fillOpacity: 0.7 
+                    tooltip: {
+                        headerFormat: '<b>{point.name}</b><br>', 
+                        pointFormat: '<b>Pagos Interinos Acumulados:</b> {point.y}<br><b>Año:</b> {point.year}<br><b>Región:</b> {point.region}<br><b>CCI:</b> {point.cci}' // Contenido del tooltip
+                    }
                 }
             },
             series: [{
                 name: 'Pagos Interinos Acumulados',
                 color: 'rgba(223, 83, 255, .5)',
-                data: data.map(item => parseInt(item.cumulative_interim_payments))
+                data: data.map(item => ({
+                    name: item.ms_name, 
+                    y: parseInt(item.cumulative_interim_payments),
+                    year: item.year, 
+                    region: item.category_of_region, 
+                    cci: item.cci 
+                }))
             }]
         });
     }
+
 
     onMount(() => {
         getData();
@@ -178,7 +184,7 @@
 <style>
 
     #pastel-container,
-    #dispersion-container {
+    #scatter-container {
         width: 100%;
         height: 410px;
         margin-bottom: 20px; 
@@ -223,4 +229,4 @@
 
 <div id="pastel-container"></div>
 <br>
-<div id="dispersion-container"></div>
+<div id="scatter-container"></div>
