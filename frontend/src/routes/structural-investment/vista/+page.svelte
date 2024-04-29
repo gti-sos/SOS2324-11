@@ -185,7 +185,6 @@
     // Crear un gráfico de mapa utilizando amcharts
     function createAmchartsGraph(data) {
 
-        // Crear el elemento raíz
         var root = am5.Root.new("chartdiv");
 
         // Establecer temas
@@ -206,19 +205,32 @@
             exclude: ["AQ"] // Excluir la Antártida
         }));
 
-        // Filtrar datos para incluir solo países con datos
-        const filteredData = data.filter(item => item.eu_payment_rate); // Filtrar países sin eu_payment_rate
+        // Agrupar y sumar los datos por país
+        const groupedData = data.reduce((acc, item) => {
+            if (!acc[item.ms]) {
+                acc[item.ms] = {
+                    id: item.ms,
+                    name: item.ms_name,
+                    value: 0
+                };
+            }
+            acc[item.ms].value += item.eu_payment_rate;
+            return acc;
+        }, {});
 
+        // Convertir el objeto agrupado en un array
+        const filteredData = Object.values(groupedData);
+
+        // Asignar los valores acumulados a los polígonos
         polygonSeries.data.setAll(filteredData.map(item => ({
-            id: item.ms, // Identificador del país
-            name: item.ms_name, // Nombre del país
-            value: item.eu_payment_rate // Usar eu_payment_rate como valor para el mapa
+            id: item.id,
+            name: item.name,
+            value: item.value // Usar el valor acumulado para el mapa
         })));
-
 
         // Configurar tooltips para mostrar información sobre los países
         polygonSeries.mapPolygons.template.setAll({
-            tooltipText: "{name}: {value}", // Mostrar el nombre del país y su valor de eu_payment_rate en el tooltip
+            tooltipText: "{name}: {value}", // Mostrar el nombre del país y su valor de eu_payment_rate acumulado en el tooltip
             toggleKey: "active",
             interactive: true
         });
@@ -259,6 +271,7 @@
         // Hacer que las cosas se animen al cargar
         chart.appear(1000, 100);
     }
+
 
 
     onMount(() => {
