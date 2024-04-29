@@ -184,7 +184,8 @@
 
     // Crear un gráfico de mapa utilizando amcharts
     function createAmchartsGraph(data) {
-
+        
+        // Crear el elemento raíz
         var root = am5.Root.new("chartdiv");
 
         // Establecer temas
@@ -271,8 +272,6 @@
         // Hacer que las cosas se animen al cargar
         chart.appear(1000, 100);
     }
-
-
 
     onMount(() => {
         getData();
