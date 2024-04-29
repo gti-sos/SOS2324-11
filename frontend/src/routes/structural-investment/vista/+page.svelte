@@ -1,11 +1,19 @@
 <svelte:head>
-    
+
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
+    <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/continentsLow.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
+
 </svelte:head>
+
 
 <script>
 
@@ -26,6 +34,7 @@
                 dataAvailable = true; 
                 createFirstGraph(data);
                 createSecondGraph(data);
+                createAmchartsGraph(data);
             }
 
         } catch (error) {
@@ -173,6 +182,84 @@
         });
     }
 
+    // Crear un gráfico de mapa utilizando amcharts
+    function createAmchartsGraph(data) {
+
+        // Crear el elemento raíz
+        var root = am5.Root.new("chartdiv");
+
+        // Establecer temas
+        root.setThemes([
+            am5themes_Animated.new(root)
+        ]);
+
+        // Crear el gráfico de mapa
+        var chart = root.container.children.push(am5map.MapChart.new(root, {
+            panX: "translateX",
+            panY: "translateY",
+            projection: am5map.geoMercator()
+        }));
+
+        // Crear la serie principal de polígonos para los países
+        var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+            geoJSON: am5geodata_worldLow,
+            exclude: ["AQ"] // Excluir la Antártida
+        }));
+
+        // Filtrar datos para incluir solo países con datos
+        const filteredData = data.filter(item => item.eu_payment_rate); // Filtrar países sin eu_payment_rate
+
+        polygonSeries.data.setAll(filteredData.map(item => ({
+            id: item.ms, // Identificador del país
+            name: item.ms_name, // Nombre del país
+            value: item.eu_payment_rate // Usar eu_payment_rate como valor para el mapa
+        })));
+
+
+        // Configurar tooltips para mostrar información sobre los países
+        polygonSeries.mapPolygons.template.setAll({
+            tooltipText: "{name}: {value}", // Mostrar el nombre del país y su valor de eu_payment_rate en el tooltip
+            toggleKey: "active",
+            interactive: true
+        });
+
+        // Crear estados para los polígonos al pasar el mouse y al hacer clic
+        polygonSeries.mapPolygons.template.states.create("hover", {
+            fill: root.interfaceColors.get("primaryButtonHover") // Cambiar el color de fondo al pasar el mouse
+        });
+
+        polygonSeries.mapPolygons.template.states.create("active", {
+            fill: root.interfaceColors.get("primaryButtonHover") // Cambiar el color de fondo al hacer clic
+        });
+
+        var previousPolygon;
+
+        // Manejar el evento de activación de un polígono
+        polygonSeries.mapPolygons.template.on("active", function (active, target) {
+            if (previousPolygon && previousPolygon != target) {
+                previousPolygon.set("active", false); // Desactivar el polígono anterior
+            }
+            if (target.get("active")) {
+                polygonSeries.zoomToDataItem(target.dataItem); // Enfocar el mapa en el país seleccionado
+            }
+            else {
+                chart.goHome(); // Volver al nivel de zoom inicial si se hace clic fuera de un polígono
+            }
+            previousPolygon = target;
+        });
+
+        // Añadir control de zoom
+        chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
+
+        // Configurar el clic en el fondo del mapa para volver al nivel de zoom inicial
+        chart.chartContainer.get("background").events.on("click", function () {
+            chart.goHome();
+        });
+
+        // Hacer que las cosas se animen al cargar
+        chart.appear(1000, 100);
+    }
+
 
     onMount(() => {
         getData();
@@ -220,6 +307,13 @@
         background-color: #d64fb7;
     }
 
+    #chartdiv {
+        width: 100%;
+        height: 410px;
+        margin-bottom: 20px; 
+    }
+
+
 </style>
 
 {#if dataAvailable==false}
@@ -230,3 +324,5 @@
 <div id="pastel-container"></div>
 <br>
 <div id="scatter-container"></div>
+<br>
+<div id="chartdiv"></div>
