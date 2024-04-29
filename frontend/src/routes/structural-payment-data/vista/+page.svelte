@@ -3,6 +3,8 @@
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartist/dist/chartist.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chartist/dist/chartist.min.css">
 </svelte:head>
 
 
@@ -27,6 +29,7 @@
                 dataAvailable = true; 
                 createGraph(data);
                 createGraph2(data);
+                createGraph3(data);
             }
         }catch(error){
             console.log(`Error fetching data: ${error}`);
@@ -147,6 +150,51 @@
         });
     }
 
+    function aggregateDataByYear(data) {
+        const aggregatedData = {};
+        data.forEach(item => {
+            if (aggregatedData[item.year]) {
+                aggregatedData[item.year] += parseFloat(item.eu_payment_rate);
+            } else {
+                aggregatedData[item.year] = parseFloat(item.eu_payment_rate);
+            }
+        });
+        return Object.keys(aggregatedData).map(year => ({
+            name: year,
+            y: aggregatedData[year]
+        }));
+    }
+    
+    function createGraph3(data){
+        var aggregatedData = aggregateDataByYear(data);
+        var options = {
+                    labelInterpolationFnc: function(value) {
+                        return value[0]
+                    }};
+
+        var responsiveOptions = [
+                        
+                    ['screen and (min-width: 640px)', {
+                        chartPadding: 30,
+                        labelOffset: 100,
+                        labelDirection: 'explode',
+                        labelInterpolationFnc: function(value) {
+                        return value;
+                        }
+                    }],
+                    ['screen and (min-width: 1024px)', {
+                        labelOffset: 80,
+                        chartPadding: 20
+                    }]
+                    ];
+
+        new Chartist.Pie('.ct-chart', {
+            labels: aggregatedData.map(item => item.name),
+            series: aggregatedData.map(item => item.y)
+        }, options, responsiveOptions);
+                    
+    }
+
 
     
     
@@ -154,13 +202,28 @@
 
 
 <style>
+    .ct-chart{
+        width: 100%;
+        height: 350px;
+        margin-bottom: 20px; 
+
+    }
+   
     #container-column,
     #container-bar {
         width: 100%;
         height: 400px;
-        margin-bottom: 20px; /* Añadí este estilo para agregar un margen inferior */
+        margin-bottom: 20px; 
+
     }
+
+    h3 {
+            text-align: center;
+        }
 </style>
 <div id="container-column"></div>
 <br>
 <div id="container-bar"></div>
+<br>
+<h3>Tasa de pago anual UE</h3>
+<div class="ct-chart"></div>
