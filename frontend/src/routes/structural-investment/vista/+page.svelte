@@ -185,10 +185,10 @@
     // Crear un gráfico de mapa utilizando amcharts
     function createAmchartsGraph(data) {
         
-        // Crear el elemento raíz
+        // Elemento raíz
         var root = am5.Root.new("chartdiv");
 
-        // Establecer temas
+        // Tema
         root.setThemes([
             am5themes_Animated.new(root)
         ]);
@@ -206,7 +206,7 @@
             exclude: ["AQ"] // Excluir la Antártida
         }));
 
-        // Agrupar y sumar los datos por país
+        // Agrupar y sumar los datos por país, convertir en array
         const groupedData = data.reduce((acc, item) => {
             if (!acc[item.ms]) {
                 acc[item.ms] = {
@@ -219,30 +219,29 @@
             return acc;
         }, {});
 
-        // Convertir el objeto agrupado en un array
         const filteredData = Object.values(groupedData);
 
         // Asignar los valores acumulados a los polígonos
         polygonSeries.data.setAll(filteredData.map(item => ({
             id: item.id,
             name: item.name,
-            value: item.value // Usar el valor acumulado para el mapa
+            value: item.value // Usar el valor calculado anteriormente
         })));
 
-        // Configurar tooltips para mostrar información sobre los países
+        // Mostrar eu_payment_rate sobre los países
         polygonSeries.mapPolygons.template.setAll({
-            tooltipText: "{name}: {value}", // Mostrar el nombre del país y su valor de eu_payment_rate acumulado en el tooltip
+            tooltipText: "{name}: {value}", 
             toggleKey: "active",
             interactive: true
         });
 
         // Crear estados para los polígonos al pasar el mouse y al hacer clic
         polygonSeries.mapPolygons.template.states.create("hover", {
-            fill: root.interfaceColors.get("primaryButtonHover") // Cambiar el color de fondo al pasar el mouse
+            fill: root.interfaceColors.get("primaryButtonHover") 
         });
 
         polygonSeries.mapPolygons.template.states.create("active", {
-            fill: root.interfaceColors.get("primaryButtonHover") // Cambiar el color de fondo al hacer clic
+            fill: root.interfaceColors.get("primaryButtonHover") 
         });
 
         var previousPolygon;
@@ -261,15 +260,10 @@
             previousPolygon = target;
         });
 
-        // Añadir control de zoom
+        // Control de zoom
         chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
 
-        // Configurar el clic en el fondo del mapa para volver al nivel de zoom inicial
-        chart.chartContainer.get("background").events.on("click", function () {
-            chart.goHome();
-        });
-
-        // Hacer que las cosas se animen al cargar
+        // Animar al cargar
         chart.appear(1000, 100);
     }
 
@@ -319,10 +313,18 @@
         background-color: #d64fb7;
     }
 
+    /* Estilo gráfica amchart */
     #chartdiv {
         width: 100%;
         height: 410px;
         margin-bottom: 20px; 
+    }
+
+    .titule {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+        font-size: 20px;
     }
 
 
@@ -337,4 +339,7 @@
 <br>
 <div id="scatter-container"></div>
 <br>
+<div class="titule" >
+    <t>"Tasa de pago de la UE" por país</t>
+</div>
 <div id="chartdiv"></div>
