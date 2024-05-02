@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import dataStore from "nedb"; 
 import { handler } from "./frontend/build/handler.js";
 import cors from "cors";
+import request from "request";
 
 import { loadBackend_sharay_v1 } from "./backend/v1/api-structural-investment-data/index.js";
 import { loadBackend_sharay } from "./backend/v2/api-structural-investment-data/index.js";
@@ -17,6 +18,16 @@ let db_AMD = new dataStore();
 let app = express();
 
 app.use(cors());
+
+
+// Proxy Sharay
+var paths = "/proxySharay";
+var apiServerHost = "https://sos2324-11.appspot.com/api/v2/structural-investment-data";
+
+app.use(paths, function(req,res){
+    var url = apiServerHost + req.url;
+    req.pipe(request(url)).pipe(res);
+});
 
 app.use(bodyParser.json());
 
