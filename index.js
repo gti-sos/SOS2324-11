@@ -19,7 +19,6 @@ let app = express();
 
 app.use(cors());
 
-
 // Proxy Sharay
 /*
 var paths = "/proxySharay";
