@@ -21,6 +21,7 @@ app.use(cors());
 
 
 // Proxy Sharay
+/*
 var paths = "/proxySharay";
 var apiServerHost = "https://sos2324-11.appspot.com/api/v2/structural-investment-data";
 
@@ -28,6 +29,7 @@ app.use(paths, function(req,res){
     var url = apiServerHost + req.url;
     req.pipe(request(url)).pipe(res);
 });
+*/
 
 app.use(bodyParser.json());
 
