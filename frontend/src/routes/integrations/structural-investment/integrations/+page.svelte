@@ -1,5 +1,6 @@
 
     <main>
+
         <div class="container">
             <div class="photo-block">
                 <div class="photo-image-block">
@@ -17,10 +18,10 @@
                     <h2 class="photo-title">Sin proxy</h2>
                 </div>
             </div>
-        
-        
        </div> 
+       
     </main>
+
     <style>
         .container{
             display: grid;
