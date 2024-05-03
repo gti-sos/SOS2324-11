@@ -193,6 +193,6 @@
 {#if dataAvailable==false}
   <e>Faltan los datos de uno de los integrantes. Por favor, introduzca los datos.</e>
   <button class="initial" on:click={insertData}>Cargar datos restantes</button>
-{:else}
-  <div id="chart-container"></div>
 {/if}
+  <div id="chart-container"></div>
+
