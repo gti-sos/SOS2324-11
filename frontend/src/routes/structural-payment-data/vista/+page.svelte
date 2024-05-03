@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chartist/dist/chartist.min.css">
 </svelte:head>
 
-
-
 <script>
     import {onMount} from "svelte";
 
