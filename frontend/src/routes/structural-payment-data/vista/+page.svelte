@@ -149,24 +149,8 @@
                 }]
         });
     }
-
-    function aggregateDataByYear(data) {
-        const aggregatedData = {};
-        data.forEach(item => {
-            if (aggregatedData[item.year]) {
-                aggregatedData[item.year] += parseFloat(item.eu_payment_rate);
-            } else {
-                aggregatedData[item.year] = parseFloat(item.eu_payment_rate);
-            }
-        });
-        return Object.keys(aggregatedData).map(year => ({
-            name: year,
-            y: aggregatedData[year]
-        }));
-    }
     
     function createGraph3(data){
-        var aggregatedData = aggregateDataByYear(data);
         var options = {
                     labelInterpolationFnc: function(value) {
                         return value[0]
@@ -189,8 +173,8 @@
                     ];
 
         new Chartist.Pie('.ct-chart', {
-            labels: aggregatedData.map(item => item.name),
-            series: aggregatedData.map(item => item.y)
+            labels: data.map(item => item.ms_name),
+            series: data.map(item => parseInt(item.eu_payment_rate))
         }, options, responsiveOptions);
                     
     }
