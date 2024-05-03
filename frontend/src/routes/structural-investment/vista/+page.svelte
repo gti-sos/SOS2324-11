@@ -184,11 +184,10 @@
 
     // Crear un gráfico de mapa utilizando amcharts
     function createAmchartsGraph(data) {
-        
-        // Elemento raíz
+
         var root = am5.Root.new("chartdiv");
 
-        // Tema
+        // Establecer temas
         root.setThemes([
             am5themes_Animated.new(root)
         ]);
@@ -197,7 +196,19 @@
         var chart = root.container.children.push(am5map.MapChart.new(root, {
             panX: "translateX",
             panY: "translateY",
-            projection: am5map.geoMercator()
+            projection: am5map.geoMercator(),
+        }));
+
+        // Crear el título del gráfico
+        var title = root.container.children.push(am5.Label.new(root, {
+            text: '"Tasa de pago de la UE" por país',
+            fontSize: 30,
+            fontWeight: "bold",
+            x: am5.percent(35), 
+            y: am5.percent(0),
+            fill: am5.color("#333"), 
+
+  
         }));
 
         // Crear la serie principal de polígonos para los países
@@ -206,7 +217,7 @@
             exclude: ["AQ"] // Excluir la Antártida
         }));
 
-        // Agrupar y sumar los datos por país, convertir en array
+        // Agrupar y sumar los datos por país
         const groupedData = data.reduce((acc, item) => {
             if (!acc[item.ms]) {
                 acc[item.ms] = {
@@ -219,29 +230,30 @@
             return acc;
         }, {});
 
+        // Convertir el objeto agrupado en un array
         const filteredData = Object.values(groupedData);
 
         // Asignar los valores acumulados a los polígonos
         polygonSeries.data.setAll(filteredData.map(item => ({
             id: item.id,
             name: item.name,
-            value: item.value // Usar el valor calculado anteriormente
+            value: item.value // Usar el valor acumulado para el mapa
         })));
 
-        // Mostrar eu_payment_rate sobre los países
+        // Configurar tooltips para mostrar información sobre los países
         polygonSeries.mapPolygons.template.setAll({
-            tooltipText: "{name}: {value}", 
+            tooltipText: "{name}: {value}", // Mostrar el nombre del país y su valor de eu_payment_rate acumulado en el tooltip
             toggleKey: "active",
             interactive: true
         });
 
         // Crear estados para los polígonos al pasar el mouse y al hacer clic
         polygonSeries.mapPolygons.template.states.create("hover", {
-            fill: root.interfaceColors.get("primaryButtonHover") 
+            fill: root.interfaceColors.get("primaryButtonHover") // Cambiar el color de fondo al pasar el mouse
         });
 
         polygonSeries.mapPolygons.template.states.create("active", {
-            fill: root.interfaceColors.get("primaryButtonHover") 
+            fill: root.interfaceColors.get("primaryButtonHover") // Cambiar el color de fondo al hacer clic
         });
 
         var previousPolygon;
@@ -260,15 +272,22 @@
             previousPolygon = target;
         });
 
-        // Control de zoom
+        // Añadir control de zoom
         chart.set("zoomControl", am5map.ZoomControl.new(root, {}));
 
-        // Animar al cargar
+        // Configurar el clic en el fondo del mapa para volver al nivel de zoom inicial
+        chart.chartContainer.get("background").events.on("click", function () {
+            chart.goHome();
+        });
+
+        // Hacer que las cosas se animen al cargar
         chart.appear(1000, 100);
     }
 
+
+
     onMount(async () => {
-        await getData()
+        await getData();
     });
 
 </script>
@@ -313,18 +332,10 @@
         background-color: #d64fb7;
     }
 
-    /* Estilo gráfica amchart */
     #chartdiv {
         width: 100%;
         height: 410px;
         margin-bottom: 20px; 
-    }
-
-    .titule {
-        text-align: center;
-        font-weight: bold;
-        margin-bottom: 20px;
-        font-size: 20px;
     }
 
 
@@ -333,14 +344,10 @@
 {#if dataAvailable==false}
     <e>No hay datos disponibles. Por favor, introduzca los datos.</e>
     <button class="initial" on:click={loadData}>Cargar datos de prueba</button>
-{:else}
-    <div id="pastel-container"></div>
-    <br>
-    <div id="scatter-container"></div>
-    <br>
-    <div class="titule" >
-        <t>"Tasa de pago de la UE" por país</t>
-    </div>
-    <div id="chartdiv"></div>
 {/if}
 
+<div id="pastel-container"></div>
+<br>
+<div id="scatter-container"></div>
+<br>
+<div id="chartdiv"></div>
