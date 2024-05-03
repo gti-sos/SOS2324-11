@@ -3,7 +3,7 @@
     <nav>
         <div class="container"> 
             <span class="sos-code" style="margin-left: 20px; font-size: 19px;">SOS2324-11</span>
-            <a href="/" >Inicio</a>
+            <a href="/" >Nosotros</a>
             <a href="/type" >Estado</a>
             <div class="dropdown">
                 <button class="dropbtn" >Frontends</button>
@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn" >Vistas</button>
+                <button class="dropbtn" >Gráficas</button>
                 <div class="dropdown-content">
                     <a href="/analytics">Gráfica grupal</a>
                     <a href="/structural-investment/vista">Inversión estructural</a>

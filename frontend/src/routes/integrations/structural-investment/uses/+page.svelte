@@ -2,16 +2,23 @@
 
     <div class="card">
         <div class="photo-image-block">
-            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/conProxy"><img src = "https://kinsta.com/es/wp-content/uploads/sites/8/2023/02/que-es-un-proxy.jpeg" alt="Imagen"></a>
+            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/caseA"><img src = "https://kinsta.com/es/wp-content/uploads/sites/8/2023/02/que-es-un-proxy.jpeg" alt="Imagen"></a>
         </div>
-        <h2 class="photo-title">Con proxy</h2>
+        <h2 class="photo-title">case a</h2>
     </div>
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo-image-block">
-            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/sinProxy"><img src = "https://kinsta.com/wp-content/uploads/2020/10/Proxy-Server.png" alt="Imagen"></a>
+            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/caseB"><img src = "https://kinsta.com/wp-content/uploads/2020/10/Proxy-Server.png" alt="Imagen"></a>
         </div>
-        <h2 class="photo-title">Sin proxy</h2>
+        <h2 class="photo-title">case b</h2>
+    </div>
+
+    <div class="card" style="margin-left: 20px;">
+        <div class="photo-image-block">
+            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/caseC"><img src = "https://kinsta.com/wp-content/uploads/2020/10/Proxy-Server.png" alt="Imagen"></a>
+        </div>
+        <h2 class="photo-title">case c</h2>
     </div>
     
 </div> 
