@@ -1,84 +1,38 @@
-<script>
-    // @ts-nocheck
-    import { onMount } from "svelte";
-    import { Table } from "sveltestrap";
-    import axios, { formToJSON } from 'axios';
 
-    onMount(async () => {
-        getIMDbData();
-    });
-
-    let datosIMDb = [];
-
-    async function getIMDbData() {
-        const options = {
-            method: 'GET',
-            url: 'https://imdb-top-100-movies.p.rapidapi.com/',
-            headers: {
-                'X-RapidAPI-Key': 'b59f48aa26mshed592c021d6d930p1eab12jsn1f5001bba931',
-                'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
-            }
-        };
-
-        try {
-            const response = await axios.request(options);
-            datosIMDb = response.data;
-        } catch (error) {
-            console.error(error);
+    <main>
+        <div class="container">
+            <div class="photo-block">
+                <div class="photo-image-block">
+                    <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/conProxy"><img src = "https://3.bp.blogspot.com/-X24aRlnk89Q/Vg6xCpICQEI/AAAAAAAAFAU/Pqm7ua8Cm5k/s1600/estadistica2.jpg" alt="Imagen"></a>
+                </div>
+                <div class="photo-metadata-block">
+                    <h2 class="photo-title">Con proxy</h2>
+                </div>
+            </div>
+            <div class="photo-block" style="margin-left: 20px;">
+                <div class="photo-image-block">
+                    <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/sinProxy"><img src = "https://thumbs.dreamstime.com/b/gr%C3%A1ficos-financieros-41675922.jpg" alt="Imagen"></a>
+                </div>
+                <div class="photo-metadata-block">
+                    <h2 class="photo-title">Sin proxy</h2>
+                </div>
+            </div>
+        
+        
+       </div> 
+    </main>
+    <style>
+        .container{
+            display: grid;
+            grid-template-columns: 50% 50%;
         }
-    }
-
-</script>
-
-<main>
-
-    <h3 align="center"><u>IMDb Top 100 Películas</u></h3>
-        <p style="text-align:center">
-            Datos de: <a
-                style="text-decoration: none; color:black"
-                href="https://rapidapi.com/rapihub-rapihub-default/api/imdb-top-100-movies/"
-                target="_blank"><u>Rapid API IMDb Top 100 Películas</u></a
-            >
-        </p>
-    <br>
-    <Table>
-        <thead>
-            <tr>
-                <th>Ranking</th>
-                <th>Título</th>
-                <!--<th>Thumbnail</th>-->
-                <th>Valoración</th>
-                <th>ID</th>
-                <th>Año</th>
-                <!--<th>Image</th>-->
-                <th>Descripción</th>
-                <th>Tráiler</th>
-                <th>Género</th>
-                <th>Director</th>
-                <th>Escritores</th>
-                <th>IMDbID</th>
-            </tr>
-        </thead>
-        <tbody>
-            {#each datosIMDb as dato}
-                <tr>
-                    <td>{dato["rank"]}</td>
-                    <td>{dato["title"]}</td>
-                    <!--<td>{dato["thumbnail"]}</td>-->
-                    <td>{dato["rating"]}</td>
-                    <td>{dato["id"]}</td>
-                    <td>{dato["year"]}</td>
-                    <!--<td>{dato["image"]}</td>-->
-                    <td>{dato["description"]}</td>
-                    <td>{dato["trailer"]}</td>
-                    <td>{dato["genre"]}</td>
-                    <td>{dato["director"]}</td>
-                    <td>{dato["writers"]}</td>
-                    <td>{dato["imdbid"]}</td>
-                </tr>
-            {/each}
-            <br>
-        </tbody>
-    </Table>
-
-</main>
+        div.photo-block {
+            text-align: center;
+            border: 1px solid gray;
+            border-radius: 5%;
+        }
+        img {
+            max-height: 400px;
+            width: auto;
+        }
+    </style>
