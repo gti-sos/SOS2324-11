@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import dataStore from "nedb"; 
 import { handler } from "./frontend/build/handler.js";
 import cors from "cors";
-//import request from "request";
+import request from "request";
 
 import { loadBackend_sharay_v1 } from "./backend/v1/api-structural-investment-data/index.js";
 import { loadBackend_sharay } from "./backend/v2/api-structural-investment-data/index.js";

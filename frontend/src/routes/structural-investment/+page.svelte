@@ -10,9 +10,7 @@
         API = "http://localhost:10000" + API;
     
 
-    // let API = "https://sos2324-11.appspot.com/api/v2/structural-investment-data";
-    
-    
+    //let API = "https://sos2324-11.appspot.com/api/v2/structural-investment-data";
     //let API  = "http://localhost:10000/proxySharay"
 
 	let showFilter = false;

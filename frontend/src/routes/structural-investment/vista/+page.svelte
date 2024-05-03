@@ -333,13 +333,14 @@
 {#if dataAvailable==false}
     <e>No hay datos disponibles. Por favor, introduzca los datos.</e>
     <button class="initial" on:click={loadData}>Cargar datos de prueba</button>
+{:else}
+    <div id="pastel-container"></div>
+    <br>
+    <div id="scatter-container"></div>
+    <br>
+    <div class="titule" >
+        <t>"Tasa de pago de la UE" por país</t>
+    </div>
+    <div id="chartdiv"></div>
 {/if}
 
-<div id="pastel-container"></div>
-<br>
-<div id="scatter-container"></div>
-<br>
-<div class="titule" >
-    <t>"Tasa de pago de la UE" por país</t>
-</div>
-<div id="chartdiv"></div>
