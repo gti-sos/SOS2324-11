@@ -5,9 +5,14 @@
             <span class="sos-code" style="margin-left: 20px; font-size: 19px;">SOS2324-11</span>
             <a href="/" >Inicio</a>
             <a href="/type" >Estado</a>
-            <a href="/structural-investment" >Inversión estructural</a>
-            <a href="/structural-payment-data" >Pagos estructurales</a>
-            <a href="/socioeconomics-tracker-using-unconventional-data" >Rastreador de socioeconomía</a>
+            <div class="dropdown">
+                <button class="dropbtn" >Frontends</button>
+                <div class="dropdown-content">
+                    <a href="/structural-investment" >Inversión estructural</a>
+                    <a href="/structural-payment-data" >Pagos estructurales</a>
+                    <a href="/socioeconomics-tracker-using-unconventional-data" >Rastreador de socioeconomía</a>
+                </div>
+            </div>
             <div class="dropdown">
                 <button class="dropbtn" >Vistas</button>
                 <div class="dropdown-content">
@@ -17,6 +22,7 @@
                     <a href="/socioeconomics-tracker-using-unconventional-data/vista">Rastreador de socioeconomía</a>
                 </div>
             </div>
+            <a href="/integrations/">Integraciones/Usos</a>
         </div>
     </nav>
 </header>
