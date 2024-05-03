@@ -267,8 +267,8 @@
         chart.appear(1000, 100);
     }
 
-    onMount(() => {
-        getData();
+    onMount(async () => {
+        await getData()
     });
 
 </script>
