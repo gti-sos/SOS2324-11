@@ -22,7 +22,7 @@
                     <a href="/socioeconomics-tracker-using-unconventional-data/vista">Rastreador de socioeconomía</a>
                 </div>
             </div>
-            <a href="/integrations/">Integraciones/Usos</a>
+            <a href="/integrations">Integraciones/Usos</a>
         </div>
     </nav>
 </header>

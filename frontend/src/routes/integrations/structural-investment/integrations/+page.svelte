@@ -1,17 +1,17 @@
 <div class="container">
 
     <div class="card">
-        <div class="photo-image-block">
-            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/integrations/conProxy"><img src = "https://kinsta.com/es/wp-content/uploads/sites/8/2023/02/que-es-un-proxy.jpeg" alt="Imagen"></a>
+        <div class="photo">
+            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/integrations/conProxy"><img  class="i"src = "https://kinsta.com/es/wp-content/uploads/sites/8/2023/02/que-es-un-proxy.jpeg" alt="Imagen"></a>
         </div>
-        <h2 class="photo-title">Con proxy</h2>
+        <h2 class="title">Con proxy</h2>
     </div>
 
     <div class="card" style="margin-left: 20px;">
-        <div class="photo-image-block">
+        <div class="photo">
             <a href="http://sos2324-11.appspot.com/integrations/structural-investment/integrations/sinProxy"><img src = "https://kinsta.com/wp-content/uploads/2020/10/Proxy-Server.png" alt="Imagen"></a>
         </div>
-        <h2 class="photo-title">Sin proxy</h2>
+        <h2 class="title">Sin proxy</h2>
     </div>
     
 </div> 
@@ -28,11 +28,21 @@
         text-align: center;
         border: 1px solid gray;
         border-radius: 5%;
+
     }
 
     img {
+        margin-top: 10px;
         max-height: 400px;
         width: auto;
+
+    }
+
+    .i {
+        margin-top: 10px;
+        max-height: 380px;
+        width: auto;
+
     }
 
 </style>
