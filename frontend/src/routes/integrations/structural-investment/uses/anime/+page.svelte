@@ -8,7 +8,7 @@
     });
 
     async function getAnime() {
-        const url = 'https://myanimelist.p.rapidapi.com/anime/top/%7Bcategory%7D';
+        //const url = 'https://myanimelist.p.rapidapi.com/anime/top/%7Bcategory%7D';
         const options = {
             method: 'GET',
             headers: {
