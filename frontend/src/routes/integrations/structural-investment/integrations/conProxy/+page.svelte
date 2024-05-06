@@ -1,9 +1,7 @@
 <svelte:head>
 
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/export-data.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 </svelte:head>
 
@@ -12,8 +10,8 @@
 
   let dataAvailable = false; 
   const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-investment-data';
-  const apiUrl2 = 'http://localhost:10000/proxySharay';
-  let yearData = [];
+  const apiUrl2 = 'https://sos2324-11.appspot.com/proxySharay';
+  let countryData = [];
 
   async function fetchData(url) {
     const response = await fetch(url);
@@ -26,12 +24,6 @@
     const data1 = await fetchData(apiUrl1);
     const data2 = await fetchData(apiUrl2);
 
-    // Verificar si hay datos disponibles en ambas fuentes
-    if (!Array.isArray(data1) || !data2 || !Array.isArray(data2.teams)) {
-        console.error('No se pudieron obtener los datos de ambas fuentes.');
-        return;
-    }
-
     const combinedData = {};
 
     if (data1.length === 0) {
@@ -39,91 +31,110 @@
       } else {
         dataAvailable=true;
 
-    // Iterar sobre los datos de la URL1 y construir un conjunto de años
-    const yearsFromData1 = new Set(data1.map(entry => parseInt(entry.year , 10)));
-    console.log("Años url1", yearsFromData1)
-    const yearsFromData2 = new Set(data2.teams.map(team => parseInt(team.intFormedYear, 10)));
-    console.log("Años url2", yearsFromData2)
+    const countryFromData1 = new Set(data1.map(c => c.ms_name));
+    console.log("Countries from data1", countryFromData1)
+    const countryFromData2 = new Set(data2.map(c => c.name.common));
+    console.log("Countries from data2", countryFromData2);
 
-    //Encomtarr años en comun
-    const commonYears = Array.from(new Set([...yearsFromData1].filter(year => yearsFromData2.has(year))));
-    console.log("Años comun", commonYears)
+    const commonCountry = Array.from(new Set([...countryFromData1].filter(c => countryFromData2.has(c))));
+    console.log("Countries comun", commonCountry)
 
        // Iterar sobre los años comunes y obtener los datos correspondientes de cada URL
-       commonYears.forEach(year => {
-            const dataFromUrl1 = data1.find(entry => entry.year === year );
-            const dataFromUrl2 = data2.teams.find(team => team.intFormedYear === year.toString());
-            console.log("1", dataFromUrl1)
-            console.log("2", dataFromUrl2)
+       commonCountry.forEach(country => {
+            const dataFromUrl1 = data1.find(entry => entry.ms_name === country);
+            const dataFromUrl2 = data2.find(team => team.name.common === country);
+            console.log("Data from URL1 for", country, dataFromUrl1);
+            console.log("Data from URL2 for", country, dataFromUrl2);
+
             if (dataFromUrl1 && dataFromUrl2) {
-                // Asegurarse de que combinedData sea un objeto para poder agregar propiedades
-                if (!combinedData[year]) {
-                    combinedData[year] = {
-                        year: year,
-                        net_planned_eu_amount: 0,
-                        idAPIfootball: 0,
+                // Ensure combinedData is an object to add properties
+                if (!combinedData[country]) {
+                    combinedData[country] = {
+                        country: country,
+                        title: 0,
+                        flag: 0,
                     };
                 }
-                combinedData[year].net_planned_eu_amount = dataFromUrl1.net_planned_eu_amount || 0;
-                combinedData[year].idAPIfootball += dataFromUrl2.idAPIfootball || 0;
-        
+                combinedData[country].title = dataFromUrl1.title ;
+                combinedData[country].flag = dataFromUrl2.flag ;
             }
         });
-
-    
   }
 
     // Filtrar solo los años comunes con datos en ambas fuentes
-    yearData = Object.values(combinedData);
-    console.log("Datos combinados" , yearData);
+    countryData = Object.values(combinedData);
+    console.log("Datos combinados" , countryData);
   
 }
 
-
 function createChart() {
     if (!dataAvailable) return; 
-    if (!yearData || yearData.length === 0) return;
+    if (!countryData || countryData.length === 0) return;
 
     Highcharts.chart('chart-container', {
+      accessibility: {
+        enabled: true
+    },
         chart: {
-            type: 'column'
+            type: 'scatter'
         },
         title: {
-            text: 'Datos combinados por año'
+            text: 'Datos combinados por país'
         },
         xAxis: {
-            categories: yearData.map(data => data.year)
+            title: {
+                text: 'Title'
+            }
         },
-        yAxis: [{
+        yAxis: {
             title: {
-                text: 'Popularity Rate'
+                text: 'Official'
             }
-        }, {
-            title: {
-                text: 'ID API Football'
-            },
-            opposite: true
-        }],
+        },
+        tooltip: {
+            pointFormat: '<b>{point.country}</b><br/>Title: {point.x}<br/>Official: {point.y}'
+        },
         series: [{
-            name: 'Popularity Rate',
-            data: yearData.map(data => data.net_planned_eu_amount),
-            yAxis: 0,
-            dataLabels: {
-                enabled: true,
-                format: '{y}'
+            name: 'Datos combinados',
+            data: countryData.map(data => ({
+                x: data.title,
+                y: data.official,
+                z: 10, 
+                country: data.country
+            })),
+            marker: {
+                symbol: 'circle', // Símbolo de los puntos
+                states: {
+                    hover: {
+                        enabled: true
+                    }
+                }
             }
-        }, {
-            name: 'ID API Football',
-            data: yearData.map(data => parseInt(data.idAPIfootball)),
-            yAxis: 1,
-            dataLabels: {
-                enabled: true,
-                format: '{y}'
-            },
-            pointWidth: 40 // Ajustar el ancho de la columna de la serie "ID API Football"
-        }]
+        }],
+        plotOptions: {
+            series: {
+                point: {
+                    events: {
+                        click: function () {
+                            // Mostrar detalles en el elemento HTML con id "details-container"
+                            document.getElementById('details-container').innerHTML = `
+                                <h3>Detalles del Punto</h3>
+                                <p><strong>País:</strong> ${this.country}</p>
+                                <p><strong>Title:</strong> ${this.x}</p>
+                                <p><strong>Official:</strong> ${this.y}</p>
+                            `;
+                        }
+                    }
+                }
+            }
+        }
     });
 }
+
+
+
+
+
 
 
 
