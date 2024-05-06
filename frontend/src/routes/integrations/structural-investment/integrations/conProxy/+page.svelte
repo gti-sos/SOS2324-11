@@ -12,7 +12,7 @@
 
   let dataAvailable = false; 
   const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-investment-data';
-  const apiUrl2 = 'https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?s=Soccer&c=Spain';
+  const apiUrl2 = 'http://localhost:10000/proxySharay';
   let yearData = [];
 
   async function fetchData(url) {
