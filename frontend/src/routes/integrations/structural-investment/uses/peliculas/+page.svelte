@@ -10,13 +10,13 @@
     });
 
     async function getMovies() {
-        const url = 'https://imdb-top-100-movies.p.rapidapi.com/';
+        //const url = 'https://imdb-top-100-movies1.p.rapidapi.com/';
         const options = {
-            method: 'GET',
-            headers: {
-                'X-RapidAPI-Key': 'dfc6d02a2emsh256a933352cbeb3p1422d0jsn488d0fd24824',
-                'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
-            }
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': 'dfc6d02a2emsh256a933352cbeb3p1422d0jsn488d0fd24824',
+            'X-RapidAPI-Host': 'imdb-top-100-movies1.p.rapidapi.com'
+        }
         };
 
         try {

@@ -63,6 +63,7 @@
 
       // Convertir el objeto combinedData en un array para facilitar su uso en la gráfica
       countryData = Object.values(combinedData);
+      console.log(countryData)
     }
 
     // Función para crear el gráfico con los datos procesados

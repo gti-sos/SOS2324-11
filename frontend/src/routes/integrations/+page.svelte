@@ -2,7 +2,7 @@
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-investment"><img src = "https://images.emojiterra.com/google/android-11/512px/1f499.png" alt="Imagen" style="width: 300px; height: 350px; margin-top: 30px;"></a>
+            <a href="http://localhost:5173/integrations/structural-investment"><img src = "https://png.pngtree.com/png-clipart/20210905/original/pngtree-computer-working-girl-png-image_6700679.jpg" alt="Imagen" style="width: 300px; height: 350px; margin-top: 30px;"></a>
         </div>
         <h2 style="margin-top: 20px;">Sharay</h2>
     </div>
