@@ -1,5 +1,6 @@
 <div class="container">
 
+    
     <div class="card">
         <div class="photo">
             <a href="http://sos2324-11.appspot.com/integrations/structural-payment/integrations/conProxy"><img  class="i"src = "https://kinsta.com/es/wp-content/uploads/sites/8/2023/02/que-es-un-proxy.jpeg" alt="Imagen"></a>

@@ -33,6 +33,7 @@
 
 <div class="card-container">
     
+    
     {#if geographicalData.length > 0}
         {#each geographicalData as dato}
             <div class="card">
