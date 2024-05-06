@@ -2,9 +2,9 @@
 
     <div class="card">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-payment/uses/ejercicio"><img class="imgA" src = "https://png.pngtree.com/png-vector/20191027/ourlarge/pngtree-hotel-building-vector-illustration-with-simple-design-hotel-icon-png-image_1850754.jpg" alt="Imagen"></a>
+            <a href="http://localhost:5173/integrations/structural-payment/uses/libros"><img class="imgA" src = "https://cdn5.dibujos.net/dibujos/pintados/201547/pila-de-libros-colegio-10258304.jpg" alt="Imagen"></a>
         </div>
-        <h2 class="title">Ejercicio</h2>
+        <h2 class="title">Libros</h2>
     </div>
 
     <div class="card" style="margin-left: 20px;">
