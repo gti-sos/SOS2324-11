@@ -2,6 +2,7 @@
 
 <script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
 
 </svelte:head>
 
@@ -67,77 +68,6 @@
   
 }
 
-function createChart() {
-    if (!dataAvailable) return; 
-    if (!countryData || countryData.length === 0) return;
-
-    Highcharts.chart('chart-container', {
-      accessibility: {
-        enabled: true
-    },
-        chart: {
-            type: 'scatter'
-        },
-        title: {
-            text: 'Datos combinados por país'
-        },
-        xAxis: {
-            title: {
-                text: 'Title'
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Official'
-            }
-        },
-        tooltip: {
-            pointFormat: '<b>{point.country}</b><br/>Title: {point.x}<br/>Official: {point.y}'
-        },
-        series: [{
-            name: 'Datos combinados',
-            data: countryData.map(data => ({
-                x: data.title,
-                y: data.official,
-                z: 10, 
-                country: data.country
-            })),
-            marker: {
-                symbol: 'circle', // Símbolo de los puntos
-                states: {
-                    hover: {
-                        enabled: true
-                    }
-                }
-            }
-        }],
-        plotOptions: {
-            series: {
-                point: {
-                    events: {
-                        click: function () {
-                            // Mostrar detalles en el elemento HTML con id "details-container"
-                            document.getElementById('details-container').innerHTML = `
-                                <h3>Detalles del Punto</h3>
-                                <p><strong>País:</strong> ${this.country}</p>
-                                <p><strong>Title:</strong> ${this.x}</p>
-                                <p><strong>Official:</strong> ${this.y}</p>
-                            `;
-                        }
-                    }
-                }
-            }
-        }
-    });
-}
-
-
-
-
-
-
-
-
   async function insertData() {
     try {
       let response = await fetch(apiUrl1 + "/loadInitialData", {
@@ -156,6 +86,74 @@ function createChart() {
     }
   }
     
+  function createChart() {
+    if (!dataAvailable || !countryData || countryData.length === 0) return;
+
+    Highcharts.chart('chart-container', {
+        chart: {
+            type: 'packedbubble',
+            plotBorderWidth: 0,
+            margin: [0, 0, 0, 0],
+            spacingBottom: 0,
+            spacingTop: 0,
+            spacingLeft: 0,
+            spacingRight: 0
+        },
+        title: {
+            text: "Datos combinados por países"
+        },
+        yAxis: {
+            visible: false
+        },
+        tooltip: {
+            useHTML: true,
+            pointFormat: '<b>Title:</b> {point.title}<br><b>Flags:</b> {point.flag} <sub></sub>'
+        },
+        series: [{
+            data: countryData.map(data => ({
+                name: data.country,
+                value: 1,
+                flag: data.flag,
+                title: data.title
+            })),
+            color: 'rgba(147, 112, 219, 0.5)', 
+            dataLabels: { 
+                enabled: true,
+                format: '{point.name}',
+                style: {
+                    fontSize: '16px' // Ajustar el tamaño de la etiqueta del país
+                }
+            },
+            events: { 
+                legendItemClick: function () {
+                    return false;
+                }
+            }
+        }],
+        plotOptions: {
+            packedbubble: {
+                marker: {
+                    symbol: 'circle',
+                    states: {
+                        hover: {
+                            enabled: true
+                        }
+                    }
+                },
+                minSize: '20%',
+                maxSize: '100%'
+            }
+        },
+        legend: {
+            enabled: false
+        }
+    });
+}
+
+
+
+
+
   
     onMount(async () => {
       await combinedData();
@@ -174,7 +172,9 @@ function createChart() {
 
 
 
+
 <style>
+
 
 e {
     font-family: '';

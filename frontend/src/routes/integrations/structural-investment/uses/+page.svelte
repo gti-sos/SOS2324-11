@@ -16,7 +16,7 @@
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-investment/uses/series"><img class="imgR"src = "https://img.freepik.com/vector-premium/escribir-resena-impresiones-calificacion-cinco-estrellas-libro-resenas-sugerencias-icono-vector_660702-204.jpg" alt="Imagen"></a>
+            <a href="http://localhost:5173/integrations/structural-investment/uses/reseñas"><img class="imgR"src = "https://img.freepik.com/vector-premium/escribir-resena-impresiones-calificacion-cinco-estrellas-libro-resenas-sugerencias-icono-vector_660702-204.jpg" alt="Imagen"></a>
         </div>
         <h2 class="title">Reseñas</h2>
     </div>

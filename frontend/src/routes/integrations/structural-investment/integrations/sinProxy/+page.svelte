@@ -14,6 +14,7 @@
   const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-investment-data';
   const apiUrl2 = 'https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?s=Soccer&c=Spain';
   let yearData = [];
+  let chartInitialized = false;
 
   async function fetchData(url) {
     const response = await fetch(url);
@@ -79,7 +80,26 @@
   
 }
 
+  async function insertData() {
+    try {
+      let response = await fetch(apiUrl1 + "/loadInitialData", {
+        method: "GET",
+      });
+      let status = await response.status;
+      console.log(`Status code: ${status}`);
+      if (status === 200) {
+        await combinedData();
+        if (dataAvailable) {
+          createChart();
+        }
+      } 
+    } catch (e) {
+      console.error(e);
+    }
+  }
+    
 
+  
 function createChart() {
     if (!dataAvailable) return; 
     if (!yearData || yearData.length === 0) return;
@@ -124,33 +144,12 @@ function createChart() {
         }]
     });
 }
-
-
-
-  async function insertData() {
-    try {
-      let response = await fetch(apiUrl1 + "/loadInitialData", {
-        method: "GET",
-      });
-      let status = await response.status;
-      console.log(`Status code: ${status}`);
-      if (status === 200) {
-        await combinedData();
-        if (dataAvailable) {
-          createChart();
-        }
-      } 
-    } catch (e) {
-      console.error(e);
-    }
-  }
-    
   
     onMount(async () => {
       await combinedData();
-    if (dataAvailable) {
-      createChart();
-    }
+      if (dataAvailable) {
+        createChart();
+      }
     });
 
 </script>
@@ -158,7 +157,7 @@ function createChart() {
 {#if dataAvailable==false}
   <e>No hay datos disponibles. Por favor, introduzca los datos.</e>
   <button class="initial" on:click={insertData}>Cargar datos de prueba</button>
-  {/if}
+{/if}
 <div id="chart-container" />
 
 

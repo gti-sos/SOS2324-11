@@ -53,14 +53,14 @@
 
         document.getElementById('reseñasGraph').on('plotly_click', function(data){
             const point = data.points[0];
-            const reseñaAuthor = point.label;
-            const reseñaRating = point.value;
+            const reseñaAuthor = point.label; // Nombre del autor de la reseña
+            const reseñaRating = point.value; // Calificación de la reseña
             alert(`Review: ${reseñaAuthor}\nRating: ${reseñaRating}`);
-        });
+    });
     }
 </script>
 
-<e>Reseñas de Productos</e>
+<e>Calificaciones de productos de usuarios(alías) de amazon</e>
 <div id="reseñasGraph"></div>
 
 
