@@ -263,7 +263,7 @@ const data_SPJ = [
         "fund": "EAFRD",
         "category_of_region": null,
         "year": 2016,
-        "net_planned_eu_amount": 1147779504,
+        "net_planned_eu_amount": 1735670840,
         "cumulative_initial_pre_financing": 40172282.64,
         "cumulative_additional_initial_pre_financing": 0,
         "recovery_of_initial_pre_financing": 0,
