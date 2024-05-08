@@ -3,10 +3,7 @@
 
     let animeData = [];
 
-    onMount(async () => {
-        await getAnime();
-    });
-
+    // Función asincrónica para obtener datos del anime desde la API
     async function getAnime() {
         //const url = 'https://myanimelist.p.rapidapi.com/anime/top/%7Bcategory%7D';
         const options = {
@@ -25,6 +22,10 @@
             console.error(error);
         }
     }
+
+    onMount(async () => {
+        await getAnime();
+    });
 
 </script>
 
@@ -80,8 +81,6 @@
         justify-content: center; 
         text-decoration: none;
     }
-
-
 
     /* Estilos de las cartas */
     .card-container {

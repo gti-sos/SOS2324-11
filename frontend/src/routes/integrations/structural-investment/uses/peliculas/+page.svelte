@@ -9,6 +9,7 @@
         createGraph();
     });
 
+    // Función asincrónica para obtener datos de las peliculas desde la API
     async function getMovies() {
         //const url = 'https://imdb-top-100-movies1.p.rapidapi.com/';
         const options = {
@@ -41,8 +42,8 @@
                 datasets: [{
                     label: 'Nota media de la película',
                     data: ratings.map((rating, index) => ({ x: index, y: rating, title: titles[index], rating: rating })),
-                    backgroundColor: 'rgba(128, 0, 128, 0.2)', // Morado (RGBA)
-                    borderColor: 'rgba(128, 0, 128, 1)', // Morado (RGBA)
+                    backgroundColor: 'rgba(128, 0, 128, 0.2)', 
+                    borderColor: 'rgba(128, 0, 128, 1)', 
                     borderWidth: 1
                 }]
             },
@@ -78,8 +79,6 @@
             }
         });
     }
-
-
 
 </script>
 

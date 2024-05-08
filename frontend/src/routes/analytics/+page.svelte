@@ -40,7 +40,8 @@
       if (data1.length === 0) {
         dataAvailable = false;
       } else {
-         // Combinar datos de las tres fuentes
+
+        // Combinar datos de las tres fuentes
         dataAvailable = true;
         [data1, data2, data3].forEach(data => {
           data.forEach(entry => {
@@ -61,12 +62,12 @@
       });
     }
 
-      // Convertir el objeto combinedData en un array para facilitar su uso en la gráfica
+      // Convertir el objeto combinedData en un array para la gráfica
       countryData = Object.values(combinedData);
       console.log(countryData)
     }
 
-    // Función para crear el gráfico con los datos procesados
+  // Función para crear el gráfico con los datos procesados
   function createChart() {
 
     // Calcular los valores mínimos y máximos para cada conjunto de datos
