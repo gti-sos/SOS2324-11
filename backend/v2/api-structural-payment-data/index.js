@@ -352,7 +352,7 @@ const data = [
         "ms": "ET",
         "ms_name": "Estonia",
         "fund": "TOTAL",
-        "year": 2022,
+        "year": 2020,
         "planned_eu_amount": 29101440102,
         "n_3_decommitment_amount": -2111646,
         "net_planned_eu_amount": 29099328456,
