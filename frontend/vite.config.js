@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [sveltekit()],
   build: {
     rollupOptions: {
-      external: ['plotly.js-dist', 'chart.js/auto']
+      external: 'chart.js/auto'
     }
   }
 });

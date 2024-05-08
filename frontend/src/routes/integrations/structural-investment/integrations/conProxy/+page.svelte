@@ -150,10 +150,6 @@
     });
 }
 
-
-
-
-
   
     onMount(async () => {
       await combinedData();
