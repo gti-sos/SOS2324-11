@@ -39,7 +39,7 @@
             data: {
                 labels: titles,
                 datasets: [{
-                    label: 'Película:',
+                    label: 'Nota media de la película',
                     data: ratings.map((rating, index) => ({ x: index, y: rating, title: titles[index], rating: rating })),
                     backgroundColor: 'rgba(128, 0, 128, 0.2)', // Morado (RGBA)
                     borderColor: 'rgba(128, 0, 128, 1)', // Morado (RGBA)
@@ -68,7 +68,7 @@
                             label: function(context) {
                                 var label = context.dataset.label || '';
                                 if (context.parsed.x !== null && context.parsed.y !== null) {
-                                    label += '\n' + context.dataset.data[context.dataIndex].title + ': ' + context.dataset.data[context.dataIndex].rating;
+                                    label +=  ":" + '\n'  +context.dataset.data[context.dataIndex].rating;
                                 }
                                 return label;
                             }
@@ -83,7 +83,7 @@
 
 </script>
 
-<e> Nota media por pélicula </e>
+<e> Nota media por película </e>
 <canvas id="myChart" width="800" height="240"></canvas>
 
 
