@@ -10,12 +10,14 @@
   
     const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
     const apiUrl2 = 'https://api.covidtracking.com/v1/us/daily.json';
-    let yearData = [];
+   
 
     onMount(async () => {
         await combinedData();
         createGraph();
     });
+
+    let yearData=[];
 
   async function fetchData(url) {
     const response = await fetch(url);
@@ -36,49 +38,32 @@
 
     const combinedData = {};
 
+    data1.forEach(entry => {
+        const year = entry.year;
+        if(!combinedData[year]){
+            combinedData[year]={
+                year: year,
+                recovery_of_expense: 0,
+                totalTestResults: 0,
+            };
+        }
+        combinedData[year].recovery_of_expense += entry.recovery_of_expense;
+    });
 
-    // Iterar sobre los datos de la URL1 y construir un conjunto de años
-    const yearsFromData1 = new Set(data1.map(entry => parseInt(entry.year , 10)));
-    console.log("Años url1", yearsFromData1)
-    const yearsFromData2 = new Set(data2.map(c => parseInt(c.date/10000, 10)));
-    console.log("Años url2", yearsFromData2)
+    data2.forEach(entry => {
+        const year = parseInt(entry.date/10000);
+        if(combinedData[year]){
+            combinedData[year].totalTestResults += entry.totalTestResults;
+        }
+    });
 
-    //Encomtarr años en comun
-    const commonYears = Array.from(new Set([...yearsFromData1].filter(year => yearsFromData2.has(year))));
-    console.log("Años comun", commonYears)
-
-       // Iterar sobre los años comunes y obtener los datos correspondientes de cada URL
-       commonYears.forEach(year => {
-            const dataFromUrl1 = data1.find(entry => entry.year === year );
-            const dataFromUrl2 = data2.find(c => parseInt(c.date/10000) === year);
-            console.log("1", dataFromUrl1)
-            console.log("2", dataFromUrl2)
-            if (dataFromUrl1 && dataFromUrl2) {
-                // Asegurarse de que combinedData sea un objeto para poder agregar propiedades
-                if (!combinedData[year]) {
-                    combinedData[year] = {
-                        year: year,
-                        recovery_of_expense: 0,
-                        totalTestResults: 0,
-                    };
-                }
-                combinedData[year].recovery_of_expense = dataFromUrl1.recovery_of_expense || 0;
-                combinedData[year].totalTestResults += dataFromUrl2.totalTestResults || 0;
-    
-            }
-        });
-
-    
-  
-
-    // Filtrar solo los años comunes con datos en ambas fuentes
     yearData = Object.values(combinedData);
-    console.log("Datos combinados" , yearData);
-  
+    console.log("Datos combinados", yearData);
 }
 
-function createGraph(){
 
+function createGraph(){
+    console.log("datos", yearData);
     if (!yearData || yearData.length === 0) return;
 
         Highcharts.chart('container-bar', {
