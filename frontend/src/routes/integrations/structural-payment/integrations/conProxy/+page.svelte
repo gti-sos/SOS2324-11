@@ -96,7 +96,7 @@ function createGraph(){
     },
     tooltip: {
         shared: true,
-        headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>'
+        headerFormat: '<b>Datos por año</b><br>'
     },
     credits: {
         enabled: false

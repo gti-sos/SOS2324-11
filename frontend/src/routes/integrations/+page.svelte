@@ -9,7 +9,7 @@
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-payment"><img src = "https://previews.123rf.com/images/rastudio/rastudio1602/rastudio160204880/52769032-una-mujer-que-trabaja-en-una-computadora-port%C3%A1til-y-de-la-red-inform%C3%A1tica-iconos-sociales-por-encima.jpg" alt="Imagen" style="width: 280px; height: 350px; margin-top:25px; margin-bottom:25px; "></a>
+            <a href="http://sos2324-11.appspot.com/integrations/structural-payment"><img src = "https://previews.123rf.com/images/rastudio/rastudio1602/rastudio160204880/52769032-una-mujer-que-trabaja-en-una-computadora-port%C3%A1til-y-de-la-red-inform%C3%A1tica-iconos-sociales-por-encima.jpg" alt="Imagen" style="width: 280px; height: 350px; margin-top:25px; margin-bottom:25px; "></a>
         </div>
         <h2 >Isabel</h2>
     </div>
