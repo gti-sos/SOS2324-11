@@ -10,7 +10,7 @@
   
     const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
     const apiUrl2 = 'https://sos2324-11.appspot.com/proxyIsabelMaria';
-   
+    //const apiUrl2 ='https://api.covidtracking.com/v1/us/daily.json'; 
 
     onMount(async () => {
         await combinedData();

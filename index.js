@@ -22,7 +22,7 @@ app.use(cors());
 
 // Proxy Isabel
 var pathsIsabelMaria = "/proxyIsabelMaria";
-var apiServerHostIsabelMaria = "https://api.covidtracking.com/v1/us/daily.json";
+var apiServerHostIsabelMaria = "https://api.openligadb.de/getavailableleagues";
 
 app.use(pathsIsabelMaria, function(req,res){
     var url = apiServerHostIsabelMaria + req.url;
