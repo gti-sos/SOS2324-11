@@ -1,24 +1,25 @@
 <svelte:head>
-    <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    
 </svelte:head>
 
 <script>
-    import { onMount } from 'svelte';
-  
-    const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
-    const apiUrl2 = 'https://api.covidtracking.com/v1/us/daily.json';
-   
+  import { onMount } from 'svelte';
 
-    onMount(async () => {
+
+  const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
+  const apiUrl2 = 'http://ergast.com/api/f1/2021/results.json';
+  let yearData = [];
+
+  onMount(async () => {
         await combinedData();
         createGraph();
     });
 
-    let yearData=[];
-
+    // Función asincrónica para obtener datos de una URL
   async function fetchData(url) {
     const response = await fetch(url);
     const data = await response.json();
@@ -26,15 +27,10 @@
     return data;
   }
 
+
   async function combinedData() {
     const data1 = await fetchData(apiUrl1);
     const data2 = await fetchData(apiUrl2);
-
-    // Verificar si hay datos disponibles en ambas fuentes
-    if (!Array.isArray(data1) || !data2 || !Array.isArray(data2)) {
-        console.error('No se pudieron obtener los datos de ambas fuentes.');
-        return;
-    }
 
     const combinedData = {};
 
@@ -43,18 +39,19 @@
         if(!combinedData[year]){
             combinedData[year]={
                 year: year,
-                recovery_of_expense: 0,
-                totalTestResults: 0,
+                eu_payment_rate: 0,
+                round: 0,
             };
         }
-        combinedData[year].recovery_of_expense += entry.recovery_of_expense;
+        combinedData[year].eu_payment_rate += entry.eu_payment_rate;
+        console.log("ver los datos", combinedData)
     });
 
-    data2.forEach(entry => {
-        const year = parseInt(entry.date/10000);
-        if(combinedData[year]){
-            combinedData[year].totalTestResults += entry.totalTestResults;
-        }
+    data2.MRData.RaceTable.Races.forEach(entry => {
+      const year = parseInt(entry.season);
+      if (combinedData[year]) {
+        combinedData[year].round += 1;
+      }
     });
 
     yearData = Object.values(combinedData);
@@ -63,69 +60,76 @@
 
 
 function createGraph(){
-    console.log("datos", yearData);
-    if (!yearData || yearData.length === 0) return;
+  var chart = // Retrieved from https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt
+Highcharts.chart('container', {
+    chart: {
+        type: 'areaspline'
+    },
+    title: {
+        text: 'Moose and deer hunting in Norway, 2000 - 2021',
+        align: 'left'
+    },
+    subtitle: {
+        text: 'Source: <a href="https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt" target="_blank">SSB</a>',
+        align: 'left'
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 120,
+        y: 70,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
+    },
+    xAxis: {
+      categories: yearData.map(item => item.year),
+        plotBands: [{ // Highlight the two last years
+            from: 2020,
+            to: 2024,
+            color: 'rgba(68, 170, 213, .2)'
+        }],
+    },
+    yAxis: {
+        title: {
+            text: 'Quantity'
+        }
+    },
+    tooltip: {
+        shared: true,
+        headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>'
+    },
+    credits: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            pointStart: 2020
+        },
+        areaspline: {
+            fillOpacity: 0.5
+        }
+    },
+    series: [{
+        name: 'Moose',
+        data:
+            yearData.map(item=>item.round)
+    }, {
+        name: 'Deer',
+        data:
+            yearData.map(item=>item.eu_payment_rate)
+              
+    }]
+});
 
-        Highcharts.chart('container-bar', {
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'Datos combinados por año',
-                    align: 'left'
-                },
-                xAxis: {
-                    categories: yearData.map(data => data.year)
-                },
-                yAxis: [{
-                            title: {
-                                text: 'Recuperación de gastos'
-                            }
-                        }, {
-                            title: {
-                                text: 'Resultados totales de los test COVID'
-                            },
-                            opposite: true
-                        }],
-                plotOptions: {
-                    bar: {
-                        borderRadius: '50%',
-                        dataLabels: {
-                            enabled: true
-                        },
-                        groupPadding: 0.1
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                credits: {
-                    enabled: false
-                },
-                series: [{
-                    name: 'Recuperación de gastos',
-                    data: yearData.map(data => data.recovery_of_expense),
-                    yAxis: 0,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{y}'
-                    }
-                }, {
-                    name: 'Resultados totales de los test COVID',
-                    data: yearData.map(data => data.totalTestResults),
-                    yAxis: 1,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{y}'
-                    }
-                }]
-        });
+}
 
 
-
-    }
 
 
 </script>
 
-<div id="container-bar" />
+
+<div id="container"></div>

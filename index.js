@@ -21,14 +21,14 @@ let app = express();
 app.use(cors());
 
 // Proxy Isabel
-var pathsIsabelM = "/proxyIsabelM";
-var apiServerHostIsabelM = "http://ergast.com/api/f1/2021/results.json";
+var pathsIsabelMaria = "/proxyIsabelMaria";
+var apiServerHostIsabelMaria = "https://api.covidtracking.com/v1/us/daily.json";
 
-app.use(pathsIsabelM, function(req,res){
-    var url = apiServerHostIsabelM + req.url;
+app.use(pathsIsabelMaria, function(req,res){
+    var url = apiServerHostIsabelMaria + req.url;
     req.pipe(request(url)).pipe(res);
 });
-/*
+
 // Proxy Sharay
 var paths = "/proxySharay";
 var apiServerHost = "https://restcountries.com/v3.1/all";
@@ -38,7 +38,7 @@ app.use(paths, function(req,res){
     req.pipe(request(url)).pipe(res);
 });
 
-*/
+
 
 app.use(bodyParser.json());
 
