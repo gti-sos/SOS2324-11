@@ -28,7 +28,7 @@ app.use(pathsIsabel, function(req,res){
     var url = apiServerHostIsabel + req.url;
     req.pipe(request(url)).pipe(res);
 });
-
+/*
 // Proxy Sharay
 var paths = "/proxySharay";
 var apiServerHost = "https://restcountries.com/v3.1/all";
@@ -38,7 +38,7 @@ app.use(paths, function(req,res){
     req.pipe(request(url)).pipe(res);
 });
 
-
+*/
 
 app.use(bodyParser.json());
 
