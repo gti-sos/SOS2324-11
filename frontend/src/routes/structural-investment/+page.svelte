@@ -46,7 +46,7 @@
     let newData = {
         "ms": "IT",
         "ms_name": "Italy",
-        "cci": "2014IT16RFOP017",
+        "cci": "2014IT16RFOP01777",
         "title": "Toscana - ERDF",
         "fund": "ERDF ",
         "category_of_region": "More developed ",

@@ -35,44 +35,38 @@
       } else {
         dataAvailable=true;
 
+    // Procesar los datos de data1
+    data1.forEach(entry => {
+        const year = entry.year;
+        if (!combinedData[year]) {
+            combinedData[year] = {
+                year: year,
+                net_planned_eu_amount: 0,
+                idAPIfootball: 0,
+            };
+        }
+        combinedData[year].net_planned_eu_amount += entry.net_planned_eu_amount;
+    });
 
-    const yearsFromData1 = new Set(data1.map(entry => parseInt(entry.year , 10)));
-    console.log("Años url1", yearsFromData1)
-    const yearsFromData2 = new Set(data2.teams.map(team => parseInt(team.intFormedYear, 10)));
-    console.log("Años url2", yearsFromData2)
-
-    //Encomtrar años en comun
-    const commonYears = Array.from(new Set([...yearsFromData1].filter(year => yearsFromData2.has(year))));
-    console.log("Años comun", commonYears)
-
-       // Iterar sobre los años comunes y obtener los datos correspondientes de cada URL
-       commonYears.forEach(year => {
-            const dataFromUrl1 = data1.find(entry => entry.year === year );
-            const dataFromUrl2 = data2.teams.find(team => team.intFormedYear === year.toString());
-            console.log("1", dataFromUrl1)
-            console.log("2", dataFromUrl2)
-            if (dataFromUrl1 && dataFromUrl2) {
-                if (!combinedData[year]) {
-                    combinedData[year] = {
-                        year: year,
-                        net_planned_eu_amount: 0,
-                        idAPIfootball: 0,
-                    };
-                }
-                combinedData[year].net_planned_eu_amount = dataFromUrl1.net_planned_eu_amount || 0;
-                combinedData[year].idAPIfootball += dataFromUrl2.idAPIfootball || 0;
-        
-            }
-        });
-
-    
+    // Combinar los datos de data2
+    data2.teams.forEach(team => {
+        const year = team.intFormedYear;
+        if (combinedData[year]) {
+            combinedData[year].idAPIfootball = parseInt(team.idAPIfootball) || 0;
+        }
+    });
   }
 
     // Filtrar solo los años comunes con datos en ambas fuentes
-    yearData = Object.values(combinedData);
-    console.log("Datos combinados" , yearData);
-  
+    const yearData = Object.values(combinedData);
+    console.log("Datos combinados", yearData);
+    createChart(yearData);
+
 }
+
+
+
+
  // Función asincrónica para insertar datos de mi API
   async function insertData() {
     try {
@@ -94,7 +88,7 @@
     
 
   // Función para crear el gráfico utilizando Highcharts
-  function createChart() {
+  function createChart(yearData) {
       if (!dataAvailable) return; 
       if (!yearData || yearData.length === 0) return;
 
@@ -110,7 +104,7 @@
           },
           yAxis: [{
               title: {
-                  text: 'Popularity Rate'
+                  text: 'Importe neto previsto de la UE'
               }
           }, {
               title: {
@@ -141,9 +135,6 @@
   
   onMount(async () => {
     await combinedData();
-    if (dataAvailable) {
-      createChart();
-    }
   });
 
 </script>
