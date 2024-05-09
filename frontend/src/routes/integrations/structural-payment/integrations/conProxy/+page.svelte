@@ -11,7 +11,7 @@
 
 
   const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
-  const apiUrl2 = 'https://sos2324-11.appspot.com/proxyIsabel';
+  const apiUrl2 = 'https://sos2324-11.appspot.com/proxyIsabelM';
   let yearData = [];
 
   onMount(async () => {

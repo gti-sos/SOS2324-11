@@ -21,11 +21,11 @@ let app = express();
 app.use(cors());
 
 // Proxy Isabel
-var pathsIsabel = "/proxyIsabel";
-var apiServerHostIsabel = "http://ergast.com/api/f1/2021/results.json";
+var pathsIsabelM = "/proxyIsabelM";
+var apiServerHostIsabelM = "http://ergast.com/api/f1/2021/results.json";
 
-app.use(pathsIsabel, function(req,res){
-    var url = apiServerHostIsabel + req.url;
+app.use(pathsIsabelM, function(req,res){
+    var url = apiServerHostIsabelM + req.url;
     req.pipe(request(url)).pipe(res);
 });
 /*
