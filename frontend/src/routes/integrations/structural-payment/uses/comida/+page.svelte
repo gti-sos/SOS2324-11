@@ -79,11 +79,18 @@
 
     }
 
-    h3 {
-            text-align: center;
+    e {
+        font-family: '';
+        font-size: 60px;
+        color: #290ef5;
+        text-align: center;
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        margin-bottom: 20px;
         }
 </style>
 
 <br>
-<h3>Calorias de algunas comidas</h3>
+<e>Calorías de comidas</e>
 <div class="ct-chart"></div>

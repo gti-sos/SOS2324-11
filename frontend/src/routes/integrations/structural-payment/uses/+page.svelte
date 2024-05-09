@@ -18,7 +18,7 @@
         <div class="photo">
             <a href="http://localhost:5173/integrations/structural-payment/uses/geografia"><img class="imgP"src = "https://static.vecteezy.com/system/resources/previews/027/511/289/original/cartoon-hand-holding-united-states-and-canadian-flags-usa-and-canada-relations-vector.jpg" alt="Imagen"></a>
         </div>
-        <h2 class="title">Geografia</h2>
+        <h2 class="title">Geografía</h2>
     </div>
     
 </div> 
