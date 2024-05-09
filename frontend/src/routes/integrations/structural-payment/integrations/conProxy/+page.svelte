@@ -62,17 +62,12 @@
 
 
 function createGraph(){
-  var chart = // Retrieved from https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt
-Highcharts.chart('container', {
+  var chart = Highcharts.chart('container', {
     chart: {
         type: 'areaspline'
     },
     title: {
-        text: 'Moose and deer hunting in Norway, 2000 - 2021',
-        align: 'left'
-    },
-    subtitle: {
-        text: 'Source: <a href="https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt" target="_blank">SSB</a>',
+        text: 'Datos combinados, 2020 - 2024',
         align: 'left'
     },
     legend: {
@@ -96,7 +91,7 @@ Highcharts.chart('container', {
     },
     yAxis: {
         title: {
-            text: 'Quantity'
+            text: 'Cantidad'
         }
     },
     tooltip: {
@@ -115,11 +110,11 @@ Highcharts.chart('container', {
         }
     },
     series: [{
-        name: 'Moose',
+        name: 'Ligas de fútbol',
         data:
             yearData.map(item=>item.leagueName)
     }, {
-        name: 'Deer',
+        name: 'Tasa de pago de la UE',
         data:
             yearData.map(item=>item.eu_payment_rate)
               

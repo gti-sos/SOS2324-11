@@ -65,5 +65,5 @@
 </style>
 
 <br>
-<h3>Valoración de cada libro</h3>
+<h3>Valoraciones a libros</h3>
 <div class="ct-chart"></div>
