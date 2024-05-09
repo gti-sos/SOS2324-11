@@ -10,7 +10,6 @@
   
     const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
     const apiUrl2 = 'https://sos2324-11.appspot.com/proxyIsabelMaria';
-    //const apiUrl2 ='https://api.covidtracking.com/v1/us/daily.json'; 
 
     onMount(async () => {
         await combinedData();
@@ -43,17 +42,17 @@
         if(!combinedData[year]){
             combinedData[year]={
                 year: year,
-                recovery_of_expense: 0,
-                totalTestResults: 0,
+                eu_payment_rate: 0,
+                leagueName: 0,
             };
         }
-        combinedData[year].recovery_of_expense += entry.recovery_of_expense;
+        combinedData[year].eu_payment_rate += entry.eu_payment_rate;
     });
 
     data2.forEach(entry => {
-        const year = parseInt(entry.date/10000);
+        const year = parseInt(entry.leagueSeason);
         if(combinedData[year]){
-            combinedData[year].totalTestResults += entry.totalTestResults;
+            combinedData[year].leagueName += 1;
         }
     });
 
@@ -63,69 +62,73 @@
 
 
 function createGraph(){
-    console.log("datos", yearData);
-    if (!yearData || yearData.length === 0) return;
+  var chart = // Retrieved from https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt
+Highcharts.chart('container', {
+    chart: {
+        type: 'areaspline'
+    },
+    title: {
+        text: 'Moose and deer hunting in Norway, 2000 - 2021',
+        align: 'left'
+    },
+    subtitle: {
+        text: 'Source: <a href="https://www.ssb.no/jord-skog-jakt-og-fiskeri/jakt" target="_blank">SSB</a>',
+        align: 'left'
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 120,
+        y: 70,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
+    },
+    xAxis: {
+      categories: yearData.map(item => item.year),
+        plotBands: [{ // Highlight the two last years
+            from: 2020,
+            to: 2024,
+            color: 'rgba(68, 170, 213, .2)'
+        }],
+    },
+    yAxis: {
+        title: {
+            text: 'Quantity'
+        }
+    },
+    tooltip: {
+        shared: true,
+        headerFormat: '<b>Hunting season starting autumn {point.x}</b><br>'
+    },
+    credits: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            pointStart: 2020
+        },
+        areaspline: {
+            fillOpacity: 0.5
+        }
+    },
+    series: [{
+        name: 'Moose',
+        data:
+            yearData.map(item=>item.leagueName)
+    }, {
+        name: 'Deer',
+        data:
+            yearData.map(item=>item.eu_payment_rate)
+              
+    }]
+});
 
-        Highcharts.chart('container-bar', {
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'Datos combinados por año',
-                    align: 'left'
-                },
-                xAxis: {
-                    categories: yearData.map(data => data.year)
-                },
-                yAxis: [{
-                            title: {
-                                text: 'Recuperación de gastos'
-                            }
-                        }, {
-                            title: {
-                                text: 'Resultados totales de los test COVID'
-                            },
-                            opposite: true
-                        }],
-                plotOptions: {
-                    bar: {
-                        borderRadius: '50%',
-                        dataLabels: {
-                            enabled: true
-                        },
-                        groupPadding: 0.1
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                credits: {
-                    enabled: false
-                },
-                series: [{
-                    name: 'Recuperación de gastos',
-                    data: yearData.map(data => data.recovery_of_expense),
-                    yAxis: 0,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{y}'
-                    }
-                }, {
-                    name: 'Resultados totales de los test COVID',
-                    data: yearData.map(data => data.totalTestResults),
-                    yAxis: 1,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{y}'
-                    }
-                }]
-        });
-
-
-
-    }
+}
 
 
 </script>
 
-<div id="container-bar" />
+<div id="container" />
