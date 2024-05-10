@@ -28,7 +28,7 @@
 - **Group graph**:
   - [analytics](https://sos2324-11.appspot.com/analytics) 
 - **Individual graphs**:
- - [structural-investment-data ](https://sos2324-11.appspot.com/structural-investment/vista)   (developed by Sharay Portillo Jurado)
+   - [structural-investment-data ](https://sos2324-11.appspot.com/structural-investment/vista)   (developed by Sharay Portillo Jurado)
 - **Integrations**:
   - [Combined data by country ](https://sos2324-11.appspot.com/integrations/structural-investment/integrations/conProxy)   (developed by Sharay Portillo Jurado) 
   - [Combined data by years ](https://sos2324-11.appspot.com/integrations/structural-investment/integrations/sinProxy)   (developed by Sharay Portillo Jurado)
