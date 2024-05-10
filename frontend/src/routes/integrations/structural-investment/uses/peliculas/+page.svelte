@@ -12,9 +12,10 @@
     let movieData = [];
     let loading = true;
 
+    // Función asincrónica para obtener datos del reseñas desde la API
     async function getMovies() {
-        
-       // const url = 'https://imdb-top-100-movies1.p.rapidapi.com/';
+
+       //const url = 'https://imdb-top-100-movies1.p.rapidapi.com/';
         const options = {
             method: 'GET',
             headers: {
@@ -27,14 +28,20 @@
             const response = await fetch(url, options);
             movieData = await response.json();
             loading = false;
+
         } catch (error) {
             console.error(error);
         }
     }
 
     function createGraph() {
-        const titles = movieData.map(movie => movie.title);
-        const ratings = movieData.map(movie => movie.rating);
+
+        const data = movieData.map((movie, index) => ({
+            x: index + 1, 
+            y: parseFloat(movie.rating),
+            title: movie.title,
+            rating: parseFloat(movie.rating)
+        }));
 
         Highcharts.chart('myChart', {
             chart: {
@@ -46,8 +53,7 @@
             xAxis: {
                 title: {
                     text: 'Películas'
-                },
-                categories: titles
+                }
             },
             yAxis: {
                 title: {
@@ -61,22 +67,26 @@
             series: [{
                 name: 'Nota media de la película',
                 color: 'rgba(128, 0, 128, 0.2)',
-                data: ratings.map((rating, index) => ({ x: index, y: rating, title: titles[index], rating: rating }))
+                data: data
             }]
         });
     }
 
+
+
     onMount(async () => {
         await getMovies();
+        console.log(movieData);
         createGraph();
     });
+
 </script>
 
 <e> Nota media por película </e>
 {#if loading}
     <p>Cargando datos...</p>
 {:else}
-    <div id="myChart" style="width: 800px; height: 240px;"></div>
+    <div id="myChart" ></div>
 {/if}
 
 <style>
