@@ -20,6 +20,15 @@ let app = express();
 
 app.use(cors());
 
+// Proxy Isabel
+var pathsIsabelMaria = "/proxyIsabelMaria";
+var apiServerHostIsabelMaria = "https://api.openligadb.de/getavailableleagues";
+
+app.use(pathsIsabelMaria, function(req,res){
+    var url = apiServerHostIsabelMaria + req.url;
+    req.pipe(request(url)).pipe(res);
+});
+
 // Proxy Sharay
 var paths = "/proxySharay";
 var apiServerHost = "https://restcountries.com/v3.1/all";
@@ -52,9 +61,3 @@ app.listen(PORT, () =>
 {
     console.log(`Server listening on port PORT ${PORT} `  ); 
 });
-
-
-
-
-
-

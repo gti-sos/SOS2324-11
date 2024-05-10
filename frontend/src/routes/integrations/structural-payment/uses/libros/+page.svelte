@@ -59,11 +59,18 @@
 
     }
 
-    h3 {
-            text-align: center;
+    e {
+        font-family: '';
+        font-size: 60px;
+        color: #290ef5;
+        text-align: center;
+        display: flex;
+        align-items: center; 
+        justify-content: center; 
+        margin-bottom: 20px;
         }
 </style>
 
 <br>
-<h3>Valoración de cada libro</h3>
+<e>Valoraciones a libros</e>
 <div class="ct-chart"></div>

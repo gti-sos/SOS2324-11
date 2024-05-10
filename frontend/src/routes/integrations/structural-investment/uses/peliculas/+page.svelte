@@ -1,29 +1,34 @@
+<svelte:head>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/treemap.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+</svelte:head>
+
 <script>
     import { onMount } from "svelte";
-    import Chart from 'chart.js/auto';
 
     let movieData = [];
+    let loading = true;
 
-    onMount(async () => {
-        await getMovies();
-        createGraph();
-    });
-
-    // Función asincrónica para obtener datos de las peliculas desde la API
+    // Función asincrónica para obtener datos del reseñas desde la API
     async function getMovies() {
-        //const url = 'https://imdb-top-100-movies1.p.rapidapi.com/';
+
+       //const url = 'https://imdb-top-100-movies1.p.rapidapi.com/';
         const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': 'dfc6d02a2emsh256a933352cbeb3p1422d0jsn488d0fd24824',
-            'X-RapidAPI-Host': 'imdb-top-100-movies1.p.rapidapi.com'
-        }
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': 'dfc6d02a2emsh256a933352cbeb3p1422d0jsn488d0fd24824',
+                'X-RapidAPI-Host': 'imdb-top-100-movies1.p.rapidapi.com'
+            }
         };
 
         try {
             const response = await fetch(url, options);
             movieData = await response.json();
-            console.log(movieData);
+            loading = false;
+
         } catch (error) {
             console.error(error);
         }
@@ -31,63 +36,60 @@
 
     function createGraph() {
 
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const titles = movieData.map(movie => movie.title);
-        const ratings = movieData.map(movie => movie.rating);
+        const data = movieData.map((movie, index) => ({
+            x: index + 1, 
+            y: parseFloat(movie.rating),
+            title: movie.title,
+            rating: parseFloat(movie.rating)
+        }));
 
-        new Chart(ctx, {
-            type: 'scatter',
-            data: {
-                labels: titles,
-                datasets: [{
-                    label: 'Nota media de la película',
-                    data: ratings.map((rating, index) => ({ x: index, y: rating, title: titles[index], rating: rating })),
-                    backgroundColor: 'rgba(128, 0, 128, 0.2)', 
-                    borderColor: 'rgba(128, 0, 128, 1)', 
-                    borderWidth: 1
-                }]
+        Highcharts.chart('myChart', {
+            chart: {
+                type: 'scatter'
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Calificación'
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Películas'
-                        }
-                    }
-                },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                var label = context.dataset.label || '';
-                                if (context.parsed.x !== null && context.parsed.y !== null) {
-                                    label +=  ":" + '\n'  +context.dataset.data[context.dataIndex].rating;
-                                }
-                                return label;
-                            }
-                        }
-                    }
+            title: {
+                text: 'Nota media por película'
+            },
+            xAxis: {
+                title: {
+                    text: 'Películas'
                 }
-            }
+            },
+            yAxis: {
+                title: {
+                    text: 'Calificación'
+                }
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '{point.title}: {point.rating}'
+            },
+            series: [{
+                name: 'Nota media de la película',
+                color: 'rgba(128, 0, 128, 0.2)',
+                data: data
+            }]
         });
     }
+
+
+
+    onMount(async () => {
+        await getMovies();
+        console.log(movieData);
+        createGraph();
+    });
 
 </script>
 
 <e> Nota media por película </e>
-<canvas id="myChart" width="800" height="240"></canvas>
-
+{#if loading}
+    <p>Cargando datos...</p>
+{:else}
+    <div id="myChart" ></div>
+{/if}
 
 <style>
-
     /* Estilo de textos */
     e {
         font-family: '';
@@ -101,4 +103,7 @@
         margin-bottom: 20px;
     }
 
+    p {
+        text-align: center;
+    }
 </style>

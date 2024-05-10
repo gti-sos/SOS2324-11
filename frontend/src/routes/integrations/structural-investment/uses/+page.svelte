@@ -2,21 +2,21 @@
 
     <div class="card">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-investment/uses/anime"><img class="imgA" src = "https://i.seadn.io/gae/Lz2UlsYIbvkgE9nS_JNkgAe310yaIUNBpWYix9rn85c67R7nWpuOKCvekAUNgksQirHhW4od9MUwHYSXuUKUhJCtX3GAsNTACvThKw?auto=format&dpr=1&w=1000" alt="Imagen"></a>
+            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/anime"><img class="imgA" src = "https://i.seadn.io/gae/Lz2UlsYIbvkgE9nS_JNkgAe310yaIUNBpWYix9rn85c67R7nWpuOKCvekAUNgksQirHhW4od9MUwHYSXuUKUhJCtX3GAsNTACvThKw?auto=format&dpr=1&w=1000" alt="Imagen"></a>
         </div>
         <h2 class="title">Anime</h2>
     </div>
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-investment/uses/peliculas"><img class="imgP" src = "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2016/06/607612-proximas-peliculas-pixar-despues-buscando-dory.jpg?tf=3840x" alt="Imagen"></a>
+            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/peliculas"><img class="imgP" src = "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2016/06/607612-proximas-peliculas-pixar-despues-buscando-dory.jpg?tf=3840x" alt="Imagen"></a>
         </div>
         <h2 class="title">Peliculas</h2>
     </div>
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-investment/uses/reviews"><img class="imgR"src = "https://img.freepik.com/vector-premium/escribir-resena-impresiones-calificacion-cinco-estrellas-libro-resenas-sugerencias-icono-vector_660702-204.jpg" alt="Imagen"></a>
+            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/reviews"><img class="imgR"src = "https://static.vecteezy.com/system/resources/previews/016/129/956/non_2x/cartoon-customer-reviews-user-feedback-icon-in-comic-style-rating-sign-illustration-pictogram-stars-rating-business-splash-effect-concept-vector.jpg" alt="Imagen"></a>
         </div>
         <h2 class="title">Reseñas</h2>
     </div>
@@ -44,12 +44,12 @@
     }
 
     .imgP {
-        height: 260px;
+        height: 250px;
         margin-top: 20px;
     }
 
     .imgR {
-        height: 300px;
+        height: 260px;
         margin-top: 20px;
     }
 

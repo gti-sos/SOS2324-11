@@ -1,93 +1,129 @@
-
+<svelte:head>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+</svelte:head>
 
 <script>
     import { onMount } from 'svelte';
   
-    const apiUrl = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
-    
-    let streamingData = {};
-    let countryData = [];
-
-
+    const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-payment-data';
+    const apiUrl2 = 'https://sos2324-11.appspot.com/proxyIsabelMaria';
 
     onMount(async () => {
-        await getData();
-        await fetchData(apiUrl);
         await combinedData();
+        createGraph();
     });
+
+    let yearData=[];
 
   async function fetchData(url) {
     const response = await fetch(url);
-    const dat = await response.json();
-    console.log('Data fetched from', url, dat);
-    return dat;
+    const data = await response.json();
+    console.log('Data fetched from', url, data);
+    return data;
   }
 
-  async function getData() {
+  async function combinedData() {
+    const data1 = await fetchData(apiUrl1);
+    const data2 = await fetchData(apiUrl2);
 
-    //const url = 'https://global-economy-news.p.rapidapi.com/?category=fiat&country=us';
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': 'adeede387emsh91b03dc6a809ef8p11c7f5jsn012824a94b45',
-            'X-RapidAPI-Host': 'global-economy-news.p.rapidapi.com'
-        }
-    };
-
-    try {
-        const response = await fetch(url, options);
-        const streamingData = await response.json();
-        console.log(streamingData);
-    } catch (error) {
-        console.error(error);
+    // Verificar si hay datos disponibles en ambas fuentes
+    if (!Array.isArray(data1) || !data2 || !Array.isArray(data2)) {
+        console.error('No se pudieron obtener los datos de ambas fuentes.');
+        return;
     }
-    }
-
-    async function combinedData() {
-    const data1 = await fetchData(apiUrl);
-    const data2 = streamingData;
 
     const combinedData = {};
 
-    const countryFromData1 = new Set(data1.map(c => c.ms));
-    console.log("Countries from data1", countryFromData1);
-    const countryFromData2 = new Set(data2.data.map(item => item.site_country));
-    console.log("Countries from data2", countryFromData2);
+    data1.forEach(entry => {
+        const year = entry.year;
+        if(!combinedData[year]){
+            combinedData[year]={
+                year: year,
+                eu_payment_rate: 0,
+                leagueName: 0,
+            };
+        }
+        combinedData[year].eu_payment_rate += entry.eu_payment_rate;
+    });
 
-    const commonCountry = Array.from(new Set([...countryFromData1].filter(c => countryFromData2.has(c))));
-    console.log("Countries comun", commonCountry)
+    data2.forEach(entry => {
+        const year = parseInt(entry.leagueSeason);
+        if(combinedData[year]){
+            combinedData[year].leagueName += 1;
+        }
+    });
 
-       // Iterar sobre los años comunes y obtener los datos correspondientes de cada URL
-       commonCountry.forEach(country => {
-            const dataFromUrl1 = data1.find(entry => entry.ms === country);
-            const dataFromUrl2 = data2.data.find(team => team.site_country === country);
-            console.log("Data from URL1 for", country, dataFromUrl1);
-            console.log("Data from URL2 for", country, dataFromUrl2);
-
-            if (dataFromUrl1 && dataFromUrl2) {
-                // Ensure combinedData is an object to add properties
-                if (!combinedData[country]) {
-                    combinedData[country] = {
-                        country: country,
-                        n_3_decommitment_amount: 0,
-                        rank: 0,
-                    };
-                }
-                combinedData[country].n_3_decommitment_amount = dataFromUrl1.n_3_decommitment_amount ;
-                combinedData[country].rank = dataFromUrl2.rank ;
-            }
-        });
-  
-
-    // Filtrar solo los años comunes con datos en ambas fuentes
-    countryData = Object.values(combinedData);
-    console.log("Datos combinados" , countryData);
-  
+    yearData = Object.values(combinedData);
+    console.log("Datos combinados", yearData);
 }
+
+
+function createGraph(){
+  var chart = Highcharts.chart('container', {
+    chart: {
+        type: 'areaspline'
+    },
+    title: {
+        text: 'Datos combinados, 2020 - 2024',
+        align: 'left'
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'left',
+        verticalAlign: 'top',
+        x: 120,
+        y: 70,
+        floating: true,
+        borderWidth: 1,
+        backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
+    },
+    xAxis: {
+      categories: yearData.map(item => item.year),
+        plotBands: [{ // Highlight the two last years
+            from: 2020,
+            to: 2024,
+            color: 'rgba(68, 170, 213, .2)'
+        }],
+    },
+    yAxis: {
+        title: {
+            text: 'Cantidad'
+        }
+    },
+    tooltip: {
+        shared: true,
+        headerFormat: '<b>Datos por año</b><br>'
+    },
+    credits: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            pointStart: 2020
+        },
+        areaspline: {
+            fillOpacity: 0.5
+        }
+    },
+    series: [{
+        name: 'Ligas de fútbol',
+        data:
+            yearData.map(item=>item.leagueName)
+    }, {
+        name: 'Tasa de pago de la UE',
+        data:
+            yearData.map(item=>item.eu_payment_rate)
+              
+    }]
+});
+
+}
+
 
 </script>
 
-
-
-
-
+<div id="container" />

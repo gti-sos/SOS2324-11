@@ -2,14 +2,14 @@
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-investment"><img src = "https://png.pngtree.com/png-clipart/20210905/original/pngtree-computer-working-girl-png-image_6700679.jpg" alt="Imagen" style="width: 300px; height: 350px; margin-top: 30px;"></a>
+            <a href="http://sos2324-11.appspot.com/integrations/structural-investment"><img src = "https://png.pngtree.com/png-clipart/20231026/original/pngtree-d-character-of-girl-playing-laptop-sitting-in-chair-with-smile-png-image_13442180.png" alt="Imagen" style="width: 300px; height: 350px; margin-top: 30px;"></a>
         </div>
         <h2 style="margin-top: 20px;">Sharay</h2>
     </div>
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-payment"><img src = "https://previews.123rf.com/images/rastudio/rastudio1602/rastudio160204880/52769032-una-mujer-que-trabaja-en-una-computadora-port%C3%A1til-y-de-la-red-inform%C3%A1tica-iconos-sociales-por-encima.jpg" alt="Imagen" style="width: 280px; height: 350px; margin-top:25px; margin-bottom:25px; "></a>
+            <a href="http://sos2324-11.appspot.com/integrations/structural-payment"><img src = "https://previews.123rf.com/images/rastudio/rastudio1602/rastudio160204880/52769032-una-mujer-que-trabaja-en-una-computadora-port%C3%A1til-y-de-la-red-inform%C3%A1tica-iconos-sociales-por-encima.jpg" alt="Imagen" style="width: 280px; height: 350px; margin-top:25px; margin-bottom:25px; "></a>
         </div>
         <h2 >Isabel</h2>
     </div>

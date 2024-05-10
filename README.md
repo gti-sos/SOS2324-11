@@ -25,4 +25,16 @@
   - [structural-investment-data ](https://sos2324-11.appspot.com/structural-investment)   (developed by Sharay Portillo Jurado)
   - [structural-payment-data ](https://sos2324-11.appspot.com/structural-payment-data) (developed by Isabel María Trapero Romero)
   - [socioeconomics-traker-using-unconventional-data ](https://sos2324-11.appspot.com/socioeconomics-tracker-using-unconventional-data) (developed by Álvaro Marcos Delgado)
-    
+- **Group graph**:
+  - [analytics](https://sos2324-11.appspot.com/analytics) 
+- **Individual graphs**:
+   - [structural-investment-data ](https://sos2324-11.appspot.com/structural-investment/vista)   (developed by Sharay Portillo Jurado)
+- **Integrations**:
+  - [Combined data by country ](https://sos2324-11.appspot.com/integrations/structural-investment/integrations/conProxy)   (developed by Sharay Portillo Jurado) 
+  - [Combined data by years ](https://sos2324-11.appspot.com/integrations/structural-investment/integrations/sinProxy)   (developed by Sharay Portillo Jurado)
+- **Uses**:
+  - [Anime ](https://sos2324-11.appspot.com/integrations/structural-investment/uses/anime)   (developed by Sharay Portillo Jurado)
+  - [Films ](https://sos2324-11.appspot.com/integrations/structural-investment/uses/peliculas)   (developed by Sharay Portillo Jurado)
+  - [Reviews ](https://sos2324-11.appspot.com/integrations/structural-investment/uses/reviews)   (developed by Sharay Portillo Jurado)
+- **Videos**:
+  - [structural-investment-data ](https://sos2324-11.appspot.com/about/structural-investment)   (developed by Sharay Portillo Jurado)
