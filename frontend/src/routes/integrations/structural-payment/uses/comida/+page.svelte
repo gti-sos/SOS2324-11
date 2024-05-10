@@ -13,7 +13,7 @@
     });
     
     async function getData() {
-        const url = 'https://dietagram.p.rapidapi.com/apiFood.php?name=Jab%C5%82ko&lang=pl';
+        //const url = 'https://dietagram.p.rapidapi.com/apiFood.php?name=Jab%C5%82ko&lang=pl';
         const options = {
             method: 'GET',
             headers: {
