@@ -70,6 +70,47 @@
     </p>
 </div>
 
+<div class="card">
+   <h2>Gráfica en comun</h2>
+   <p>
+      <a href="https://sos2324-11.appspot.com/analytics"><span>Anaytics</span></a>  
+   </p>
+</div>
+
+<div class="card">
+   <h2>Gráficas individuales</h2>
+   <p>
+      <a href="https://sos2324-11.appspot.com/structural-investment/vista"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado)  
+   </p>
+</div>
+
+<div class="card">
+   <h2>Integraciones</h2>
+   <p>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/integrations/conProxy"><span>Datos combinados por países</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/integrations/sinProxy"><span>Datos combinados por años</span></a> (desarrollado por Sharay Portillo Jurado)  
+ 
+   </p>
+</div>
+
+<div class="card">
+   <h2>Usos</h2>
+   <p>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/anime"><span>Anime</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/peliculas"><span>Películas</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/reviews"><span>Reseñas</span></a> (desarrollado por Sharay Portillo Jurado)  
+   </p>
+</div>
+
+<div class="card">
+   <h2>Videos</h2>
+   <p>
+      <a href="https://sos2324-11.appspot.com/about/structural-investment"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado)  
+   </p>
+</div>
+
+
+
 <style>
 
    .card {

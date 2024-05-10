@@ -40,7 +40,7 @@
 
     .i {
         margin-top: 10px;
-        max-height: 380px;
+        max-height: 360px;
         width: auto;
 
     }

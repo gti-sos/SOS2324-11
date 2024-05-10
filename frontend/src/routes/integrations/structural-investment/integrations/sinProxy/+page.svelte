@@ -8,12 +8,40 @@
 </svelte:head>
 
 <script>
+
   import { onMount } from 'svelte';
 
   let dataAvailable = false; 
+  let yearData = [];
   const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/structural-investment-data';
   const apiUrl2 = 'https://www.thesportsdb.com/api/v1/json/3/search_all_teams.php?s=Soccer&c=Spain';
-  let yearData = [];
+ 
+
+ // Función asincrónica para insertar datos de mi API
+  async function insertData() {
+
+    try {
+      let response = await fetch(apiUrl1 + "/loadInitialData", {
+        method: "GET",
+      });
+
+      let status = response.status;
+      console.log(`Status code: ${status}`);
+
+      if (status === 200) {
+        await combinedData();
+
+        if (dataAvailable) {
+          createChart();
+        }
+      } 
+
+    } catch (e) {
+      console.error(e);
+    }
+
+  }
+
 
   // Función asincrónica para obtener datos de una URL
   async function fetchData(url) {
@@ -23,8 +51,10 @@
     return data;
   }
 
+
   // Función asincrónica para combinar los datos de las dos APIs
   async function combinedData() {
+
     const data1 = await fetchData(apiUrl1);
     const data2 = await fetchData(apiUrl2);
     
@@ -32,63 +62,42 @@
 
     if (data1.length === 0) {
         dataAvailable = false;
-      } else {
+
+    } else {
         dataAvailable=true;
 
-    // Procesar los datos de data1
-    data1.forEach(entry => {
-        const year = entry.year;
-        if (!combinedData[year]) {
-            combinedData[year] = {
-                year: year,
-                net_planned_eu_amount: 0,
-                idAPIfootball: 0,
-            };
-        }
-        combinedData[year].net_planned_eu_amount += entry.net_planned_eu_amount;
-    });
-
-    // Combinar los datos de data2
-    data2.teams.forEach(team => {
-        const year = team.intFormedYear;
-        if (combinedData[year]) {
-            combinedData[year].idAPIfootball = parseInt(team.idAPIfootball) || 0;
-        }
-    });
-  }
-
-    // Filtrar solo los años comunes con datos en ambas fuentes
-    const yearData = Object.values(combinedData);
-    console.log("Datos combinados", yearData);
-    createChart(yearData);
-
-}
-
-
-
-
- // Función asincrónica para insertar datos de mi API
-  async function insertData() {
-    try {
-      let response = await fetch(apiUrl1 + "/loadInitialData", {
-        method: "GET",
+      // Procesar los datos de data1
+      data1.forEach(entry => {
+          const year = entry.year;
+          if (!combinedData[year]) {
+              combinedData[year] = {
+                  year: year,
+                  net_planned_eu_amount: 0,
+                  idAPIfootball: 0,
+              };
+          }
+          combinedData[year].net_planned_eu_amount += entry.net_planned_eu_amount;
       });
-      let status = await response.status;
-      console.log(`Status code: ${status}`);
-      if (status === 200) {
-        await combinedData();
-        if (dataAvailable) {
-          createChart();
-        }
-      } 
-    } catch (e) {
-      console.error(e);
+
+      // Combinar los datos de data2
+      data2.teams.forEach(team => {
+          const year = team.intFormedYear;
+          if (combinedData[year]) {
+              combinedData[year].idAPIfootball = parseInt(team.idAPIfootball) || 0;
+          }
+      });
     }
+
+      // Filtrar solo los años comunes con datos en ambas fuentes
+      yearData = Object.values(combinedData);
+      console.log("Datos combinados", yearData);
+
   }
     
 
   // Función para crear el gráfico utilizando Highcharts
-  function createChart(yearData) {
+  function createChart() {
+
       if (!dataAvailable) return; 
       if (!yearData || yearData.length === 0) return;
 
@@ -128,13 +137,17 @@
                   enabled: true,
                   format: '{y}'
               },
-              pointWidth: 40 // Ajustar el ancho de la columna de la serie "ID API Football"
+              pointWidth: 40 
           }]
       });
   }
   
+  
   onMount(async () => {
     await combinedData();
+    if(dataAvailable){
+      createChart();
+    }
   });
 
 </script>
@@ -143,13 +156,13 @@
   <e>No hay datos disponibles. Por favor, introduzca los datos.</e>
   <button class="initial" on:click={insertData}>Cargar datos de prueba</button>
 {/if}
-<div id="chart-container" />
-
+  <div id="chart-container" />
 
 
 <style>
 
-e {
+  /*Estilo del texto */
+  e {
     font-family: '';
     font-size: 40px;
     color: #ff864a;

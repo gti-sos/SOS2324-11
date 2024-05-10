@@ -1,10 +1,12 @@
 <script>
+
     import { onMount } from "svelte";
 
     let animeData = [];
 
     // Función asincrónica para obtener datos del anime desde la API
     async function getAnime() {
+
         //const url = 'https://myanimelist.p.rapidapi.com/anime/top/%7Bcategory%7D';
         const options = {
             method: 'GET',
@@ -18,11 +20,14 @@
             const response = await fetch(url, options);
             animeData = await response.json();
             console.log(animeData);
+
         } catch (error) {
             console.error(error);
         }
+
     }
 
+    
     onMount(async () => {
         await getAnime();
     });
@@ -44,6 +49,7 @@
         <p>Cargando datos...</p>
     {/if}
 </div>
+
 
 <style>
 
@@ -100,6 +106,5 @@
         box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1); 
         margin-left: 10px;
     }
-
 
 </style>

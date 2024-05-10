@@ -16,7 +16,7 @@
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://localhost:5173/integrations/structural-investment/uses/reviews"><img class="imgR"src = "https://img.freepik.com/vector-premium/escribir-resena-impresiones-calificacion-cinco-estrellas-libro-resenas-sugerencias-icono-vector_660702-204.jpg" alt="Imagen"></a>
+            <a href="http://localhost:5173/integrations/structural-investment/uses/reviews"><img class="imgR"src = "https://static.vecteezy.com/system/resources/previews/016/129/956/non_2x/cartoon-customer-reviews-user-feedback-icon-in-comic-style-rating-sign-illustration-pictogram-stars-rating-business-splash-effect-concept-vector.jpg" alt="Imagen"></a>
         </div>
         <h2 class="title">Reseñas</h2>
     </div>
@@ -44,12 +44,12 @@
     }
 
     .imgP {
-        height: 260px;
+        height: 250px;
         margin-top: 20px;
     }
 
     .imgR {
-        height: 300px;
+        height: 260px;
         margin-top: 20px;
     }
 

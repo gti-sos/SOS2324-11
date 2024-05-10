@@ -1,13 +1,10 @@
 <script>
+
     import { onMount } from "svelte";
     import Chart from 'chart.js/auto';
 
     let movieData = [];
-
-    onMount(async () => {
-        await getMovies();
-        createGraph();
-    });
+    let loading = true;
 
     // Función asincrónica para obtener datos de las peliculas desde la API
     async function getMovies() {
@@ -24,6 +21,8 @@
             const response = await fetch(url, options);
             movieData = await response.json();
             console.log(movieData);
+            let loading = false;
+
         } catch (error) {
             console.error(error);
         }
@@ -80,10 +79,22 @@
         });
     }
 
+
+    onMount(async () => {
+        await getMovies();
+        createGraph();
+    });
+
 </script>
 
+
 <e> Nota media por película </e>
-<canvas id="myChart" width="800" height="240"></canvas>
+{#if loading}
+    <p>Cargando datos...</p>
+{:else}
+    <canvas id="myChart" width="800" height="240"></canvas>
+{/if}
+
 
 
 <style>
@@ -99,6 +110,10 @@
         align-items: center; 
         justify-content: center; 
         margin-bottom: 20px;
+    }
+
+    p{
+        text-align: center;
     }
 
 </style>

@@ -1,4 +1,3 @@
-
 <svelte:head>
 
     <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -6,18 +5,17 @@
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 </svelte:head>
+
 <script>
+
     import { onMount } from "svelte";
 
     let reseñasData = [];
-
-    onMount(async () => {
-        await getReseñas();
-        createGraph(reseñasData);
-    });
+    let loading = true;
 
     // Función asincrónica para obtener datos del reseñas desde la API
     async function getReseñas() {
+        
         //const url = 'https://amazonlive.p.rapidapi.com/reviews?asin=B0BBLT626J&location=de&page=1&amount=10';
         const options = {
             method: 'GET',
@@ -31,6 +29,7 @@
             const response = await fetch(url, options);
             reseñasData = await response.json();
             console.log(reseñasData);
+            loading = false;
 
         } catch (error) {
             console.error(error);
@@ -38,9 +37,10 @@
     }
 
     function createGraph(reseñasData) {
+
         const palette = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf'];
 
-        const data = Highcharts.chart('reseñasGraph', {
+        Highcharts.chart('reseñasGraph', {
             chart: {
                 type: 'treemap'
             },
@@ -82,10 +82,21 @@
     }
 
 
+    onMount(async () => {
+        await getReseñas();
+        createGraph(reseñasData);
+    });
+
 </script>
 
+
 <e>Reseñas de productos de amazon por usuarios(alías) </e>
-<div id="reseñasGraph"></div>
+
+{#if loading}
+    <p>Cargando datos...</p>
+{:else}
+    <div id="reseñasGraph"></div>
+{/if}
 
 
 <style>
@@ -101,6 +112,10 @@
         align-items: center; 
         justify-content: center; 
         margin-bottom: 20px;
+    }
+
+    p{
+        text-align: center;
     }
 
 </style>
