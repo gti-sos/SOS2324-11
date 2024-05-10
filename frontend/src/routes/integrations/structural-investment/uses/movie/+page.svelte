@@ -8,6 +8,7 @@
 
     // Función asincrónica para obtener datos de las peliculas desde la API
     async function getMovies() {
+        
         //const url = 'https://imdb-top-100-movies1.p.rapidapi.com/';
         const options = {
         method: 'GET',
