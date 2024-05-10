@@ -1,7 +1,7 @@
 <script>
 
     import { onMount } from "svelte";
-    import { Chart } from 'chart.js/auto';
+    import  Chart  from 'chart.js/auto';
 
     let movieData = [];
     let loading = true;
@@ -21,7 +21,7 @@
             const response = await fetch(url, options);
             movieData = await response.json();
             console.log(movieData);
-            let loading = false;
+            loading = false;
 
         } catch (error) {
             console.error(error);
