@@ -1,15 +1,18 @@
 <svelte:head>
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
     <script src="https://code.highcharts.com/modules/pyramid.js"></script>
     <script src="https://code.highcharts.com/modules/exporting.js"></script>
     <script src="https://code.highcharts.com/modules/export-data.js"></script>
     <script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
+
 </svelte:head>
 
 <script>
     import {onMount} from "svelte";
+    
 
     onMount(()=>{
         getData();
@@ -28,6 +31,7 @@
                 dataAvailable = true; 
                 createBubbleGraph(data);
                 createPyramidGraph(data);
+                createChartGraph(data);
                 
                 
             }
@@ -82,8 +86,9 @@ function toneCumByYear(data) {
 
     function createBubbleGraph(data){
 
+        console.log(data);
         const aggregateData = toneDocCountByCountry(data);
-        console.log(aggregateData)
+        console.log(aggregateData);
 
         const gr = Highcharts.chart('container-bubble',  {
                         chart: {
@@ -161,16 +166,49 @@ function toneCumByYear(data) {
             });
     }
 
+    function createChartGraph(data){
+        var mapeo = data.map(d => ({
+                        y:d.tone_doc_count,
+                        label: d.amd1code +","+ d.year
+                    }))
+        var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title:{
+                text: "Cantidad de documento por pais-año"
+            },
+            axisY: {
+                title: ""
+            },
+            data: [{        
+                type: "column",  
+                showInLegend: true, 
+                legendMarkerColor: "grey",
+                legendText: "Cantidad de documentos",
+                dataPoints:       
+                    mapeo
+                
+            }]
+        });
+        chart.render();
+    }
+
 </script>
 
 <style>
     #container-bubble,
-    #container-pyramid {
-        width: 100%;
+    #container-pyramid,
+    #chartContainer {
+        border-left: 20px;
+        border-right: 20px;
         margin-bottom: 20px; /* Añadí este estilo para agregar un margen inferior */
     }
 </style>
+
 <div id="container-bubble"></div>
 <br>
 <div id="container-pyramid"></div>
+<br>
+<div id="chartContainer"></div>
+
     

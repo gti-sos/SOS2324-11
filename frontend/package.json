@@ -20,11 +20,12 @@
 		"eslint-plugin-svelte": "^2.35.1",
 		"prettier": "^3.1.1",
 		"prettier-plugin-svelte": "^3.1.2",
-		"svelte": "^4.2.7",
+		"svelte": "^4.2.15",
 		"vite": "^5.0.3"
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltestrap/sveltestrap": "^6.2.7",
 		"popup": "^0.0.3"
 	}
 }
