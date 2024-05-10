@@ -1,7 +1,7 @@
 <script>
 
     import { onMount } from "svelte";
-    import Chart from 'chart.js/auto';
+    import { Chart } from 'chart.js/auto';
 
     let movieData = [];
     let loading = true;
