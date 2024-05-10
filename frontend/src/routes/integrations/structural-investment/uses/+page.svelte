@@ -9,7 +9,7 @@
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/movie"><img class="imgP" src = "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2016/06/607612-proximas-peliculas-pixar-despues-buscando-dory.jpg?tf=3840x" alt="Imagen"></a>
+            <a href="http://sos2324-11.appspot.com/integrations/structural-investment/uses/peliculas"><img class="imgP" src = "https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2016/06/607612-proximas-peliculas-pixar-despues-buscando-dory.jpg?tf=3840x" alt="Imagen"></a>
         </div>
         <h2 class="title">Peliculas</h2>
     </div>
