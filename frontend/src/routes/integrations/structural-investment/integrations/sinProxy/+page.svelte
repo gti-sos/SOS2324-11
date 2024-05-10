@@ -122,7 +122,7 @@
               opposite: true
           }],
           series: [{
-              name: 'Popularity Rate',
+              name: 'Importe neto previsto de la UE',
               data: yearData.map(data => data.net_planned_eu_amount),
               yAxis: 0,
               dataLabels: {
