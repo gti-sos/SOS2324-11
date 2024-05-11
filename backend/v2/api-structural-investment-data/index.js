@@ -530,6 +530,7 @@ function loadBackend_sharay (app, db) {
     
     //GET -- OK  Search by single field or by country name with range
     app.get(API_BASE + "/structural-investment-data/:identifier", (req, res) => {
+        
         const identifier = req.params.identifier;
         let fromDate = req.query.from;
         let toDate = req.query.to;
@@ -548,7 +549,7 @@ function loadBackend_sharay (app, db) {
             if (countryData) {
                 const { _id, ...data } = countryData;
                 res.status(200).json(data);
-                return; // Detiene la ejecución aquí para evitar más consultas
+                return;
             }
     
             // If not found by cci, try searching by ms_name

@@ -18,6 +18,8 @@ let db_AMD = new dataStore();
 
 let app = express();
 
+console.log("a")
+
 app.use(cors());
 
 // Proxy Isabel
@@ -90,5 +92,6 @@ const PORT = (process.env.PORT || 10000);
 // Listening on port X
 app.listen(PORT, () =>
 {
+    console.log("b")
     console.log(`Server listening on port PORT ${PORT} `  ); 
 });

@@ -28,7 +28,7 @@
         try {
             const res = await fetch(DATAAPI);
             const data = await res.json();
-            console.log(`Data received: ${JSON.stringify(data, null, 2)}`);
+           console.log(`Data received: ${JSON.stringify(data, null, 2)}`);
 
             if (data.length > 0) {
                 dataAvailable = true; 
@@ -78,11 +78,11 @@
 
         });
 
-        // Convertir el objeto a un formato adecuado para Highcharts
         return Object.keys(aggregatedData).map(year => ({
-            name: year,
+            x: year,
             y: aggregatedData[year]
         }));
+
 
     }
 
@@ -108,13 +108,13 @@
                     dataLabels: {
                         enabled: true,
                         formatter: function() {
-                            return this.point.name;  // Mostrar solo el año en las etiquetas de datos
+                            return this.point.x;  // Mostrar solo el año en las etiquetas de datos
                         }
                     }
                 }
             },
             series: [{
-                name: 'Prefinanciación inicial acumulada',
+                x: 'Prefinanciación inicial acumulada',
                 data: processedData
             }]
         });
@@ -125,7 +125,7 @@
 
         const scatterChart = Highcharts.chart('scatter-container', {
             chart: {
-                type: 'scatter', // Cambiamos el tipo de gráfico a scatter (puntos)
+                type: 'scatter',
                 zoomType: 'xy'
             },
             title: {
@@ -293,6 +293,17 @@
 </script>
 
 
+{#if dataAvailable==false}
+    <e>No hay datos disponibles. Por favor, introduzca los datos.</e>
+    <button class="initial" on:click={loadData}>Cargar datos de prueba</button>
+{/if}
+
+<div id="pastel-container"></div>
+<br>
+<div id="scatter-container"></div>
+<br>
+<div id="chartdiv"></div>
+
 <style>
 
     #pastel-container,
@@ -340,14 +351,3 @@
 
 
 </style>
-
-{#if dataAvailable==false}
-    <e>No hay datos disponibles. Por favor, introduzca los datos.</e>
-    <button class="initial" on:click={loadData}>Cargar datos de prueba</button>
-{/if}
-
-<div id="pastel-container"></div>
-<br>
-<div id="scatter-container"></div>
-<br>
-<div id="chartdiv"></div>
