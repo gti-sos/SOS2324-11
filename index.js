@@ -38,6 +38,37 @@ app.use(paths, function(req,res){
     req.pipe(request(url)).pipe(res);
 });
 
+// Proxy Alvaro
+app.use("/proxyAlvaro", function (req, res) {
+
+    const url = 'https://trading-view.p.rapidapi.com/calendars/get-economic-calendar';
+    const params = new URLSearchParams({ from: '2016-01-01',
+                                    to: '2022-12-31',
+                                    countries: 'EU',
+                                    lang: 'en',
+                                    minImportance: '1' });
+    const fullUrl = `${url}?${params.toString()}`;
+
+    const options = {
+        url: fullUrl,
+        headers: {
+            'X-RapidAPI-Key': '01bdbb50d8mshb0788f51cbd3fccp155beejsnce3fed91f95e',
+            'X-RapidAPI-Host': 'trading-view.p.rapidapi.com'
+        }
+    };
+    request(options, (error, response, body) => {
+        if (error) {
+            console.error(error);
+            res.status(500).send(error);
+        } else {
+            console.log(response.statusCode);
+            console.log(body);
+            res.send(body);
+        }
+    });
+
+});
+
 
 
 app.use(bodyParser.json());
