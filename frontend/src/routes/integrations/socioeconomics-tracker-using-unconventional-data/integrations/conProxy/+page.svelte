@@ -1,5 +1,5 @@
 <svelte:head>
-    <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
 </svelte:head>
 
 <script>
@@ -7,10 +7,12 @@
     const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data';
     const apiUrl2 = 'https://sos2324-11.appspot.com/proxyAlvaro';
 
+    let datosCombinados = null;
+
     onMount(async () => {
-        fetchData(apiUrl1);
-        fetchData(apiUrl2);
-        combinedData()
+        await combinedData();
+        createGraph();
+        
     });
 
     async function fetchData(url) {
@@ -22,11 +24,9 @@
 
     async function combinedData() {
         const data1 = await fetchData(apiUrl1);
-
         const data2 = await fetchData(apiUrl2);
-        //Esto es porque el data 2 devuelve dos parametros uno el status y otro el result que es el array de objetos que quiero obtener
-        const data2Result = data2.result
-
+        // Esto es porque el data 2 devuelve dos parámetros, uno el status y otro el result que es el array de objetos que quiero obtener
+        const data2Result = data2.result;
 
         if (!Array.isArray(data1) || !Array.isArray(data2Result)) {
             console.error('Datos incorrectos. No son arrays.');
@@ -55,12 +55,13 @@
                         actual: 0,
                     };
                 }
-                combinedData[year].popularity_rate = dataUrl1;
-                combinedData[year].net_profit_margin = dataUrl2.actual || 0;
+                combinedData[year].tone_doc_count = dataUrl1;
+                combinedData[year].actual += dataUrl2.actual || 0;
             }
         });
 
-        datosCombinados = Object.values(combinedData); // Asegúrate de asignar valores válidos
+        datosCombinados = Object.values(combinedData);
+        console.log(datosCombinados); // Asegúrate de asignar valores válidos
     }
 
     function extraerAño(fecha) {
@@ -72,7 +73,6 @@
     }
 
     function toneDocCountByYear(data) {
-        
         const yearTotals = {};
 
         data.forEach((d) => {
@@ -87,10 +87,8 @@
             yearTotals[year].count += 1;
         });
 
-    
         const yearAverages = {};
 
-        
         Object.keys(yearTotals).forEach((year) => {
             const total = yearTotals[year].total;
             const count = yearTotals[year].count;
@@ -99,4 +97,83 @@
 
         return yearAverages;
     }
+    // amcharts Chartist.js highchart
+
+    function createGraph() {
+        if (!Array.isArray(datosCombinados) || datosCombinados.length === 0) {
+            console.error('No hay datos combinados disponibles para el gráfico.');
+            return;
+        }
+
+        const mapeoToneDocCount = datosCombinados.map(entry => ({
+            label: entry.year,
+            y: entry.tone_doc_count
+        }));
+
+        const mapeoActual = datosCombinados.map(entry => ({
+            label: entry.year,
+            y: entry.actual
+        }));
+
+        var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                title:{
+                    text: "Tone_doc_count vs Actual"
+                },	
+                axisY: {
+                    title: "Tone doc count",
+                    titleFontColor: "#4F81BC",
+                    lineColor: "#4F81BC",
+                    labelFontColor: "#4F81BC",
+                    tickColor: "#4F81BC"
+                },
+                axisY2: {
+                    title: "Actual",
+                    titleFontColor: "#C0504E",
+                    lineColor: "#C0504E",
+                    labelFontColor: "#C0504E",
+                    tickColor: "#C0504E"
+                },	
+                toolTip: {
+                    shared: true
+                },
+                legend: {
+                    cursor:"pointer",
+                    itemclick: toggleDataSeries
+                },
+                data: [{
+                    type: "column",
+                    name: "Tone_doc_count",
+                    legendText: "Tone_doc_count",
+                    showInLegend: true, 
+                    dataPoints:mapeoToneDocCount
+                },
+                {
+                    type: "column",	
+                    name: "Actual",
+                    legendText: "Actual",
+                    axisYType: "secondary",
+                    showInLegend: true,
+                    dataPoints:mapeoActual
+                }]
+            });
+            chart.render();
+
+            function toggleDataSeries(e) {
+                if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                    e.dataSeries.visible = false;
+                }
+                else {
+                    e.dataSeries.visible = true;
+                }
+                chart.render();
+            }
+
+            }
+
+    
+
+    
 </script>
+
+<div id="chartContainer"></div>

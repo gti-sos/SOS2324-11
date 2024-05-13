@@ -30,7 +30,7 @@
             if (data.length > 0) {
                 dataAvailable = true; 
                 createBubbleGraph(data);
-                createPyramidGraph(data);
+                createAreaGraph(data);
                 createChartGraph(data);
                 
                 
@@ -137,34 +137,47 @@ function toneCumByYear(data) {
 
     }
 
-    function createPyramidGraph(data){
+    function createAreaGraph(data){
 
-                    const listData = toneCumByYear(data);
+        // Filtrar los datos para obtener solo los relacionados con el año y el tono promedio
+        const filteredData = data.map(item => ({
+            date: new Date(item.year, item.month - 1, item.day), // Crear una fecha con los datos de año, mes y día
+            toneAvg: item.tone_avg // Tonos promedio
+        }));
 
-                    const gr = Highcharts.chart('container-pyramid', {
-                chart: {
-                    type: 'area'
-                },
+        // Ordenar los datos por fecha ascendente
+        filteredData.sort((a, b) => a.date - b.date);
+
+        // Extraer fechas y tonos promedio en listas separadas
+        const dates = filteredData.map(item => item.date.toLocaleDateString()); // Formatear fechas como cadenas
+        const toneAvgs = filteredData.map(item => item.toneAvg);
+
+        // Crear la gráfica de área con los datos procesados
+        const gr = Highcharts.chart('container-area', {
+            chart: {
+                type: 'area'
+            },
+            title: {
+                text: 'Representación de Datos en un Gráfico de Área'
+            },
+            xAxis: {
+                categories: dates, // Fechas en el eje X
                 title: {
-                    text: 'Representación de Datos en un Gráfico de Área'
-                },
-                xAxis: {
-                    categories: ['25-09-2022', '26-09-2022', '27-09-2022', '28-09-2022', '29-09-2022', '30-09-2022'],
-                    title: {
-                        text: 'Fechas'
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Valor '
-                    }
-                },
-                series: [{
-                    name: 'Tone Average',
-                    data: [-1.262, null, -0.224, 1.128, 0.766, 2.844]
-                }]
-            });
+                    text: 'Fechas'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Valor '
+                }
+            },
+            series: [{
+                name: 'Tone Average',
+                data: toneAvgs // Tonos promedio en el eje Y
+            }]
+        });
     }
+
 
     function createChartGraph(data){
         var mapeo = data.map(d => ({
@@ -197,7 +210,7 @@ function toneCumByYear(data) {
 
 <style>
     #container-bubble,
-    #container-pyramid,
+    #container-area,
     #chartContainer {
         border-left: 20px;
         border-right: 20px;
@@ -207,7 +220,7 @@ function toneCumByYear(data) {
 
 <div id="container-bubble"></div>
 <br>
-<div id="container-pyramid"></div>
+<div id="container-area"></div>
 <br>
 <div id="chartContainer"></div>
 

@@ -10,17 +10,17 @@
     });
 
     async function getGoles() {
-    //const url = 'https://api-football-v1.p.rapidapi.com/v3/players/topscorers';
-    const params = new URLSearchParams({ league: '39',
-                                            season: '2020' });
-    const fullUrl = `${url}?${params.toString()}`;
+        //const url = 'https://api-football-v1.p.rapidapi.com/v3/players/topscorers';
+        const params = new URLSearchParams({ league: '39',
+                                                season: '2020' });
+        const fullUrl = `${url}?${params.toString()}`;
 
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': '01bdbb50d8mshb0788f51cbd3fccp155beejsnce3fed91f95e',
-            'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
-        }
+        const options = {
+            method: 'GET',
+            headers: {
+                'X-RapidAPI-Key': '01bdbb50d8mshb0788f51cbd3fccp155beejsnce3fed91f95e',
+                'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+            }
     };
 
     try {
