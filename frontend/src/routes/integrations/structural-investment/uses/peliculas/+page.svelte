@@ -15,12 +15,12 @@
     // Función asincrónica para obtener datos del reseñas desde la API
     async function getMovies() {
 
-       //const url = 'https://imdb-top-100-movies1.p.rapidapi.com/';
+       const url = 'https://imdb-top-100-movies.p.rapidapi.com/';
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': 'dfc6d02a2emsh256a933352cbeb3p1422d0jsn488d0fd24824',
-                'X-RapidAPI-Host': 'imdb-top-100-movies1.p.rapidapi.com'
+                'X-RapidAPI-Key': 'e1ea75b4eemsh03c06dd38996c18p18d0cdjsnc0e35bfe03d4',
+                'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com'
             }
         };
 
@@ -107,3 +107,5 @@
         text-align: center;
     }
 </style>
+
+

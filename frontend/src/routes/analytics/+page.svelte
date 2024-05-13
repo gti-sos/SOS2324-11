@@ -1,9 +1,6 @@
 <svelte:head>
 
   <script src="https://code.highcharts.com/highcharts.js"></script>
-  <script src="https://code.highcharts.com/modules/exporting.js"></script>
-  <script src="https://code.highcharts.com/modules/export-data.js"></script>
-  <script src="https://code.highcharts.com/modules/accessibility.js"></script>
   
 </svelte:head>
 
@@ -151,50 +148,49 @@
   
 </script>
 
-<style>
-
-  #chart-container {
-    width: 150%;
-    height: 500px; 
-    max-width: 1500px;
-    margin: 0 auto;
-  }
-
-  e {
-    font-family: '';
-    font-size: 40px;
-    color: #ff864a;
-    text-shadow: 2px 2px 4px rgba(254, 0, 0, 0.5);
-    text-align: center;
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-  }
-
-  /* Estilo botón de cargar datos */
-  .initial {
-    background-color: #ba3da7;
-    color: white;
-    border: none;
-    padding: 2vh 3vw;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 30px; 
-    margin-left: auto;
-    margin-right: auto;
-    display: block; 
-    margin-top: 20px;
-  }
-
-  .initial:hover {
-    background-color: #d64fb7;
-  }
-
-</style>
-
 {#if dataAvailable==false}
   <e>Faltan los datos de uno de los integrantes. Por favor, introduzca los datos.</e>
   <button class="initial" on:click={insertData}>Cargar datos restantes</button>
 {/if}
   <div id="chart-container"></div>
 
+  <style>
+
+    #chart-container {
+      width: 150%;
+      height: 500px; 
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+  
+    e {
+      font-family: '';
+      font-size: 40px;
+      color: #ff864a;
+      text-shadow: 2px 2px 4px rgba(254, 0, 0, 0.5);
+      text-align: center;
+      display: flex;
+      align-items: center; 
+      justify-content: center; 
+    }
+  
+    /* Estilo botón de cargar datos */
+    .initial {
+      background-color: #ba3da7;
+      color: white;
+      border: none;
+      padding: 2vh 3vw;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 30px; 
+      margin-left: auto;
+      margin-right: auto;
+      display: block; 
+      margin-top: 20px;
+    }
+  
+    .initial:hover {
+      background-color: #d64fb7;
+    }
+  
+  </style>
