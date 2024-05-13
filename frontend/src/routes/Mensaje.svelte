@@ -18,7 +18,7 @@
 </script>
 
 <!--  Tipo del mensaje y mosntrar el mensaje-->
-<div class={tipo === 'exito' ? 'mensaje-exito' : 'mensaje-error'} style="display: {isVisible ? 'block' : 'none'};">
+<div class={tipo === 'exito' ? 'mensaje-exito' : 'mensaje-error'} style="display: {isVisible ? 'block' : 'none'};" >
   {mensaje}
 </div>
 
