@@ -13,7 +13,7 @@
     });
     
     async function getData() {
-        //const url = 'https://book-info-hub.p.rapidapi.com/search.php?query=atomic';
+        const url = 'https://book-info-hub.p.rapidapi.com/search.php?query=atomic';
         const options = {
             method: 'GET',
             headers: {

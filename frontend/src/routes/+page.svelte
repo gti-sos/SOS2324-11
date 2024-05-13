@@ -80,7 +80,8 @@
 <div class="card">
    <h2>Gráficas individuales</h2>
    <p>
-      <a href="https://sos2324-11.appspot.com/structural-investment/vista"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado)  
+      <a href="https://sos2324-11.appspot.com/structural-investment/vista"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado) <br>
+      <a href="https://sos2324-11.appspot.com/structural-payment-data/vista"><span>structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero) <br>
    </p>
 </div>
 
@@ -88,7 +89,9 @@
    <h2>Integraciones</h2>
    <p>
       <a href="https://sos2324-11.appspot.com/integrations/structural-investment/integrations/conProxy"><span>Datos combinados por países</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/integrations/sinProxy"><span>Datos combinados por años</span></a> (desarrollado por Sharay Portillo Jurado)  
+      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/integrations/sinProxy"><span>Datos combinados por años</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/integrations/conProxy"><span>Datos combinados por años</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/integrations/sinProxy"><span>Datos combinados por años</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
  
    </p>
 </div>
@@ -98,14 +101,18 @@
    <p>
       <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/anime"><span>Anime</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
       <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/peliculas"><span>Películas</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/reviews"><span>Reseñas</span></a> (desarrollado por Sharay Portillo Jurado)  
+      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/reviews"><span>Reseñas</span></a> (desarrollado por Sharay Portillo Jurado) <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/uses/comida"><span>Comida</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/uses/geografia"><span>Geografía</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/uses/libros"><span>Libros</span></a> (desarrollado por Isabel María Trapero Romero)  <br> 
    </p>
 </div>
 
 <div class="card">
    <h2>Videos</h2>
    <p>
-      <a href="https://sos2324-11.appspot.com/about/structural-investment"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado)  
+      <a href="https://sos2324-11.appspot.com/about/structural-investment"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
+      <a href="https://sos2324-11.appspot.com/about/structural-payment"><span>structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero) <br>
    </p>
 </div>
 
