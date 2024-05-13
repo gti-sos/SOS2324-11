@@ -10,7 +10,7 @@
     });
 
     async function getGoles() {
-        //const url = 'https://api-football-v1.p.rapidapi.com/v3/players/topscorers';
+        const url = 'https://api-football-v1.p.rapidapi.com/v3/players/topscorers';
         const params = new URLSearchParams({ league: '39',
                                                 season: '2020' });
         const fullUrl = `${url}?${params.toString()}`;

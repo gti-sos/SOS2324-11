@@ -12,7 +12,7 @@
     });
 
     async function getFilms(){
-        //const url = 'https://imdb188.p.rapidapi.com/api/v1/getWeekTop10';
+        const url = 'https://imdb188.p.rapidapi.com/api/v1/getWeekTop10';
         const options = {
             method: 'GET',
             headers: {

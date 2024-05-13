@@ -5,7 +5,7 @@
 <script>
     import { onMount } from 'svelte';
     const apiUrl1 = 'https://sos2324-11.appspot.com/api/v2/socioeconomics-traker-using-unconventional-data';
-    //const apiUrl2 = 'https://real-time-finance-data.p.rapidapi.com/company-income-statement';
+    const apiUrl2 = 'https://real-time-finance-data.p.rapidapi.com/company-income-statement';
     let datosCombinados = null;
 
     onMount(async () => {

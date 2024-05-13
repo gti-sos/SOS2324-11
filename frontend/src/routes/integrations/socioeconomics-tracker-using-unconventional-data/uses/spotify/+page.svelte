@@ -12,7 +12,7 @@
   });
 
   async function getSpotify() {
-    //const url = 'https://spotify23.p.rapidapi.com/user_followers/';
+    const url = 'https://spotify23.p.rapidapi.com/user_followers/';
     const params = new URLSearchParams({ id: 'nocopyrightsounds' });
     const fullUrl = `${url}?${params.toString()}`;
 
