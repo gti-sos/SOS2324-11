@@ -82,7 +82,6 @@
    <p>
       <a href="https://sos2324-11.appspot.com/structural-investment/vista"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado) <br>
       <a href="https://sos2324-11.appspot.com/structural-payment-data/vista"><span>structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero) <br>
-      <a href="https://sos2324-11.appspot.com/socioeconomics-tracker-using-unconventional-data/vista"><span>socioeconomics-tracker-using-unconventional-data</span></a> (desarrollado por Álvaro Marcos Delgado)
    </p>
 </div>
 
@@ -90,14 +89,10 @@
    <h2>Integraciones</h2>
    <p>
       <a href="https://sos2324-11.appspot.com/integrations/structural-investment/integrations/conProxy"><span>Datos combinados por países</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/integrations/sinProxy"><span>Datos combinados por años</span></a> (desarrollado por Sharay Portillo Jurado)  <br> <br>
-
-      <a href="https://sos2324-11.appspot.com/integrations/structural-payment-data/integrations/conProxy"><span>Datos combinados usando un Proxy</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/structural-payment-data/integrations/sinProxy"><span>Datos combinados sin usar un Proxy</span></a> (desarrollado por Isabel María Trapero Romero)  <br> <br>
-
-      <a href="https://sos2324-11.appspot.com/integrations/socioeconomics-tracker-using-unconventional-data/integrations/conProxy"><span>Datos combinados usando un Proxy</span></a> (desarrollado por Álvaro Marcos Delgado)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/socioeconomics-tracker-using-unconventional-data/integrations/sinProxy"><span>Datos combinados sin usar un Proxy</span></a> (desarrollado por Álvaro Marcos Delgado)  <br>
-      
+      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/integrations/sinProxy"><span>Datos combinados por años</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/integrations/conProxy"><span>Datos combinados por años</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/integrations/sinProxy"><span>Datos combinados por años</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
+ 
    </p>
 </div>
 
@@ -106,24 +101,18 @@
    <p>
       <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/anime"><span>Anime</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
       <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/peliculas"><span>Películas</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/reviews"><span>Reseñas</span></a> (desarrollado por Sharay Portillo Jurado)  <br> <br>
-
-      <a href="https://sos2324-11.appspot.com/integrations/structural-payment-data/uses/libros"><span>Libros</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/structural-payment-data/uses/comida"><span>Comida</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/structural-payment-data/uses/geografia"><span>Geografia</span></a> (desarrollado por Isabel María Trapero Romero)  <br> <br>
-
-      <a href="https://sos2324-11.appspot.com/integrations/socioeconomics-tracker-using-unconventional-data/uses/futbol"><span>Spotify</span></a> (desarrollado por Álvaro Marcos Delgado)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/socioeconomics-tracker-using-unconventional-data/uses/imdb"><span>Goleadores Premier</span></a> (desarrollado por Álvaro Marcos Delgado)  <br>
-      <a href="https://sos2324-11.appspot.com/integrations/socioeconomics-tracker-using-unconventional-data/uses/spotify"><span>Top 10 peliculas semanales</span></a> (desarrollado por Álvaro Marcos Delgado)  <br> <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-investment/uses/reviews"><span>Reseñas</span></a> (desarrollado por Sharay Portillo Jurado) <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/uses/comida"><span>Comida</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/uses/geografia"><span>Geografía</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
+      <a href="https://sos2324-11.appspot.com/integrations/structural-payment/uses/libros"><span>Libros</span></a> (desarrollado por Isabel María Trapero Romero)  <br> 
    </p>
 </div>
 
 <div class="card">
    <h2>Videos</h2>
    <p>
-      <a href="https://sos2324-11.appspot.com/about/structural-investment"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado) <br>
-      <a href="https://sos2324-11.appspot.com/about/structural-payment-data"><span>structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero)  <br>
-      <a href="http://localhost:5173/about/socioeconomics-tracker-using-unconventional-data"><span>socioeconomics-tracker-using-unconventional-data</span></a> (desarrollado por Álvaro Marcos Delgado) 
+      <a href="https://sos2324-11.appspot.com/about/structural-investment"><span>structural-investment-data</span></a> (desarrollado por Sharay Portillo Jurado)  <br>
+      <a href="https://sos2324-11.appspot.com/about/structural-payment"><span>structural-payment-data</span></a> (desarrollado por Isabel María Trapero Romero) <br>
    </p>
 </div>
 

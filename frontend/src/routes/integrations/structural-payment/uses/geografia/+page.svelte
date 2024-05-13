@@ -8,7 +8,7 @@
     });
 
     async function getData() {
-        //const url = 'https://ai-weather-by-meteosource.p.rapidapi.com/find_places_prefix?text=fishermans%20wh&language=en';
+        const url = 'https://ai-weather-by-meteosource.p.rapidapi.com/find_places_prefix?text=fishermans%20wh&language=en';
         const options = {
             method: 'GET',
             headers: {
