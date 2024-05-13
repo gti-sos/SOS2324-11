@@ -601,7 +601,7 @@ function loadBackend_isabel (app, db) {
         if (!isValidData) {
             res.sendStatus(400, "Bad Request");
         } else {
-          db.findOne({ ms_name: newData.ms_name }, (err, existingData) => {
+          db.findOne({ ms_name: newData.ms_name, fund: newData.fund }, (err, existingData) => {
             if (err) {
                 res.sendStatus(500, "Internal Error");
             } else {
