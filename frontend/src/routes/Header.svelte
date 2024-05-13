@@ -23,14 +23,7 @@
                 </div>
             </div>
             <a href="/integrations">Integraciones/Usos</a>
-            <div class="dropdown">
-                <button class="dropbtn" >Videos</button>
-                <div class="dropdown-content">
-                    <a href="/about/structural-investment" >Inversión estructural</a>
-                    <a href="/structural-payment-data" >Pagos estructurales</a>
-                    <a href="/socioeconomics-tracker-using-unconventional-data" >Rastreador de socioeconomía</a>
-                </div>
-            </div>
+            <a href="/about" >Videos</a>
         </div>
     </nav>
 </header>
