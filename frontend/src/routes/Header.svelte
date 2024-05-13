@@ -23,6 +23,7 @@
                 </div>
             </div>
             <a href="/integrations">Integraciones/Usos</a>
+<<<<<<< HEAD
             <div class="dropdown">
                 <button class="dropbtn" >Videos</button>
                 <div class="dropdown-content">
@@ -31,6 +32,9 @@
                     <a href="/socioeconomics-tracker-using-unconventional-data" >Rastreador de socioeconomía</a>
                 </div>
             </div>
+=======
+            <a href="/about" >Videos</a>
+>>>>>>> 1430dc49db2e4d63b980f83efbf418a345e80ca8
         </div>
     </nav>
 </header>
