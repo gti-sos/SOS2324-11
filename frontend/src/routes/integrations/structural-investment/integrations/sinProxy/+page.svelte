@@ -88,7 +88,6 @@
       });
     }
 
-      // Filtrar solo los años comunes con datos en ambas fuentes
       yearData = Object.values(combinedData);
       console.log("Datos combinados", yearData);
 
