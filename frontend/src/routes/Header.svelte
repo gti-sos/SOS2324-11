@@ -28,7 +28,7 @@
                 <div class="dropdown-content">
                     <a href="/about/structural-investment" >Inversión estructural</a>
                     <a href="/structural-payment-data" >Pagos estructurales</a>
-                    <a href="/socioeconomics-tracker-using-unconventional-data" >Rastreador de socioeconomía</a>
+                    <a href="/about/socioeconomics-tracker-using-unconventional-data" >Rastreador de socioeconomía</a>
                 </div>
             </div>
         </div>
