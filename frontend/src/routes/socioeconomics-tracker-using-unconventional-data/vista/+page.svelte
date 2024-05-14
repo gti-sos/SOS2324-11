@@ -14,8 +14,8 @@
     import {onMount} from "svelte";
     
 
-    onMount(()=>{
-        getData();
+    onMount(async ()=>{
+        await getData();
     });
 
     let dataAvailable = false;

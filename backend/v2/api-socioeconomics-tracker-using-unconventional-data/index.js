@@ -518,7 +518,7 @@ function loadBackend_álvaro (app, db) {
 
     app.get(API_BASE + "/socioeconomics-traker-using-unconventional-data", (req, res) => {
         const queryParameters = req.query;
-        const limit = parseInt(queryParameters.limit) || 20;
+        const limit = parseInt(queryParameters.limit) || 30;
         const offset = parseInt(queryParameters.offset) || 0;
         let from = req.query.from;
         let to = req.query.to;
