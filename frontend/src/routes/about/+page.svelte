@@ -2,7 +2,7 @@
 
     <div class="card" style="margin-left: 20px;">
         <div class="photo">
-            <a href="http://sos2324-11.appspot.com/integrations/structural-investment"><img src = "https://png.pngtree.com/png-clipart/20231026/original/pngtree-d-character-of-girl-playing-laptop-sitting-in-chair-with-smile-png-image_13442180.png" alt="Imagen" style="width: 300px; height: 350px; margin-top: 30px;"></a>
+            <a href="http://sos2324-11.appspot.com/about/structural-investment"><img src = "https://png.pngtree.com/png-clipart/20231026/original/pngtree-d-character-of-girl-playing-laptop-sitting-in-chair-with-smile-png-image_13442180.png" alt="Imagen" style="width: 300px; height: 350px; margin-top: 30px;"></a>
         </div>
         <h2 style="margin-top: 20px;">Sharay</h2>
     </div>
@@ -16,7 +16,7 @@
 
     <div class="card" style="margin-left: 20px">
         <div class="photo">
-            <a href="http://sos2324-11.appspot.com/integrations/socioeconomics-tracker-using-unconventional-data"><img src = "https://estaticos-cdn.prensaiberica.es/clip/8278557d-adfa-480e-b154-610ba48e788d_16-9-discover-aspect-ratio_default_0.webp" alt="Imagen" style="width: 330px; margin-top: 80px; margin-bottom:10px;"></a>
+            <a href="http://sos2324-11.appspot.com/about/"><img src = "https://estaticos-cdn.prensaiberica.es/clip/8278557d-adfa-480e-b154-610ba48e788d_16-9-discover-aspect-ratio_default_0.webp" alt="Imagen" style="width: 330px; margin-top: 80px; margin-bottom:10px;"></a>
         </div>
         <h2  style="margin-top: 90px;">Alvaro </h2>
     </div>    
