@@ -1,0 +1,10 @@
+# Node-specific files
+node_modules
+playwright-report
+test-results
+
+
+
+# Other IDE-specific folders
+nbproject
+.vscode
