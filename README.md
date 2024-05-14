@@ -29,12 +29,19 @@
   - [analytics](https://sos2324-11.appspot.com/analytics) 
 - **Individual graphs**:
    - [structural-investment-data ](https://sos2324-11.appspot.com/structural-investment/vista)   (developed by Sharay Portillo Jurado)
+   - [structural-payment-data ](https://sos2324-11.appspot.com/structural-payment-data/vista)   (developed by Isabel María Trapero Romero)
 - **Integrations**:
   - [Combined data by country ](https://sos2324-11.appspot.com/integrations/structural-investment/integrations/conProxy)   (developed by Sharay Portillo Jurado) 
   - [Combined data by years ](https://sos2324-11.appspot.com/integrations/structural-investment/integrations/sinProxy)   (developed by Sharay Portillo Jurado)
+  - [Combined data by year ](https://sos2324-11.appspot.com/integrations/structural-payment/integrations/conProxy)   (developed by Isabel María Trapero Romero) 
+  - [Combined data by year ](https://sos2324-11.appspot.com/integrations/structural-payment/integrations/sinProxy)   (developed by Isabel María Trapero Romero)
 - **Uses**:
   - [Anime ](https://sos2324-11.appspot.com/integrations/structural-investment/uses/anime)   (developed by Sharay Portillo Jurado)
   - [Films ](https://sos2324-11.appspot.com/integrations/structural-investment/uses/peliculas)   (developed by Sharay Portillo Jurado)
   - [Reviews ](https://sos2324-11.appspot.com/integrations/structural-investment/uses/reviews)   (developed by Sharay Portillo Jurado)
+  - [Food ](https://sos2324-11.appspot.com/integrations/structural-payment/uses/comida)   (developed by Isabel María Trapero Romero)
+  - [Geography ](https://sos2324-11.appspot.com/integrations/structural-payment/uses/geografia)   (developed by Isabel María Trapero Romero)
+  - [Books ](https://sos2324-11.appspot.com/integrations/structural-payment/uses/libros)   (developed by Isabel María Trapero Romero)
 - **Videos**:
   - [structural-investment-data ](https://sos2324-11.appspot.com/about/structural-investment)   (developed by Sharay Portillo Jurado)
+  - [structural-payment-data ](https://sos2324-11.appspot.com/about/structural-payment)   (developed by Isabel María Trapero Romero)
