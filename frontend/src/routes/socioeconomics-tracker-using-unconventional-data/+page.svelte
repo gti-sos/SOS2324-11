@@ -76,6 +76,7 @@
             if (currentPage > 0) {
                 const offset = currentPage * limit;
                 parametros += `&offset=${offset}`;
+                
             }
     
             // Verificamos si se han introducido parámetros de búsqueda
