@@ -16,7 +16,7 @@
 
     <div class="card" style="margin-left: 20px">
         <div class="photo">
-            <a href="http://sos2324-11.appspot.com/about/"><img src = "https://estaticos-cdn.prensaiberica.es/clip/8278557d-adfa-480e-b154-610ba48e788d_16-9-discover-aspect-ratio_default_0.webp" alt="Imagen" style="width: 330px; margin-top: 80px; margin-bottom:10px;"></a>
+            <a href="http://sos2324-11.appspot.com/about/socioeconomics-tracker-using-unconventional-data"><img src = "https://estaticos-cdn.prensaiberica.es/clip/8278557d-adfa-480e-b154-610ba48e788d_16-9-discover-aspect-ratio_default_0.webp" alt="Imagen" style="width: 330px; margin-top: 80px; margin-bottom:10px;"></a>
         </div>
         <h2  style="margin-top: 90px;">Alvaro </h2>
     </div>    
