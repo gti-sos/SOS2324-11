@@ -50,24 +50,12 @@
     onMount(()=>{
         filterApplied = false;
         mostrarTabla = false;
-        getData();
+        getDataFilter();
     })
 
     let filterApplied = false;
     let mostrarTabla = false;
-    async function getData(){
-        try{
-            let response = await fetch(API+`?offset=0&&limit=${limit}`, {
-                                method: "GET"
-                        });
-
-            let dat = await response.json();
-            data = dat;
-            console.log(data);
-        }catch(e){
-            Msg = e;
-        }
-    }
+    
 
     async function getDataFilter() {
         try {
@@ -128,11 +116,7 @@
                 method: "GET",
             });
     
-            if (response.status === 404) {
-                Msg = "No se encontraron datos que coincidan con los filtros especificados.";
-                datas = []; 
-                return;
-            }
+            
     
             let datas = await response.json();
 
@@ -202,42 +186,7 @@
         }
     }
 
-    let getFrom = null;
-    let getTo = null;
-
-    async function getFromTo(getFrom, getTo, currentPage) {
-        try {
-            let parametros = `?from=${getFrom}&to=${getTo}`;
-            
-            // Calcular el offset para la paginación
-            //const offset = currentPage * limit;
-            parametros += `?offset=0&&limit=${limit}`;
-            
-            const response = await fetch(API + parametros, {
-                method: "GET",
-            });
-
-            if (response.status === 200) {
-                const datas = await response.json();
-                console.log(datas);
-                data = datas;
-
-                if (data.length === 0) {
-                    Msg = "No se encontraron datos que coincidan con los filtros especificados.";
-                } else {
-                    Msg = "Se ha realizado la búsqueda correctamente.";
-                }
-            } else if (response.status === 404) {
-                Msg = "No se encontraron datos que coincidan con los filtros especificados.";
-            } else {
-                Msg = "Error al obtener datos. Código de estado: " + response.status;
-            }
-        } catch (error) {
-            Msg = "Error al obtener datos: " + error;
-        }
-    }
-
-
+    
     async function createData(){
         try{
             let response = await fetch(API, {
@@ -274,7 +223,7 @@
                                 method: "DELETE"
                         });
             if(response.status==200){
-                getData();
+                getDataFilter();
                 Msg = "Se han eliminado todos los datos correctamente";
             } else if (response.status == 404) {
                 Msg = "No se ha encontrado";
@@ -297,7 +246,7 @@
                         });
             
             if(response.status==200){
-                getData();
+                getDataFilter();
                 Msg = "Dato eliminado correctamente";
             } else if (response.status == 404) {
                 Msg = `No se ha encontrado el país ${country} con año ${parseInt(year)} y dia ${parseInt(day)}`;
@@ -336,11 +285,6 @@
         getDataFilter();
     }
 
-    function limpiarCamposFromTo() {
-         getFrom = "";
-         getTo = "";
-        getDataFilter() ;
-    }
 
     async function nextPage() {
         if (data.length >= limit) {
