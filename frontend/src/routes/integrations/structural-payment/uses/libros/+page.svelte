@@ -17,7 +17,7 @@
         const options = {
             method: 'GET',
             headers: {
-                'X-RapidAPI-Key': 'adeede387emsh91b03dc6a809ef8p11c7f5jsn012824a94b45',
+                'X-RapidAPI-Key': 'ca5c298a0emsh256fcb07f27e2a0p1330b7jsn2140fe88722e',
                 'X-RapidAPI-Host': 'book-info-hub.p.rapidapi.com'
             }
         };
