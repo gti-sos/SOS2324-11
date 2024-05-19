@@ -599,7 +599,6 @@ function loadBackend_álvaro (app, db) {
 
     app.get(API_BASE+"/socioeconomics-traker-using-unconventional-data/loadInitialData",(req, res) =>{
         db.find({},(err,data) => {
-
             if(err){
                 res.sendStatus(500, "Internal Error")
             }else{
@@ -696,7 +695,7 @@ function loadBackend_álvaro (app, db) {
                             
                             res.sendStatus(500); 
                         } else {
-                          
+
                             res.sendStatus(201); 
                         }
                     });
