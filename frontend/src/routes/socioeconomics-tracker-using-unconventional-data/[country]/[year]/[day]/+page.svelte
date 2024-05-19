@@ -17,6 +17,21 @@
         API = "http://localhost:10000"+API;
     }
 
+    let updatedDate = "";
+    let updatedYear = year;
+    let updatedMonth = "";
+    let updatedDay = day;
+    let updatedTone_doc_count = "";
+    let updatedPopularity_rate = "";
+    let updatedTone_avg = "";
+    let updatedTone_w_avg = "";
+    let updatedTone_cum = "";
+    let updatedAmd1code = "";
+    let updatedCountry = country;
+    let updatedArea = "";
+    let updatedRef_time = "";
+    let updatedTopic = "";
+
     let dato = [];
     let result = "";
     let resultStatus = "";
@@ -59,20 +74,7 @@
         }
     }
 
-    let updatedDate = "";
-    let updatedYear = year;
-    let updatedMonth = "";
-    let updatedDay = day;
-    let updatedTone_doc_count = "";
-    let updatedPopularity_rate = "";
-    let updatedTone_avg = "";
-    let updatedTone_w_avg = "";
-    let updatedTone_cum = "";
-    let updatedAmd1code = "";
-    let updatedCountry = country;
-    let updatedArea = "";
-    let updatedRef_time = "";
-    let updatedTopic = "";
+    
 
     async function updateData() {
         resultStatus = result = "";
@@ -101,6 +103,7 @@
         });
         const status = await res.status;
         resultStatus = status;
+        console.log(dato)
 
         if (status == 200) {
             message = "El dato se ha actualizado";
