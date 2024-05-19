@@ -51,6 +51,6 @@
 - **Videos**:
   - [structural-investment-data ](https://sos2324-11.appspot.com/about/structural-investment)   (developed by Sharay Portillo Jurado)
   - [structural-payment-data ](https://sos2324-11.appspot.com/about/structural-payment)   (developed by Isabel María Trapero Romero)
-  - [structural-payment-data ](https://sos2324-11.appspot.com/about/socioeconomics-tracker-using-unconventional-data)   (developed by Álvaro Marcos Delgado)
+  - [socioeconomics-tracker-using-unconventional-data ](https://sos2324-11.appspot.com/about/socioeconomics-tracker-using-unconventional-data)   (developed by Álvaro Marcos Delgado)
 - **Docker**:
   - [Para lanzar la imagen del proyecto usar el siguiente comando manteniendo el puerto 10000 **docker run -p 12000:10000 marketes03/sos2324-11:0.0.2** ]
