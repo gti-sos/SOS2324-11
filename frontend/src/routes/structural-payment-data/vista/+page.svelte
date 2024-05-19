@@ -10,6 +10,7 @@
 <script>
     import {onMount} from "svelte";
 
+    
     onMount(()=>{
         getData();
     });
