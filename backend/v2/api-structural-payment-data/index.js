@@ -551,6 +551,7 @@ function loadBackend_isabel (app, db) {
             query.year = { $gte: parseInt(fromDate), $lte: parseInt(toDate) };
         }
     
+    
         db.find(query, (err, countryData) => {
             if (err) {
                 res.status(500).json({ error: "Internal Server Error" });
