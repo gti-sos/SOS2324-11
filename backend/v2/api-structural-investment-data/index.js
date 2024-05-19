@@ -509,6 +509,7 @@ function loadBackend_sharay (app, db) {
                     }
                 }
             });
+
         } else {
             db.find(query).skip(offset).limit(limit).exec((err, data) => {
                 if (err) {
@@ -526,6 +527,7 @@ function loadBackend_sharay (app, db) {
                 }
             });
         }
+        
     });
     
     //GET -- OK  Search by single field or by country name with range
