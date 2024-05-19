@@ -16,7 +16,7 @@
     // Función asincrónica para obtener datos del reseñas desde la API
     async function getReseñas() {
         
-        //const url = 'https://amazonlive.p.rapidapi.com/reviews?asin=B0BBLT626J&location=de&page=1&amount=10';
+        const url = 'https://amazonlive.p.rapidapi.com/reviews?asin=B0BBLT626J&location=de&page=1&amount=10';
         const options = {
             method: 'GET',
             headers: {
